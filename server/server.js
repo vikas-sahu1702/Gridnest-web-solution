@@ -59,7 +59,7 @@ app.use(express.static(templateDist));
 // Serve main Gridnest site files
 app.use(express.static(path.join(__dirname, '..'), {
   extensions: ['html'],
-  index: 'Final Index.html',
+  index: 'index.html',
 }));
 
 // API routes
@@ -123,7 +123,7 @@ app.get('*', (req, res) => {
   if (fs.existsSync(templatePath)) {
     return res.sendFile(templatePath);
   }
-  res.sendFile(path.join(__dirname, '..', 'Final Index.html'));
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 // Global error handler

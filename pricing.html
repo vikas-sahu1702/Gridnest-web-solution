@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | Gridnest Web Solutions</title>
+    <meta name="description" content="Transparent pricing for premium web design and development services. Choose the perfect plan for your business.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        /* Pricing Toggle */
+        .pricing-toggle-wrapper {
+            text-align: center;
+            margin-bottom: var(--space-xxl);
+        }
+        .pricing-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-md);
+            background-color: var(--white);
+            padding: 0.5rem;
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-md);
+        }
+        .pricing-toggle-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            border-radius: var(--radius-full);
+            transition: all var(--transition-normal);
+        }
+        .pricing-toggle-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+        }
+        .pricing-toggle-btn:hover:not(.active) {
+            color: var(--dark);
+        }
+
+        /* Pricing Section Spacing */
+        .pricing-plans {
+            padding: var(--space-xxl) 0;
+        }
+
+        /* Featured Card Enhancement */
+        .pricing-card.featured {
+            transform: scale(1.05);
+            z-index: 1;
+        }
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        /* Pricing Card Check Icons */
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        .pricing-features li i {
+            color: var(--primary);
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        /* Guarantee Badge */
+        .guarantee-badge {
+            text-align: center;
+            margin-top: var(--space-xxl);
+            padding: var(--space-xl);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(6, 182, 212, 0.05));
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-light);
+        }
+        .guarantee-badge i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: var(--space-md);
+        }
+        .guarantee-badge h3 {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-sm);
+        }
+        .guarantee-badge p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--gray);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: var(--space-xxl) 0;
+            background-color: var(--light);
+        }
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: box-shadow var(--transition-normal);
+        }
+        .faq-item:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-lg) var(--space-xl);
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-family: var(--font-heading);
+            font-size: 1.0625rem;
+            font-weight: 600;
+            color: var(--dark);
+            transition: color var(--transition-fast);
+        }
+        .faq-question:hover {
+            color: var(--primary);
+        }
+        .faq-question i {
+            font-size: 0.875rem;
+            color: var(--primary);
+            transition: transform var(--transition-normal);
+            flex-shrink: 0;
+            margin-left: var(--space-md);
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-normal), padding var(--transition-normal);
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+        .faq-answer-content {
+            padding: 0 var(--space-xl) var(--space-xl);
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            padding: var(--space-xxl) 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        .comparison-table thead {
+            background: linear-gradient(135deg, var(--dark), var(--dark-light));
+        }
+        .comparison-table th {
+            padding: var(--space-lg) var(--space-md);
+            color: var(--white);
+            font-family: var(--font-heading);
+            font-weight: 600;
+            text-align: center;
+        }
+        .comparison-table th:first-child {
+            text-align: left;
+        }
+        .comparison-table td {
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--gray-light);
+            text-align: center;
+        }
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        .comparison-table tbody tr:hover {
+            background-color: rgba(37, 99, 235, 0.02);
+        }
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .comparison-table .check {
+            color: var(--primary);
+            font-size: 1.125rem;
+        }
+        .comparison-table .cross {
+            color: var(--gray-light);
+            font-size: 1.125rem;
+        }
+
+        @media (max-width: 992px) {
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+        }
+        @media (max-width: 768px) {
+            .pricing-toggle {
+                flex-direction: column;
+                border-radius: var(--radius-lg);
+            }
+            .pricing-toggle-btn {
+                width: 100%;
+            }
+            .comparison-table {
+                font-size: 0.875rem;
+            }
+            .comparison-table th,
+            .comparison-table td {
+                padding: var(--space-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-content">
+            <div class="logo-loader">
+                <span class="logo-text">Gridnest</span>
+                <div class="loader-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+            <div class="loading-progress">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mouse Glow Effect -->
+    <div class="mouse-glow"></div>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/916392948032" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="Final Index.html" class="logo">
+                <span class="logo-primary">Gridnest</span>
+                <span class="logo-sub">Web Solutions</span>
+            </a>
+            
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="Final Index.html" class="nav-link">Home</a></li>
+                    <li><a href="final about.html" class="nav-link">About</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="templates.html" class="nav-link">Templates</a></li>
+                    <li><a href="pricing.html" class="nav-link active">Pricing</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <div class="nav-cta">
+                    <a href="contact.html" class="btn btn-primary">Get Quote</a>
+                </div>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <h1 class="page-title">Transparent Pricing</h1>
+                <p class="page-subtitle">Premium solutions with clear, value-driven pricing. No hidden fees, no surprises.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Plans -->
+    <section class="pricing-plans">
+        <div class="container">
+            <!-- Pricing Toggle -->
+            <div class="pricing-toggle-wrapper">
+                <div class="pricing-toggle">
+                    <button class="pricing-toggle-btn active" data-period="once">One-time Payment</button>
+                    <button class="pricing-toggle-btn" data-period="monthly">Monthly Plans</button>
+                </div>
+            </div>
+
+            <!-- Pricing Cards -->
+            <div class="pricing-grid">
+                <!-- Basic Website -->
+                <div class="pricing-card fade-in stagger-delay-1">
+                    <div class="pricing-header">
+                        <h3>Basic Website</h3>
+                        <p style="color: var(--gray); margin-bottom: var(--space-md);">Perfect for small businesses</p>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">1,999</span>
+                            <span class="period">/one-time</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 5 Page Website</li>
+                            <li><i class="fas fa-check"></i> Mobile Responsive Design</li>
+                            <li><i class="fas fa-check"></i> Basic SEO Setup</li>
+                            <li><i class="fas fa-check"></i> Contact Form Integration</li>
+                            <li><i class="fas fa-check"></i> 1 Month Free Support</li>
+                            <li><i class="fas fa-check"></i> SSL Certificate</li>
+                            <li><i class="fas fa-check"></i> Social Media Links</li>
+                        </ul>
+                    </div>
+                    <a href="contact.html" class="btn btn-outline btn-block">Get Started</a>
+                </div>
+
+                <!-- Business Website (Featured) -->
+                <div class="pricing-card featured fade-in stagger-delay-2">
+                    <div class="pricing-header">
+                        <h3>Business Website</h3>
+                        <p style="color: var(--gray); margin-bottom: var(--space-md);">Best for growing companies</p>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">4,999</span>
+                            <span class="period">/one-time</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 15 Page Website</li>
+                            <li><i class="fas fa-check"></i> Custom Premium Design</li>
+                            <li><i class="fas fa-check"></i> Advanced SEO Optimization</li>
+                            <li><i class="fas fa-check"></i> Booking Integration</li>
+                            <li><i class="fas fa-check"></i> 6 Months Free Support</li>
+                            <li><i class="fas fa-check"></i> Analytics Dashboard</li>
+                            <li><i class="fas fa-check"></i> CMS Integration</li>
+                            <li><i class="fas fa-check"></i> Performance Optimization</li>
+                            <li><i class="fas fa-check"></i> Priority Email Support</li>
+                        </ul>
+                    </div>
+                    <a href="contact.html" class="btn btn-primary btn-block">Get Started</a>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="pricing-card fade-in stagger-delay-3">
+                    <div class="pricing-header">
+                        <h3>Enterprise</h3>
+                        <p style="color: var(--gray); margin-bottom: var(--space-md);">For large-scale projects</p>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">9,999</span>
+                            <span class="period">/one-time</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Unlimited Pages</li>
+                            <li><i class="fas fa-check"></i> Premium Custom Design</li>
+                            <li><i class="fas fa-check"></i> Full SEO Suite</li>
+                            <li><i class="fas fa-check"></i> Custom Features & Integrations</li>
+                            <li><i class="fas fa-check"></i> 12 Months Free Support</li>
+                            <li><i class="fas fa-check"></i> Priority 24/7 Support</li>
+                            <li><i class="fas fa-check"></i> Dedicated Project Manager</li>
+                            <li><i class="fas fa-check"></i> E-commerce Ready</li>
+                            <li><i class="fas fa-check"></i> Multi-language Support</li>
+                        </ul>
+                    </div>
+                    <a href="contact.html" class="btn btn-outline btn-block">Contact Sales</a>
+                </div>
+            </div>
+
+            <!-- Guarantee Badge -->
+            <div class="guarantee-badge fade-in">
+                <i class="fas fa-shield-alt"></i>
+                <h3>100% Satisfaction Guaranteed</h3>
+                <p>We're confident in our work. If you're not satisfied with the final result, we'll revise it until you love it. Your success is our priority.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Comparison -->
+    <section class="comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Compare Plans</h2>
+                <p class="section-subtitle">See exactly what's included in each plan</p>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Features</th>
+                            <th>Basic</th>
+                            <th>Business</th>
+                            <th>Enterprise</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Number of Pages</td>
+                            <td>5</td>
+                            <td>15</td>
+                            <td>Unlimited</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Responsive</td>
+                            <td><i class="fas fa-check check"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Custom Design</td>
+                            <td><i class="fas fa-times cross"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>SEO Optimization</td>
+                            <td>Basic</td>
+                            <td>Advanced</td>
+                            <td>Full Suite</td>
+                        </tr>
+                        <tr>
+                            <td>Booking System</td>
+                            <td><i class="fas fa-times cross"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Analytics</td>
+                            <td><i class="fas fa-times cross"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>CMS Integration</td>
+                            <td><i class="fas fa-times cross"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>E-commerce</td>
+                            <td><i class="fas fa-times cross"></i></td>
+                            <td><i class="fas fa-times cross"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Multi-language</td>
+                            <td><i class="fas fa-times cross"></i></td>
+                            <td><i class="fas fa-times cross"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Support Duration</td>
+                            <td>1 Month</td>
+                            <td>6 Months</td>
+                            <td>12 Months</td>
+                        </tr>
+                        <tr>
+                            <td>Dedicated Manager</td>
+                            <td><i class="fas fa-times cross"></i></td>
+                            <td><i class="fas fa-times cross"></i></td>
+                            <td><i class="fas fa-check check"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Everything you need to know about our pricing and services</p>
+            </div>
+            
+            <div class="faq-grid">
+                <div class="faq-item active">
+                    <button class="faq-question">
+                        <span>How long does it take to build a website?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Project timelines vary based on complexity. A Basic website typically takes 2-3 weeks, Business websites take 4-6 weeks, and Enterprise projects range from 8-12 weeks. We provide a detailed timeline during our initial consultation and keep you updated throughout the process.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Are there any hidden fees or recurring charges?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            No hidden fees. The price you see is the price you pay. The only additional costs would be annual hosting ($99-$299/year) and domain registration ($12-$15/year), which are optional and can be managed independently. We're transparent about all costs from the start.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Do you offer payment plans?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! We offer flexible payment plans. You can split your investment into 3-4 monthly installments with no interest. For Enterprise projects, we can create custom payment schedules. We want to make premium web design accessible to every business.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What happens after the free support period ends?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            After your free support period, you can choose from our maintenance plans starting at $99/month. These include security updates, content changes, technical support, and performance monitoring. Many clients find this invaluable for keeping their site fresh and secure.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I upgrade my plan later?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely! You can upgrade your plan at any time. You'll only pay the difference between your current plan and the new one. We make it easy to scale your website as your business grows, ensuring you always have the features you need.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Do you offer refunds?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We offer a full refund if we haven't started the design phase. Once design work begins, we offer a 50% refund. Our satisfaction guarantee ensures we'll work with you until you're happy with the result. We believe in our work and stand behind it completely.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="contact-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Start Your Project?</h2>
+                <p class="cta-description">Let's discuss your vision and find the perfect plan for your business. Get a free consultation today.</p>
+                <div class="cta-actions">
+                    <a href="contact.html" class="btn btn-primary btn-large">
+                        <span>Get Free Quote</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="tel:+916392948032" class="btn btn-outline btn-large">
+                        <span>Call Us Now</span>
+                        <i class="fas fa-phone"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="Final Index.html" class="footer-logo">
+                        <span class="logo-primary">Gridnest</span>
+                        <span class="logo-sub">Web Solutions</span>
+                    </a>
+                    <p class="footer-tagline">Building Digital Success</p>
+                    <p class="footer-description">Premium web design and development agency specializing in hospitality and corporate solutions.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="Final Index.html">Home</a></li>
+                        <li><a href="final about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="services.html#hotel">Hotel Websites</a></li>
+                        <li><a href="services.html#restaurant">Restaurant Websites</a></li>
+                        <li><a href="services.html#corporate">Corporate Websites</a></li>
+                        <li><a href="services.html#seo">SEO Optimization</a></li>
+                        <li><a href="services.html#maintenance">Maintenance</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+91 6392948032</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>Contact@gridnest.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Osho Nagar, Kanaushi,<br>Manak Nagar, Lucknow 226023</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2026 Gridnest Web Solutions. All rights reserved.</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Pricing Toggle
+        const toggleBtns = document.querySelectorAll('.pricing-toggle-btn');
+        const amounts = document.querySelectorAll('.amount');
+        const periods = document.querySelectorAll('.period');
+        
+        const prices = {
+            once: ['1,999', '4,999', '9,999'],
+            monthly: ['199', '499', '999']
+        };
+        
+        toggleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                toggleBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const period = btn.dataset.period;
+                
+                amounts.forEach((amount, index) => {
+                    amount.textContent = prices[period][index];
+                });
+                
+                periods.forEach(periodEl => {
+                    periodEl.textContent = period === 'once' ? '/one-time' : '/month';
+                });
+            });
+        });
+    </script>
+    <script src="js/script.js"></script>
+    <script src="js/animation.js"></script>
+</body>
+</html>

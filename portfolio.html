@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Gridnest Web Solutions</title>
+    <meta name="description" content="Explore our premium portfolio of web design projects for hotels, restaurants, corporate clients, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .portfolio-item-detail.hidden {
+            display: none;
+        }
+        .portfolio-item-detail {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .portfolio-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xxl);
+            margin-top: var(--space-xl);
+        }
+        .portfolio-stat {
+            text-align: center;
+        }
+        .portfolio-stat .stat-number {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: var(--space-xs);
+        }
+        .portfolio-stat .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .cta-section {
+            padding: var(--space-xxl) 0;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+        }
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .cta-content h2 {
+            font-size: 2.75rem;
+            color: var(--white);
+            margin-bottom: var(--space-md);
+        }
+        .cta-content p {
+            font-size: 1.125rem;
+            color: var(--gray-light);
+            margin-bottom: var(--space-xl);
+        }
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+        }
+        .cta-actions .btn-outline {
+            color: var(--white);
+            border-color: var(--white);
+        }
+        .cta-actions .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--dark);
+        }
+        .portfolio-category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--space-sm);
+        }
+        .portfolio-item-detail .portfolio-info h3 {
+            font-size: 1.25rem;
+        }
+        .portfolio-item-detail .portfolio-info p {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+        .portfolio-item-detail .portfolio-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            transition: gap var(--transition-normal);
+        }
+        .portfolio-item-detail .portfolio-link:hover {
+            gap: var(--space-md);
+        }
+        .no-results {
+            text-align: center;
+            padding: var(--space-xxl) 0;
+            display: none;
+        }
+        .no-results i {
+            font-size: 3rem;
+            color: var(--gray-light);
+            margin-bottom: var(--space-md);
+        }
+        .no-results p {
+            font-size: 1.125rem;
+            color: var(--gray);
+        }
+        @media (max-width: 992px) {
+            .portfolio-stats {
+                flex-wrap: wrap;
+                gap: var(--space-xl);
+            }
+            .cta-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-content">
+            <div class="logo-loader">
+                <span class="logo-text">Gridnest</span>
+                <div class="loader-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+            <div class="loading-progress">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mouse Glow Effect -->
+    <div class="mouse-glow"></div>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/916392948032" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="Final Index.html" class="logo">
+                <span class="logo-primary">Gridnest</span>
+                <span class="logo-sub">Web Solutions</span>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="Final Index.html" class="nav-link">Home</a></li>
+                    <li><a href="final about.html" class="nav-link">About</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+                    <li><a href="templates.html" class="nav-link">Templates</a></li>
+                    <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+
+                <div class="nav-cta">
+                    <a href="contact.html" class="btn btn-primary">Get Quote</a>
+                </div>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <h1 class="page-title">Our Premium Portfolio</h1>
+                <p class="page-subtitle">150+ projects delivered with excellence across hospitality, corporate, and lifestyle brands worldwide.</p>
+                <div class="portfolio-stats">
+                    <div class="portfolio-stat">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="portfolio-stat">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                    <div class="portfolio-stat">
+                        <div class="stat-number">40+</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="portfolio-filter">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="hotel">Hotels</button>
+                <button class="filter-btn" data-filter="restaurant">Restaurants</button>
+                <button class="filter-btn" data-filter="corporate">Corporate</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="portfolio-grid-detail">
+        <div class="container">
+            <div class="portfolio-items" id="portfolioGrid">
+
+                <!-- Hotel 1 -->
+                <div class="portfolio-item-detail" data-category="hotel">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Oceanview Luxury Resort">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Hotel</span>
+                        <h3>Oceanview Luxury Resort</h3>
+                        <p>Premium hotel website with integrated booking engine, virtual room tours, and guest management system.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Restaurant 1 -->
+                <div class="portfolio-item-detail" data-category="restaurant">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Bistro Moderna">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Restaurant</span>
+                        <h3>Bistro Moderna</h3>
+                        <p>Fine dining experience website with online reservations, interactive menu, and ambiance gallery.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Corporate 1 -->
+                <div class="portfolio-item-detail" data-category="corporate">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Global Finance Corp">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Corporate</span>
+                        <h3>Global Finance Corp</h3>
+                        <p>Financial services website with secure client portal, real-time market data, and investment tools.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hotel 2 -->
+                <div class="portfolio-item-detail" data-category="hotel">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="The Grand Palace Hotel">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Hotel</span>
+                        <h3>The Grand Palace Hotel</h3>
+                        <p>Heritage luxury property website featuring elegant design, heritage storytelling, and concierge services.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Restaurant 2 -->
+                <div class="portfolio-item-detail" data-category="restaurant">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1579027989536-b7b1f875659b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Sakura Japanese Kitchen">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Restaurant</span>
+                        <h3>Sakura Japanese Kitchen</h3>
+                        <p>Authentic Japanese cuisine website with digital menu, cultural storytelling, and table booking integration.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Corporate 2 -->
+                <div class="portfolio-item-detail" data-category="corporate">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="TechVault Solutions">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Corporate</span>
+                        <h3>TechVault Solutions</h3>
+                        <p>Technology company website with product showcases, developer documentation, and API integration portals.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hotel 3 -->
+                <div class="portfolio-item-detail" data-category="hotel">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Mountain View Lodge">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Hotel</span>
+                        <h3>Mountain View Lodge</h3>
+                        <p>Boutique mountain retreat website with nature-inspired design, activity booking, and seasonal packages.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Restaurant 3 -->
+                <div class="portfolio-item-detail" data-category="restaurant">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="The Green Fork">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Restaurant</span>
+                        <h3>The Green Fork</h3>
+                        <p>Farm-to-table restaurant website with seasonal menu updates, ingredient sourcing stories, and eco-branding.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Corporate 3 -->
+                <div class="portfolio-item-detail" data-category="corporate">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Horizon Real Estate">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Corporate</span>
+                        <h3>Horizon Real Estate</h3>
+                        <p>Property development firm website with virtual property tours, investment calculator, and agent directory.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mixed 1 -->
+                <div class="portfolio-item-detail" data-category="hotel">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Azure Spa & Wellness">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Wellness</span>
+                        <h3>Azure Spa & Wellness</h3>
+                        <p>Spa and wellness center website with treatment booking, therapist profiles, and serene visual experience.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mixed 2 -->
+                <div class="portfolio-item-detail" data-category="corporate">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Skyline Co-working">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Corporate</span>
+                        <h3>Skyline Co-working</h3>
+                        <p>Modern workspace website with room booking, membership plans, virtual office tours, and community events.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mixed 3 -->
+                <div class="portfolio-item-detail" data-category="restaurant">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="The Artisan Bakery">
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="portfolio-category-badge">Restaurant</span>
+                        <h3>The Artisan Bakery</h3>
+                        <p>Artisan bakery brand website with online ordering, recipe blog, custom cake designer, and delivery tracking.</p>
+                        <a href="#" class="portfolio-link">
+                            <span>View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- No Results Message -->
+            <div class="no-results" id="noResults">
+                <i class="fas fa-search"></i>
+                <p>No projects found for this category.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Project?</h2>
+                <p>Let's craft a stunning digital experience that transforms your brand and drives real business results.</p>
+                <div class="cta-actions">
+                    <a href="contact.html" class="btn btn-primary btn-large">
+                        <span>Start Your Project</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="tel:+916392948032" class="btn btn-outline btn-large">
+                        <span>Call Us Now</span>
+                        <i class="fas fa-phone"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="Final Index.html" class="footer-logo">
+                        <span class="logo-primary">Gridnest</span>
+                        <span class="logo-sub">Web Solutions</span>
+                    </a>
+                    <p class="footer-tagline">Building Digital Success</p>
+                    <p class="footer-description">Premium web design and development agency specializing in hospitality and corporate solutions.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="Final Index.html">Home</a></li>
+                        <li><a href="final about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3 class="footer-title">Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="services.html#hotel">Hotel Websites</a></li>
+                        <li><a href="services.html#restaurant">Restaurant Websites</a></li>
+                        <li><a href="services.html#corporate">Corporate Websites</a></li>
+                        <li><a href="services.html#seo">SEO Optimization</a></li>
+                        <li><a href="services.html#maintenance">Maintenance</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+91 6392948032</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>Contact@gridnest.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Osho Nagar, Kanaushi,<br>Manak Nagar, Lucknow 226023</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2026 Gridnest Web Solutions. All rights reserved.</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Newsletter Modal -->
+    <div class="newsletter-modal" id="newsletterModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="Close newsletter modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <h3 class="modal-title">Stay Updated</h3>
+                <p class="modal-description">Subscribe to our newsletter for the latest in web design trends and hospitality insights.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <div class="form-group">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Subscribe</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <p class="form-note">We respect your privacy. Unsubscribe at any time.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/animation.js"></script>
+    <script>
+        // Portfolio Filter Functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item-detail');
+            const noResults = document.getElementById('noResults');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const filter = button.getAttribute('data-filter');
+                    let visibleCount = 0;
+
+                    portfolioItems.forEach((item, index) => {
+                        const category = item.getAttribute('data-category');
+
+                        if (filter === 'all' || category === filter) {
+                            item.classList.remove('hidden');
+                            item.style.animation = 'none';
+                            item.offsetHeight; // Trigger reflow
+                            item.style.animation = `fadeInUp 0.5s ease ${index * 0.05}s forwards`;
+                            visibleCount++;
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+
+                    // Show/hide no results message
+                    if (visibleCount === 0) {
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
+                });
+            });
+
+            // Add hover effects for portfolio items
+            portfolioItems.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    item.style.transform = 'translateY(-8px)';
+                    item.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    item.style.transform = 'translateY(0)';
+                    item.style.boxShadow = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Gridnest Web Solutions</title>
+    <meta name="description" content="Get in touch with Gridnest Web Solutions. Contact us for premium web design, development, and digital solutions for your business.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-content">
+            <div class="logo-loader">
+                <span class="logo-text">Gridnest</span>
+                <div class="loader-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+            <div class="loading-progress">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mouse Glow Effect -->
+    <div class="mouse-glow"></div>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/916392948032" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="Final Index.html" class="logo">
+                <span class="logo-primary">Gridnest</span>
+                <span class="logo-sub">Web Solutions</span>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="Final Index.html" class="nav-link">Home</a></li>
+                    <li><a href="final about.html" class="nav-link">About</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="templates.html" class="nav-link">Templates</a></li>
+                    <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                    <li><a href="contact.html" class="nav-link active">Contact</a></li>
+                </ul>
+
+                <div class="nav-cta">
+                    <a href="contact.html" class="btn btn-primary">Get Quote</a>
+                </div>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="hero-background">
+            <div class="gradient-animation"></div>
+            <div class="floating-elements">
+                <div class="float-el el-1"></div>
+                <div class="float-el el-2"></div>
+                <div class="float-el el-3"></div>
+                <div class="float-el el-4"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="page-hero-content">
+                <p class="page-eyebrow">Get In Touch</p>
+                <h1 class="page-title">Let's Build Something Amazing</h1>
+                <p class="page-subtitle">Have a project in mind? We'd love to hear about it. Reach out and let's start a conversation about bringing your vision to life.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <div class="form-header">
+                        <h2>Send Us a Message</h2>
+                        <p>Fill out the form below and our team will get back to you within 24 hours.</p>
+                    </div>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">Full Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input type="text" id="fullName" name="fullName" placeholder="John Doe" required>
+                                </div>
+                                <span class="error-message" id="nameError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-envelope input-icon"></i>
+                                    <input
+type="email"
+id="email"
+name="email"
+placeholder="example@email.com"
+required>
+                                </div>
+                                <span class="error-message" id="emailError"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-phone input-icon"></i>
+                                    <input
+    type="tel"
+    id="phone"
+    name="phone"
+    placeholder="6392948032"
+    maxlength="10"
+    minlength="10"
+    inputmode="numeric"
+    pattern="[0-9]{10}"
+    required>
+                                </div>
+                                <span class="error-message" id="phoneError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Company</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-building input-icon"></i>
+                                    <input type="text" id="company" name="company" placeholder="Your Company Name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service Interested In <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-concierge-bell input-icon"></i>
+                                <select id="service" name="service" required>
+                                    <option value="">Select a service</option>
+                                    <option value="hotel">Hotel Website</option>
+                                    <option value="restaurant">Restaurant Website</option>
+                                    <option value="corporate">Corporate Website</option>
+                                    <option value="seo">SEO Optimization</option>
+                                    <option value="maintenance">Website Maintenance</option>
+                                    <option value="template">Template Customization</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <span class="error-message" id="serviceError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Project Details <span class="required">*</span></label>
+                            <div class="input-wrapper textarea-wrapper">
+                                <i class="fas fa-comment-dots input-icon textarea-icon"></i>
+                                <textarea id="message" name="message" rows="6" placeholder="Tell us about your project, goals, timeline, and budget..." required></textarea>
+                            </div>
+                            <span class="error-message" id="messageError"></span>
+                            <span class="char-count"><span id="charCount">0</span> / 1000</span>
+                        </div>
+                        <!-- Honeypot spam protection - hidden from real users -->
+                        <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;" aria-hidden="true">
+                            <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
+                        </div>
+                        <!-- Hidden field for template tracking -->
+                        <input type="hidden" name="templateSource" id="templateSource" value="">
+                        <button type="submit" class="btn btn-primary btn-large btn-submit" id="submitBtn">
+                            <span class="btn-text">Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                            <span class="btn-loading" style="display:none;">
+                                <i class="fas fa-spinner fa-spin"></i> Sending...
+                            </span>
+                        </button>
+                    </form>
+                    <!-- Success Message -->
+                    <div class="form-success" id="formSuccess" style="display:none;">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>Message Sent Successfully!</h3>
+                        <p>Thank you for reaching out. Our team will get back to you within 24 hours.</p>
+                        <button class="btn btn-outline" id="sendAnother">Send Another Message</button>
+                    </div>
+                </div>
+
+                <!-- Contact Info Panel -->
+                <div class="contact-info-container">
+                    <div class="info-header">
+                        <h2>Contact Information</h2>
+                        <p>Reach out through any of the channels below. We're here to help.</p>
+                    </div>
+
+                    <div class="contact-info-grid">
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Phone</h3>
+                                <a href="tel:+916392948032">+91 6392948032</a>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Email</h3>
+                                <a href="mailto:Contact@gridnest.com">Contact@gridnest.com</a>
+                                <a href="mailto:sales@gridnest.com">sales@gridnest.com</a>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Office</h3>
+                                <p>Osho Nagar, Kanaushi,</p>
+                                <p>Manak Nagar, Lucknow</p>
+                                <p>226023, India</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon whatsapp-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>WhatsApp</h3>
+                                <a href="https://wa.me/916392948032" target="_blank" rel="noopener">+91 6392948032</a>
+                                <p class="info-note">Quick response guaranteed</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="business-hours">
+                        <h3><i class="fas fa-clock"></i> Business Hours</h3>
+                        <ul>
+                            <li>
+                                <span class="day">Monday - Friday</span>
+                                <span class="hours">9:00 AM - 6:00 PM</span>
+                            </li>
+                            <li>
+                                <span class="day">Saturday</span>
+                                <span class="hours">10:00 AM - 4:00 PM</span>
+                            </li>
+                            <li>
+                                <span class="day">Sunday</span>
+                                <span class="hours closed">Closed</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="map-placeholder">
+                        <div class="map-content">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <h3>Our Location</h3>
+                            <p>Manak Nagar, Lucknow, India</p>
+                            <a href="https://maps.google.com/?q=Lucknow+226023+India" class="btn btn-outline btn-small" target="_blank" rel="noopener">
+                                <span>Open in Maps</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="Final Index.html" class="footer-logo">
+                        <span class="logo-primary">Gridnest</span>
+                        <span class="logo-sub">Web Solutions</span>
+                    </a>
+                    <p class="footer-tagline">Building Digital Success</p>
+                    <p class="footer-description">Premium web design and development agency specializing in hospitality and corporate solutions.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="Final Index.html">Home</a></li>
+                        <li><a href="final about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3 class="footer-title">Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="services.html#hotel">Hotel Websites</a></li>
+                        <li><a href="services.html#restaurant">Restaurant Websites</a></li>
+                        <li><a href="services.html#corporate">Corporate Websites</a></li>
+                        <li><a href="services.html#seo">SEO Optimization</a></li>
+                        <li><a href="services.html#maintenance">Maintenance</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+91 6392948032</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>Contact@gridnest.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Osho Nagar, Kanaushi,<br>Manak Nagar, Lucknow 226023</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2026 Gridnest Web Solutions. All rights reserved.</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/animation.js"></script>
+
+    <!-- Contact Form Validation & Submission -->
+    <script>
+    (function() {
+        'use strict';
+
+        const API_BASE = window.location.origin + '/api';
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        const formSuccess = document.getElementById('formSuccess');
+        const sendAnother = document.getElementById('sendAnother');
+        const charCount = document.getElementById('charCount');
+        const messageField = document.getElementById('message');
+        const templateField = document.getElementById('templateSource');
+
+        // Read template from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const template = urlParams.get('template');
+        if (template) {
+            templateField.value = template;
+            // Auto-select "template" service and prefill message
+            const serviceSelect = document.getElementById('service');
+            if (serviceSelect) serviceSelect.value = 'template';
+            if (!messageField.value.trim()) {
+                messageField.value = `I'm interested in the "${template}" template. Please provide more details about customization and pricing.`;
+                charCount.textContent = messageField.value.length;
+            }
+        }
+
+        // Character counter
+        messageField.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            if (count > 1000) {
+                charCount.style.color = '#e74c3c';
+            } else {
+                charCount.style.color = '';
+            }
+        });
+
+        // Validation helpers
+        function showError(id, message) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = message;
+                el.parentElement.classList.add('error');
+            }
+        }
+
+        function clearError(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = '';
+                el.parentElement.classList.remove('error');
+            }
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function validatePhone(phone) {
+            if (!phone) return true;
+            return /^[0-9]{10}$/.test(phone);
+        }
+
+        // Real-time validation
+        document.getElementById('fullName').addEventListener('blur', function() {
+            if (!this.value.trim()) {
+                showError('nameError', 'Please enter your full name');
+            } else if (this.value.trim().length < 2) {
+                showError('nameError', 'Name must be at least 2 characters');
+            } else {
+                clearError('nameError');
+            }
+        });
+
+        document.getElementById('email').addEventListener('blur', function() {
+            if (!this.value.trim()) {
+                showError('emailError', 'Please enter your email address');
+            } else if (!validateEmail(this.value.trim())) {
+                showError('emailError', 'Please enter a valid email address');
+            } else {
+                clearError('emailError');
+            }
+        });
+
+        document.getElementById('phone').addEventListener('blur', function() {
+            if (this.value.trim() && !validatePhone(this.value.trim())) {
+                showError('phoneError', 'Please enter a valid 10-digit phone number');
+            } else {
+                clearError('phoneError');
+            }
+        });
+
+        document.getElementById('service').addEventListener('change', function() {
+            if (!this.value) {
+                showError('serviceError', 'Please select a service');
+            } else {
+                clearError('serviceError');
+            }
+        });
+
+        messageField.addEventListener('blur', function() {
+            if (!this.value.trim()) {
+                showError('messageError', 'Please describe your project');
+            } else if (this.value.trim().length < 10) {
+                showError('messageError', 'Please provide at least 10 characters');
+            } else if (this.value.length > 1000) {
+                showError('messageError', 'Message cannot exceed 1000 characters');
+            } else {
+                clearError('messageError');
+            }
+        });
+
+        // Clear errors on input
+        ['fullName', 'email', 'phone', 'service', 'message'].forEach(function(id) {
+            document.getElementById(id).addEventListener('input', function() {
+                clearError(id === 'fullName' ? 'nameError' : id + 'Error');
+            });
+        });
+
+        // Form submission - sends data to backend API
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let isValid = true;
+
+            // Validate name
+            const name = document.getElementById('fullName').value.trim();
+            if (!name) {
+                showError('nameError', 'Please enter your full name');
+                isValid = false;
+            } else if (name.length < 2) {
+                showError('nameError', 'Name must be at least 2 characters');
+                isValid = false;
+            }
+
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            if (!email) {
+                showError('emailError', 'Please enter your email address');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError('emailError', 'Please enter a valid email address');
+                isValid = false;
+            }
+
+            // Validate phone
+            const phone = document.getElementById('phone').value.trim();
+            if (phone && !validatePhone(phone)) {
+                showError('phoneError', 'Please enter a valid 10-digit phone number');
+                isValid = false;
+            }
+
+            // Validate service
+            const service = document.getElementById('service').value;
+            if (!service) {
+                showError('serviceError', 'Please select a service');
+                isValid = false;
+            }
+
+            // Validate message
+            const message = messageField.value.trim();
+            if (!message) {
+                showError('messageError', 'Please describe your project');
+                isValid = false;
+            } else if (message.length < 10) {
+                showError('messageError', 'Please provide at least 10 characters');
+                isValid = false;
+            } else if (message.length > 1000) {
+                showError('messageError', 'Message cannot exceed 1000 characters');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                const firstError = form.querySelector('.error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            // Show loading state
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline-flex';
+            submitBtn.disabled = true;
+
+            // Collect form data (including hidden honeypot field)
+            var formData = {
+                fullName: name,
+                email: email,
+                phone: phone || '',
+                company: document.getElementById('company').value.trim() || '',
+                service: service,
+                message: message,
+                templateSource: templateField ? templateField.value : '',
+                honeypot: form.querySelector('[name="honeypot"]') ? form.querySelector('[name="honeypot"]').value : ''
+            };
+
+            // Send to backend API
+            fetch(API_BASE + '/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(function(response) {
+                return response.json().then(function(data) {
+                    return { status: response.status, data: data };
+                });
+            })
+            .then(function(result) {
+                if (result.data.success) {
+                    form.style.display = 'none';
+                    formSuccess.style.display = 'flex';
+                    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    var errorMsg = result.data.message || 'Something went wrong. Please try again.';
+                    if (result.data.errors && result.data.errors.length > 0) {
+                        errorMsg = result.data.errors.map(function(err) { return err.message; }).join('\n');
+                    }
+                    alert(errorMsg);
+                    btnText.style.display = 'inline-flex';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(function(error) {
+                console.error('Form submission error:', error);
+                alert('Network error. Please check your connection and try again.');
+                btnText.style.display = 'inline-flex';
+                btnLoading.style.display = 'none';
+                submitBtn.disabled = false;
+            });
+        });
+
+        // Send another message
+        sendAnother.addEventListener('click', function() {
+            form.reset();
+            form.style.display = 'block';
+            formSuccess.style.display = 'none';
+            btnText.style.display = 'inline-flex';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
+            charCount.textContent = '0';
+            ['nameError', 'emailError', 'phoneError', 'serviceError', 'messageError'].forEach(clearError);
+        });
+    })();
+    </script>
+</body>
+</html>

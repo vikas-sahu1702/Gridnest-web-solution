@@ -44,7 +44,7 @@ contentTypes.forEach((type) => {
 });
 
 // Image upload route
-const uploadDir = path.join(__dirname, '..', '..', 'templates', 'uploads');
+const uploadDir = path.join(__dirname, '..', '..', 'uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }

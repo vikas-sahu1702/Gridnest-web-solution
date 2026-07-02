@@ -2558,17 +2558,21 @@ p {
 
 /* Template Cards - templates.html */
 .template-image-side {
-    height: 100%;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: var(--space-lg);
 }
 .template-image-wrapper {
     width: 100%;
-    height: 100%;
     position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
 }
 .template-image-side .template-image {
     width: 100%;
-    height: 100%;
+    height: 400px;
     object-fit: cover;
     display: block;
     transition: transform var(--transition-slow);
@@ -2975,7 +2979,7 @@ p {
     /* Template Cards - templates.html */
     .template-card-large { grid-template-columns: 1fr; border-radius: var(--radius-lg); }
     .template-card-large:nth-child(even) { direction: ltr; }
-    .template-image-side { height: auto; min-height: auto; }
+    .template-image-side { padding: var(--space-md); }
     .template-image-side .template-image { height: 220px; }
     .template-content-side { padding: var(--space-lg); }
     .template-number { font-size: 2.5rem; margin-bottom: 0.25rem; }
@@ -3095,7 +3099,6 @@ p {
     .hero-title { font-size: 1.5rem; }
     .page-hero-title, .page-title { font-size: 1.375rem; }
     .template-number { font-size: 2rem; }
-    .template-image-side { height: auto; }
     .template-image-side .template-image { height: 180px; }
     .nav-menu { width: 85%; padding: 4.5rem var(--space-md) var(--space-md); }
 }

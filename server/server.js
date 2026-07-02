@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
-const fs = require('fs');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
@@ -52,9 +51,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Serve template uploads
 app.use('/uploads', express.static(path.join(__dirname, '..', 'templates', 'uploads')));
 
-// Serve template dist files (assets first so they're found)
-const templateDist = path.join(__dirname, '..', 'templates', 'luxury-hotel', 'dist');
-app.use(express.static(templateDist));
+
 
 // Serve main Gridnest site files
 app.use(express.static(path.join(__dirname, '..'), {
@@ -119,10 +116,6 @@ app.use('/api', (req, res) => {
 
 // Serve frontend for all non-API routes
 app.get('*', (req, res) => {
-  const templatePath = path.join(__dirname, '..', 'templates', 'luxury-hotel', 'dist', 'index.html');
-  if (fs.existsSync(templatePath)) {
-    return res.sendFile(templatePath);
-  }
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 

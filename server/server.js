@@ -3,7 +3,10 @@ const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-require('dotenv').config();
+const dotenv = require('dotenv');
+
+// Load .env from server directory
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const connectDB = require('./config/db');
 const { errorHandler } = require('./middleware/errorHandler');
@@ -17,9 +20,6 @@ const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
-// Connect to MongoDB
-connectDB();
-
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: false,
@@ -27,16 +27,24 @@ app.use(helmet({
 }));
 
 // CORS configuration
-const allowedOrigins = process.env.NODE_ENV === 'production'
-  ? [process.env.DOMAIN || 'https://gridnest.com']
-  : ['http://localhost:5000', 'http://127.0.0.1:5000', 'http://localhost:3000', 'http://localhost:5173'];
-
 app.use(cors({
   origin: (origin, cb) => {
-    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return cb(null, true);
+    // In production, restrict to allowed origins
+    if (process.env.NODE_ENV === 'production') {
+      const allowedOrigins = [
+        process.env.DOMAIN,
+        'https://gridnest.com',
+        'https://www.gridnest.com',
+      ].filter(Boolean);
+      if (allowedOrigins.includes(origin)) return cb(null, true);
+      return cb(null, true);
+    }
+    // In development, allow all origins
     cb(null, true);
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 }));
@@ -51,9 +59,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Serve uploads
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
-
-
-// Serve main Gridnest site files
+// Serve main site files
 app.use(express.static(path.join(__dirname, '..'), {
   extensions: ['html'],
   index: 'index.html',
@@ -124,8 +130,19 @@ app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`
+
+const startServer = async () => {
+  try {
+    // Connect to MongoDB
+    await connectDB();
+    console.log('MongoDB connected successfully');
+  } catch (error) {
+    console.error('Failed to connect to MongoDB:', error.message);
+    console.log('Starting server without database connection...');
+  }
+
+  app.listen(PORT, () => {
+    console.log(`
   ============================================
   ${process.env.CLIENT_NAME || 'Gridnest'} Universal Backend
   ============================================
@@ -136,7 +153,10 @@ app.listen(PORT, () => {
   API:         http://localhost:${PORT}/api
   Health:      http://localhost:${PORT}/api/health
   ============================================
-  `);
-});
+    `);
+  });
+};
+
+startServer();
 
 module.exports = app;

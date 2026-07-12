@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -9,6 +10,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: path.join(__dirname, '.env') });
 
 const connectDB = require('./config/db');
+const { checkDB } = require('./config/db');
 const { errorHandler } = require('./middleware/errorHandler');
 const { protect } = require('./middleware/auth');
 
@@ -65,18 +67,20 @@ app.use(express.static(path.join(__dirname, '..'), {
   index: 'index.html',
 }));
 
-// API routes
-app.use('/api/auth', authRoutes);
-app.use('/api/contact', contactRoutes);
-app.use('/api/newsletter', newsletterRoutes);
-app.use('/api/content', protect, contentRoutes);
+// API routes (with DB connection check)
+app.use('/api/auth', checkDB, authRoutes);
+app.use('/api/contact', checkDB, contactRoutes);
+app.use('/api/newsletter', checkDB, newsletterRoutes);
+app.use('/api/content', checkDB, protect, contentRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
+  const { getDBConnectionState } = require('./config/db');
   res.status(200).json({
     success: true,
     message: 'Gridnest Universal API is running',
     environment: process.env.NODE_ENV,
+    database: getDBConnectionState() ? 'connected' : 'disconnected',
     timestamp: new Date().toISOString(),
   });
 });
@@ -133,12 +137,11 @@ const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
   try {
-    // Connect to MongoDB
     await connectDB();
     console.log('MongoDB connected successfully');
   } catch (error) {
-    console.error('Failed to connect to MongoDB:', error.message);
-    console.log('Starting server without database connection...');
+    console.error('Failed to connect to MongoDB after all retries:', error.message);
+    console.error('Starting server without database - API routes will return 503 until DB connects.');
   }
 
   app.listen(PORT, () => {
@@ -158,5 +161,14 @@ const startServer = async () => {
 };
 
 startServer();
+
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err.message);
+});
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received. Shutting down gracefully...');
+  mongoose.connection.close(false).then(() => process.exit(0));
+});
 
 module.exports = app;

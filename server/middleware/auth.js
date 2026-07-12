@@ -24,7 +24,7 @@ const protect = async (req, res, next) => {
       return res.status(401).json({ success: false, message: 'Password recently changed. Please login again.' });
     }
     const now = Date.now();
-    if (decoded.lastActivity && (now - decoded.lastActivity) > SESSION_TIMEOUT) {
+    if (admin.lastActivity && (now - admin.lastActivity.getTime()) > SESSION_TIMEOUT) {
       return res.status(401).json({ success: false, message: 'Session expired due to inactivity.' });
     }
     await Admin.findByIdAndUpdate(decoded.id, { lastActivity: now });

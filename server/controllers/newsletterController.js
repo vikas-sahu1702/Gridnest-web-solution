@@ -23,7 +23,7 @@ const subscribe = async (req, res, next) => {
       email, honeypot, ipAddress: req.ip || req.connection.remoteAddress,
     });
 
-    sendWelcomeEmail(email).catch(err => console.error('Welcome email failed:', err.message));
+    sendWelcomeEmail(email, '').catch(err => console.error('Welcome email failed:', err.message));
     sendSubscriptionNotification(email).catch(err => console.error('Admin notification failed:', err.message));
 
     res.status(201).json({

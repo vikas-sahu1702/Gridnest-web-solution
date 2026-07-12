@@ -11,6 +11,7 @@
   "keywords": ["gridnest", "web-solutions", "hotel"],
   "author": "Gridnest Web Solutions",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",

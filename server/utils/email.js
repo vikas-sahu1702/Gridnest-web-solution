@@ -74,7 +74,17 @@ const sendSubscriptionNotification = async (email) => {
   });
 };
 
+const sendEmail = async ({ to, subject, html }) => {
+  return transporter.sendMail({
+    from: `"${process.env.CLIENT_NAME || 'Gridnest'}" <${process.env.SMTP_USER}>`,
+    to,
+    subject,
+    html,
+  });
+};
+
 module.exports = {
+  sendEmail,
   sendContactEmail,
   sendBookingEmail,
   sendWelcomeEmail,

@@ -22,14 +22,23 @@ const sendContactEmail = async ({ fullName, email, phone, company, service, mess
     </table>
     <h3>Message:</h3>
     <p style="background:#f5f5f5;padding:15px;border-radius:5px">${message}</p>
+    <hr/>
+    <p style="color:#666;font-size:12px">Reply to: ${email}</p>
   `;
 
-  return resend.emails.send({
+  const { data, error } = await resend.emails.send({
     from: FROM_EMAIL,
     to: [TO_EMAIL],
     subject: `${service ? `[${service}] ` : ''}New inquiry from ${fullName}`,
     html,
+    replyTo: email,
   });
+
+  if (error) {
+    console.error('Resend contact email error:', error.message);
+    throw new Error(error.message);
+  }
+  return data;
 };
 
 const sendBookingEmail = async ({ guestName, email, phone, roomName, checkIn, checkOut, adults, children, specialRequests }) => {
@@ -47,12 +56,19 @@ const sendBookingEmail = async ({ guestName, email, phone, roomName, checkIn, ch
     </table>
   `;
 
-  return resend.emails.send({
+  const { data, error } = await resend.emails.send({
     from: FROM_EMAIL,
     to: [TO_EMAIL],
     subject: `New Booking - ${guestName} - ${roomName || 'Website'}`,
     html,
+    replyTo: email,
   });
+
+  if (error) {
+    console.error('Resend booking email error:', error.message);
+    throw new Error(error.message);
+  }
+  return data;
 };
 
 const sendWelcomeEmail = async (email, name) => {

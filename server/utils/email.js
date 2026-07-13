@@ -1,23 +1,9 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT) || 587,
-  secure: false,
-  requireTLS: true,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-  connectionTimeout: 30000,
-  greetingTimeout: 30000,
-  socketTimeout: 30000,
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Verify SMTP connection on startup
-transporter.verify()
-  .then(() => console.log('SMTP connection verified successfully'))
-  .catch((err) => console.error('SMTP connection failed:', err.message, '- Emails will not be sent until this is fixed'));
+const FROM_EMAIL = process.env.EMAIL_FROM || 'Gridnest <onboarding@resend.dev>';
+const TO_EMAIL = process.env.EMAIL_TO || 'vishalsahu6392@gmail.com';
 
 const sendContactEmail = async ({ fullName, email, phone, company, service, message, templateSource }) => {
   const html = `
@@ -34,9 +20,9 @@ const sendContactEmail = async ({ fullName, email, phone, company, service, mess
     <p style="background:#f5f5f5;padding:15px;border-radius:5px">${message}</p>
   `;
 
-  return transporter.sendMail({
-    from: `"${process.env.CLIENT_NAME || 'Gridnest'}" <${process.env.SMTP_USER}>`,
-    to: process.env.EMAIL_TO || process.env.SMTP_USER,
+  return resend.emails.send({
+    from: FROM_EMAIL,
+    to: [TO_EMAIL],
     subject: `${service ? `[${service}] ` : ''}New inquiry from ${fullName}`,
     html,
   });
@@ -57,36 +43,36 @@ const sendBookingEmail = async ({ guestName, email, phone, roomName, checkIn, ch
     </table>
   `;
 
-  return transporter.sendMail({
-    from: `"${process.env.CLIENT_NAME || 'Gridnest'}" <${process.env.SMTP_USER}>`,
-    to: process.env.EMAIL_TO || process.env.SMTP_USER,
+  return resend.emails.send({
+    from: FROM_EMAIL,
+    to: [TO_EMAIL],
     subject: `New Booking - ${guestName} - ${roomName || 'Website'}`,
     html,
   });
 };
 
 const sendWelcomeEmail = async (email, name) => {
-  return transporter.sendMail({
-    from: `"${process.env.CLIENT_NAME || 'Gridnest'}" <${process.env.SMTP_USER}>`,
-    to: email,
+  return resend.emails.send({
+    from: FROM_EMAIL,
+    to: [email],
     subject: `Welcome to ${process.env.CLIENT_NAME || 'Gridnest'}!`,
     html: `<h2>Welcome, ${name}!</h2><p>Thank you for subscribing. We'll keep you updated.</p>`,
   });
 };
 
 const sendSubscriptionNotification = async (email) => {
-  return transporter.sendMail({
-    from: `"${process.env.CLIENT_NAME || 'Gridnest'}" <${process.env.SMTP_USER}>`,
-    to: process.env.EMAIL_TO || process.env.SMTP_USER,
+  return resend.emails.send({
+    from: FROM_EMAIL,
+    to: [TO_EMAIL],
     subject: 'New Newsletter Subscriber',
     html: `<p>New subscriber: <strong>${email}</strong></p>`,
   });
 };
 
 const sendEmail = async ({ to, subject, html }) => {
-  return transporter.sendMail({
-    from: `"${process.env.CLIENT_NAME || 'Gridnest'}" <${process.env.SMTP_USER}>`,
-    to,
+  return resend.emails.send({
+    from: FROM_EMAIL,
+    to: [to],
     subject,
     html,
   });

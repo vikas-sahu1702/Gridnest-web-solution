@@ -40,7 +40,7 @@ const submitContact = async (req, res, next) => {
       service,
       message,
       templateSource,
-    }).catch((err) => console.error('Email send failed:', err.message));
+    }).catch((err) => console.error('Contact email send failed:', err.message, err.code || ''));
 
     res.status(201).json({
       success: true,

@@ -13,6 +13,11 @@ const transporter = nodemailer.createTransport({
   socketTimeout: 30000,
 });
 
+// Verify SMTP connection on startup
+transporter.verify()
+  .then(() => console.log('SMTP connection verified successfully'))
+  .catch((err) => console.error('SMTP connection failed:', err.message, '- Emails will not be sent until this is fixed'));
+
 const sendContactEmail = async ({ fullName, email, phone, company, service, message, templateSource }) => {
   const html = `
     <h2>New Contact Inquiry</h2>

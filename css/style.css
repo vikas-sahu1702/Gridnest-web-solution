@@ -518,6 +518,50 @@ p {
 .about-actions {
     margin-top: var(--space-xl);
 }
+.about-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--primary);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: var(--space-lg);
+    letter-spacing: 0.3px;
+}
+.highlight-box {
+    margin-top: var(--space-xl);
+    padding: 1.25rem 1.5rem;
+    background: var(--light);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--primary);
+}
+.highlight-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: var(--space-md);
+}
+.highlight-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.highlight-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--gray);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+.highlight-list li::before {
+    content: "\2713";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 700;
+}
 /* Services Preview */
 .services-preview {
     padding: var(--space-xxl) 0;

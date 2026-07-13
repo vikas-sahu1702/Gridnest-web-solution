@@ -6,7 +6,6 @@ const {
   getContact,
   updateContactStatus,
   deleteContact,
-  deleteAllContacts,
   getContactStats,
 } = require('../controllers/contactController');
 const { contactValidation } = require('../middleware/validate');
@@ -18,7 +17,6 @@ router.post('/', contactLimiter, contactValidation, submitContact);
 
 // Admin routes (protected)
 router.get('/stats', protect, getContactStats);
-router.delete('/bulk/all', protect, deleteAllContacts);
 router.get('/', protect, getContacts);
 router.get('/:id', protect, getContact);
 router.put('/:id', protect, updateContactStatus);

@@ -218,28 +218,11 @@ const getContactStats = async (req, res, next) => {
   }
 };
 
-// @desc    Delete all contacts (bulk delete)
-// @route   DELETE /api/contact/bulk/all
-// @access  Private (admin)
-const deleteAllContacts = async (req, res, next) => {
-  try {
-    const result = await Contact.deleteMany({});
-    res.status(200).json({
-      success: true,
-      message: `Deleted ${result.deletedCount} contact inquiries successfully`,
-      data: { deletedCount: result.deletedCount },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
 module.exports = {
   submitContact,
   getContacts,
   getContact,
   updateContactStatus,
   deleteContact,
-  deleteAllContacts,
   getContactStats,
 };

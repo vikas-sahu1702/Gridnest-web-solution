@@ -1758,7 +1758,7 @@ p {
 .pricing-card {
     background-color: var(--white);
     border-radius: var(--radius-lg);
-    border: 2px solid var(--gray-light);
+    border: 2px solid var(--primary);
     overflow: hidden;
     box-shadow: var(--shadow-md);
     transition: all var(--transition-normal);
@@ -1769,11 +1769,6 @@ p {
 .pricing-card:hover {
     transform: translateY(-10px);
     box-shadow: var(--shadow-xl);
-}
-
-.pricing-card.featured {
-    border: 2px solid var(--primary);
-    position: relative;
 }
 
 .pricing-card.featured::before {

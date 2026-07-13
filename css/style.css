@@ -1534,6 +1534,61 @@ p {
     color: var(--white);
 }
 
+/* Mission Grid */
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mission-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    background-color: var(--white);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.mission-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.mission-item i {
+    color: var(--primary);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.mission-item span {
+    font-weight: 500;
+    color: var(--dark);
+}
+
+/* About Services List */
+.about-services-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin: var(--space-lg) 0;
+}
+
+.about-services-list span {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(6, 182, 212, 0.08));
+    color: var(--primary);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
 .about-team {
     padding: var(--space-xxl) 0;
 }
@@ -1989,6 +2044,10 @@ p {
     }
     
     .values-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .mission-grid {
         grid-template-columns: 1fr;
     }
     
@@ -2962,6 +3021,7 @@ p {
     .pricing-grid,
     .team-grid,
     .values-grid,
+    .mission-grid,
     .overview-grid,
     .about-stats .container { grid-template-columns: 1fr; }
     .portfolio-items { grid-template-columns: 1fr; }

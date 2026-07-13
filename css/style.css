@@ -641,6 +641,11 @@ p {
     margin-bottom: var(--space-sm);
     line-height: 1;
 }
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+    line-height: 1;
+}
 .feature-title {
     margin-bottom: var(--space-sm);
 }

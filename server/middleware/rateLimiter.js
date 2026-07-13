@@ -9,6 +9,7 @@ const apiLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false },
 });
 
 const contactLimiter = rateLimit({
@@ -20,6 +21,7 @@ const contactLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false },
 });
 
 const newsletterLimiter = rateLimit({
@@ -31,6 +33,7 @@ const newsletterLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false },
 });
 
 module.exports = { apiLimiter, contactLimiter, newsletterLimiter };

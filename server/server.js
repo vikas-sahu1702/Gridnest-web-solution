@@ -22,6 +22,9 @@ const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
+// Trust proxy (required for Railway/Heroku/etc. behind reverse proxy)
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: false,
@@ -139,6 +142,33 @@ const startServer = async () => {
   try {
     await connectDB();
     console.log('MongoDB connected successfully');
+
+    // Auto-seed admin account on startup
+    try {
+      const Admin = require('./models/Admin');
+      const existingAdmin = await Admin.findOne({ email: process.env.ADMIN_EMAIL }).select('+password');
+      if (!existingAdmin) {
+        await Admin.create({
+          name: process.env.ADMIN_NAME || 'Super Admin',
+          email: process.env.ADMIN_EMAIL,
+          password: process.env.ADMIN_PASSWORD,
+          role: 'superadmin',
+        });
+        console.log('Admin account seeded successfully.');
+      } else {
+        // Always update password to match .env on startup
+        const passwordMatch = await existingAdmin.comparePassword(process.env.ADMIN_PASSWORD);
+        if (!passwordMatch) {
+          existingAdmin.password = process.env.ADMIN_PASSWORD;
+          await existingAdmin.save({ validateBeforeSave: false });
+          console.log('Admin password updated to match .env.');
+        } else {
+          console.log('Admin account already exists and password matches.');
+        }
+      }
+    } catch (seedError) {
+      console.error('Admin seeding error:', seedError.message);
+    }
   } catch (error) {
     console.error('Failed to connect to MongoDB after all retries:', error.message);
     console.error('Starting server without database - API routes will return 503 until DB connects.');

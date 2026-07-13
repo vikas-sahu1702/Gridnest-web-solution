@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const Admin = require('../models/Admin');
 const { protect } = require('../middleware/auth');
-const sendEmail = require('../utils/email');
+const { sendEmail } = require('../utils/email');
 const router = express.Router();
 
 const signToken = (admin, rememberMe = false) => {

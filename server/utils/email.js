@@ -6,7 +6,7 @@ if (!process.env.RESEND_API_KEY) {
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
 
-const FROM_EMAIL = process.env.EMAIL_FROM || 'Gridnest <onboarding@resend.dev>';
+const FROM_EMAIL = 'Gridnest <onboarding@resend.dev>';
 const TO_EMAIL = process.env.EMAIL_TO || 'vishalsahu6392@gmail.com';
 
 const sendContactEmail = async ({ fullName, email, phone, company, country, state, service, message, templateSource }) => {

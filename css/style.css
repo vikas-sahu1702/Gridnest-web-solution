@@ -1801,6 +1801,17 @@ p {
     margin-bottom: var(--space-md);
 }
 
+.pricing-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: var(--white);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+}
+
 .price {
     display: flex;
     align-items: flex-start;

@@ -1758,6 +1758,7 @@ p {
 .pricing-card {
     background-color: var(--white);
     border-radius: var(--radius-lg);
+    border: 2px solid var(--gray-light);
     overflow: hidden;
     box-shadow: var(--shadow-md);
     transition: all var(--transition-normal);
@@ -1796,6 +1797,7 @@ p {
 
 .pricing-header {
     padding: var(--space-xl);
+    padding-top: 3.5rem;
     text-align: center;
     background-color: var(--light);
 }

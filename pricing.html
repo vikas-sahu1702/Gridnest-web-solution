@@ -12,40 +12,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
     <style>
-        /* Pricing Toggle */
-        .pricing-toggle-wrapper {
-            text-align: center;
-            margin-bottom: var(--space-xxl);
-        }
-        .pricing-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-md);
-            background-color: var(--white);
-            padding: 0.5rem;
-            border-radius: var(--radius-full);
-            box-shadow: var(--shadow-md);
-        }
-        .pricing-toggle-btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            background: transparent;
-            font-family: var(--font-body);
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--gray);
-            cursor: pointer;
-            border-radius: var(--radius-full);
-            transition: all var(--transition-normal);
-        }
-        .pricing-toggle-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: var(--white);
-        }
-        .pricing-toggle-btn:hover:not(.active) {
-            color: var(--dark);
-        }
-
         /* Pricing Section Spacing */
         .pricing-plans {
             padding: var(--space-xxl) 0;
@@ -53,11 +19,11 @@
 
         /* Featured Card Enhancement */
         .pricing-card.featured {
-            transform: scale(1.05);
+            transform: scale(1.03);
             z-index: 1;
         }
         .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
+            transform: scale(1.03) translateY(-10px);
         }
 
         /* Pricing Card Check Icons */
@@ -218,13 +184,6 @@
             }
         }
         @media (max-width: 768px) {
-            .pricing-toggle {
-                flex-direction: column;
-                border-radius: var(--radius-lg);
-            }
-            .pricing-toggle-btn {
-                width: 100%;
-            }
             .comparison-table {
                 font-size: 0.875rem;
             }
@@ -323,7 +282,6 @@
                             <span class="amount">14,000</span>
                             <span class="period">/one-time</span>
                         </div>
-                        <span style="display: inline-block; background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--white); padding: 0.3rem 0.8rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600; margin-top: var(--space-sm);">Most Popular</span>
                     </div>
                     <div class="pricing-features">
                         <ul>
@@ -340,7 +298,9 @@
                             <li><i class="fas fa-check"></i> Free Consultation & Project Planning Included</li>
                         </ul>
                     </div>
-                    <a href="contact.html" class="btn btn-primary btn-block">Get Started</a>
+                    <div class="pricing-card-footer">
+                        <a href="contact.html" class="btn btn-outline btn-block">Get Started</a>
+                    </div>
                 </div>
 
                 <!-- Custom Premium Website (Featured) -->
@@ -368,7 +328,9 @@
                             <li><i class="fas fa-check"></i> Free Consultation & Project Planning Included</li>
                         </ul>
                     </div>
-                    <a href="contact.html" class="btn btn-outline btn-block">Contact Us</a>
+                    <div class="pricing-card-footer">
+                        <a href="contact.html" class="btn btn-primary btn-block">Contact Us</a>
+                    </div>
                 </div>
             </div>
 

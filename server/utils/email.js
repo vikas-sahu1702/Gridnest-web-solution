@@ -9,7 +9,7 @@ const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
 const FROM_EMAIL = process.env.EMAIL_FROM || 'Gridnest <onboarding@resend.dev>';
 const TO_EMAIL = process.env.EMAIL_TO || 'vishalsahu6392@gmail.com';
 
-const sendContactEmail = async ({ fullName, email, phone, company, service, message, templateSource }) => {
+const sendContactEmail = async ({ fullName, email, phone, company, country, state, service, message, templateSource }) => {
   const html = `
     <h2>New Contact Inquiry</h2>
     <table style="border-collapse:collapse;width:100%">
@@ -17,6 +17,8 @@ const sendContactEmail = async ({ fullName, email, phone, company, service, mess
       <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">Email</td><td style="padding:8px;border:1px solid #ddd">${email}</td></tr>
       ${phone ? `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">Phone</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr>` : ''}
       ${company ? `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">Company</td><td style="padding:8px;border:1px solid #ddd">${company}</td></tr>` : ''}
+      ${country ? `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">Country</td><td style="padding:8px;border:1px solid #ddd">${country}</td></tr>` : ''}
+      ${state ? `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">State</td><td style="padding:8px;border:1px solid #ddd">${state}</td></tr>` : ''}
       <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">Service</td><td style="padding:8px;border:1px solid #ddd">${service}</td></tr>
       ${templateSource ? `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">Template</td><td style="padding:8px;border:1px solid #ddd">${templateSource}</td></tr>` : ''}
     </table>

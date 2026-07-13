@@ -38,6 +38,16 @@ const contactValidation = [
     .trim()
     .isLength({ max: 200 }).withMessage('Company name cannot exceed 200 characters'),
 
+  body('country')
+    .trim()
+    .notEmpty().withMessage('Country is required')
+    .isLength({ max: 100 }).withMessage('Country cannot exceed 100 characters'),
+
+  body('state')
+    .trim()
+    .notEmpty().withMessage('State is required')
+    .isLength({ max: 100 }).withMessage('State cannot exceed 100 characters'),
+
   body('service')
     .trim()
     .notEmpty().withMessage('Please select a service')
@@ -47,7 +57,7 @@ const contactValidation = [
   body('message')
     .trim()
     .notEmpty().withMessage('Project details are required')
-    .isLength({ min: 10, max: 1000 }).withMessage('Message must be between 10 and 1000 characters'),
+    .isLength({ min: 1, max: 1000 }).withMessage('Message must be between 1 and 1000 characters'),
 
   body('honeypot')
     .optional()

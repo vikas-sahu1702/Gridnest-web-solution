@@ -34,7 +34,7 @@
     <div class="mouse-glow"></div>
 
     <!-- Floating WhatsApp -->
-    <a href="https://wa.me/916392948032" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <a href="https://wa.me/919667195689" class="whatsapp-float" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -138,7 +138,7 @@ required>
     type="tel"
     id="phone"
     name="phone"
-    placeholder="6392948032"
+    placeholder="+91 XXXXXXXXXX"
     maxlength="10"
     minlength="10"
     inputmode="numeric"
@@ -153,6 +153,28 @@ required>
                                     <i class="fas fa-building input-icon"></i>
                                     <input type="text" id="company" name="company" placeholder="Your Company Name">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="country">Country <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-globe input-icon"></i>
+                                    <select id="country" name="country" required>
+                                        <option value="">Select a country</option>
+                                    </select>
+                                </div>
+                                <span class="error-message" id="countryError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-map-marker-alt input-icon"></i>
+                                    <select id="state" name="state" required>
+                                        <option value="">Select a state</option>
+                                    </select>
+                                </div>
+                                <span class="error-message" id="stateError"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -220,7 +242,7 @@ required>
                             </div>
                             <div class="info-content">
                                 <h3>Phone</h3>
-                                <a href="tel:+916392948032">+91 6392948032</a>
+                                <a href="tel:+919667195689">+91 9667195689</a>
                             </div>
                         </div>
                         <div class="info-item">
@@ -250,7 +272,7 @@ required>
                             </div>
                             <div class="info-content">
                                 <h3>WhatsApp</h3>
-                                <a href="https://wa.me/916392948032" target="_blank" rel="noopener">+91 6392948032</a>
+                                <a href="https://wa.me/919667195689" target="_blank" rel="noopener">+91 9667195689</a>
                                 <p class="info-note">Quick response guaranteed</p>
                             </div>
                         </div>
@@ -337,7 +359,7 @@ required>
                     <ul class="footer-contact">
                         <li>
                             <i class="fas fa-phone"></i>
-                            <span>+91 6392948032</span>
+                            <span>+91 9667195689</span>
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
@@ -381,6 +403,52 @@ required>
         const charCount = document.getElementById('charCount');
         const messageField = document.getElementById('message');
         const templateField = document.getElementById('templateSource');
+        const countrySelect = document.getElementById('country');
+        const stateSelect = document.getElementById('state');
+
+        // Country-State Data
+        var countryStateData = {
+            "India": ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi","Jammu and Kashmir","Ladakh","Chandigarh","Puducherry","Andaman and Nicobar Islands","Dadra and Nagar Haveli and Daman and Diu","Lakshadweep"],
+            "United States": ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"],
+            "United Kingdom": ["England","Scotland","Wales","Northern Ireland"],
+            "Canada": ["Alberta","British Columbia","Manitoba","New Brunswick","Newfoundland and Labrador","Nova Scotia","Ontario","Prince Edward Island","Quebec","Saskatchewan","Northwest Territories","Nunavut","Yukon"],
+            "Australia": ["Australian Capital Territory","New South Wales","Northern Territory","Queensland","South Australia","Tasmania","Victoria","Western Australia"],
+            "United Arab Emirates": ["Abu Dhabi","Dubai","Sharjah","Ajman","Umm Al Quwain","Ras Al Khaimah","Fujairah"],
+            "Singapore": ["Central Region","East Region","North Region","North-East Region","West Region"],
+            "Germany": ["Baden-Württemberg","Bavaria","Berlin","Brandenburg","Bremen","Hamburg","Hesse","Lower Saxony","Mecklenburg-Vorpommern","North Rhine-Westphalia","Rhineland-Palatinate","Saarland","Saxony","Saxony-Anhalt","Schleswig-Holstein","Thuringia"],
+            "France": ["Auvergne-Rhône-Alpes","Bourgogne-Franche-Comté","Brittany","Centre-Val de Loire","Corsica","Grand Est","Hauts-de-France","Île-de-France","Normandy","Nouvelle-Aquitaine","Occitanie","Pays de la Loire","Provence-Alpes-Côte d'Azur"],
+            "Japan": ["Hokkaido","Tohoku","Kanto","Chubu","Kinki","Chugoku","Shikoku","Kyushu"],
+            "Other": ["Other"]
+        };
+
+        // Populate countries
+        var countries = Object.keys(countryStateData).sort(function(a, b) {
+            if (a === 'India') return -1;
+            if (b === 'India') return 1;
+            if (a === 'Other') return 1;
+            if (b === 'Other') return -1;
+            return a.localeCompare(b);
+        });
+        countries.forEach(function(c) {
+            var opt = document.createElement('option');
+            opt.value = c;
+            opt.textContent = c;
+            countrySelect.appendChild(opt);
+        });
+
+        // Populate states when country changes
+        countrySelect.addEventListener('change', function() {
+            stateSelect.innerHTML = '<option value="">Select a state</option>';
+            var selected = this.value;
+            if (selected && countryStateData[selected]) {
+                countryStateData[selected].forEach(function(s) {
+                    var opt = document.createElement('option');
+                    opt.value = s;
+                    opt.textContent = s;
+                    stateSelect.appendChild(opt);
+                });
+            }
+        });
 
         // Read template from URL parameter
         const urlParams = new URLSearchParams(window.location.search);
@@ -470,11 +538,25 @@ required>
             }
         });
 
+        countrySelect.addEventListener('change', function() {
+            if (!this.value) {
+                showError('countryError', 'Please select a country');
+            } else {
+                clearError('countryError');
+            }
+        });
+
+        stateSelect.addEventListener('change', function() {
+            if (!this.value) {
+                showError('stateError', 'Please select a state');
+            } else {
+                clearError('stateError');
+            }
+        });
+
         messageField.addEventListener('blur', function() {
             if (!this.value.trim()) {
                 showError('messageError', 'Please describe your project');
-            } else if (this.value.trim().length < 10) {
-                showError('messageError', 'Please provide at least 10 characters');
             } else if (this.value.length > 1000) {
                 showError('messageError', 'Message cannot exceed 1000 characters');
             } else {
@@ -483,10 +565,16 @@ required>
         });
 
         // Clear errors on input
-        ['fullName', 'email', 'phone', 'service', 'message'].forEach(function(id) {
-            document.getElementById(id).addEventListener('input', function() {
-                clearError(id === 'fullName' ? 'nameError' : id + 'Error');
-            });
+        ['fullName', 'email', 'phone', 'service', 'message', 'country', 'state'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', function() {
+                    clearError(id === 'fullName' ? 'nameError' : id + 'Error');
+                });
+                el.addEventListener('change', function() {
+                    clearError(id === 'fullName' ? 'nameError' : id + 'Error');
+                });
+            }
         });
 
         // Form submission - sends data to backend API
@@ -529,13 +617,24 @@ required>
                 isValid = false;
             }
 
+            // Validate country
+            const country = countrySelect.value;
+            if (!country) {
+                showError('countryError', 'Please select a country');
+                isValid = false;
+            }
+
+            // Validate state
+            const state = stateSelect.value;
+            if (!state) {
+                showError('stateError', 'Please select a state');
+                isValid = false;
+            }
+
             // Validate message
             const message = messageField.value.trim();
             if (!message) {
                 showError('messageError', 'Please describe your project');
-                isValid = false;
-            } else if (message.length < 10) {
-                showError('messageError', 'Please provide at least 10 characters');
                 isValid = false;
             } else if (message.length > 1000) {
                 showError('messageError', 'Message cannot exceed 1000 characters');
@@ -561,6 +660,8 @@ required>
                 email: email,
                 phone: phone || '',
                 company: document.getElementById('company').value.trim() || '',
+                country: country,
+                state: state,
                 service: service,
                 message: message,
                 templateSource: templateField ? templateField.value : '',
@@ -614,7 +715,8 @@ required>
             btnLoading.style.display = 'none';
             submitBtn.disabled = false;
             charCount.textContent = '0';
-            ['nameError', 'emailError', 'phoneError', 'serviceError', 'messageError'].forEach(clearError);
+            stateSelect.innerHTML = '<option value="">Select a state</option>';
+            ['nameError', 'emailError', 'phoneError', 'serviceError', 'messageError', 'countryError', 'stateError'].forEach(clearError);
         });
     })();
     </script>

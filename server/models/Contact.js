@@ -32,6 +32,18 @@ const contactSchema = new mongoose.Schema(
       trim: true,
       maxlength: [200, 'Company name cannot exceed 200 characters'],
     },
+    country: {
+      type: String,
+      required: [true, 'Country is required'],
+      trim: true,
+      maxlength: [100, 'Country cannot exceed 100 characters'],
+    },
+    state: {
+      type: String,
+      required: [true, 'State is required'],
+      trim: true,
+      maxlength: [100, 'State cannot exceed 100 characters'],
+    },
     service: {
       type: String,
       required: [true, 'Please select a service'],
@@ -51,7 +63,6 @@ const contactSchema = new mongoose.Schema(
     message: {
       type: String,
       required: [true, 'Project details are required'],
-      minlength: [10, 'Message must be at least 10 characters'],
       maxlength: [1000, 'Message cannot exceed 1000 characters'],
     },
     templateSource: {

@@ -6,7 +6,7 @@ const { sendContactEmail } = require('../utils/email');
 // @access  Public
 const submitContact = async (req, res, next) => {
   try {
-    const { fullName, email, phone, company, service, message, honeypot, templateSource } = req.body;
+    const { fullName, email, phone, company, country, state, service, message, honeypot, templateSource } = req.body;
 
     // Honeypot check (spam bot detection)
     if (honeypot && honeypot.length > 0) {
@@ -23,6 +23,8 @@ const submitContact = async (req, res, next) => {
       email,
       phone,
       company,
+      country,
+      state,
       service,
       message,
       templateSource,
@@ -37,6 +39,8 @@ const submitContact = async (req, res, next) => {
       email,
       phone,
       company,
+      country,
+      state,
       service,
       message,
       templateSource,

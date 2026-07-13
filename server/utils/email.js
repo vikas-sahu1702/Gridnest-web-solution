@@ -1,6 +1,10 @@
 const { Resend } = require('resend');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+if (!process.env.RESEND_API_KEY) {
+  console.error('RESEND_API_KEY is not set - emails will not be sent');
+}
+
+const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
 
 const FROM_EMAIL = process.env.EMAIL_FROM || 'Gridnest <onboarding@resend.dev>';
 const TO_EMAIL = process.env.EMAIL_TO || 'vishalsahu6392@gmail.com';

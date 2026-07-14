@@ -244,8 +244,13 @@ p {
 }
 .logo {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     text-decoration: none;
+}
+.logo img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
 }
 .logo-primary {
     font-family: var(--font-heading);
@@ -904,9 +909,14 @@ p {
 }
 .footer-logo {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     text-decoration: none;
     margin-bottom: var(--space-md);
+}
+.footer-logo img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
 }
 .footer-logo .logo-primary {
     color: var(--white);

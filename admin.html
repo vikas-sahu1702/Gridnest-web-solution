@@ -411,47 +411,19 @@
         .totals-box div { padding: 0.25rem 0; font-size: 0.875rem; }
         .totals-box .grand { font-size: 1.125rem; font-weight: 700; color: #0f172a; border-top: 2px solid #0f172a; padding-top: 0.5rem; }
         /* ==================== PROPOSAL & INVOICE PREVIEW ==================== */
-        .preview-container { background: #e2e8f0; padding: 1rem; border-radius: 0.5rem; }
-        .preview-page {
-            background: #fff; width: 210mm; min-height: 297mm; margin: 0 auto; padding: 20mm;
+        .preview-container { background: #e2e8f0; padding: 1rem; border-radius: 0.5rem; max-height: 80vh; overflow-y: auto; }
+        .proposal-page {
+            background: #fff; width: 100%; min-height: 297mm; margin: 0 auto 1rem; padding: 20mm;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15); position: relative; overflow: hidden;
             font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 10pt; line-height: 1.5; color: #1a1a1a;
-            page-break-after: always;
+            page-break-after: always; display: flex; flex-direction: column;
         }
-        .preview-page .watermark {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            opacity: 0.06; pointer-events: none; z-index: 0;
-        }
-        .preview-page .watermark img { width: 300px; height: auto; }
-        .preview-page > * { position: relative; z-index: 1; }
-        .preview-logo { max-height: 50px; width: auto; margin-bottom: 0.5rem; }
-        .preview-section { margin-bottom: 1rem; }
-        .preview-section h3 {
-            font-size: 11pt; font-weight: 700; color: #0f172a; margin-bottom: 0.375rem;
-            padding-bottom: 0.25rem; border-bottom: 2px solid #2563EB;
-        }
-        .preview-table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-size: 9pt; }
-        .preview-table th {
-            background: #f1f5f9; padding: 0.375rem 0.5rem; text-align: left;
-            font-weight: 600; border: 1px solid #d1d5db; font-size: 8pt; text-transform: uppercase;
-        }
-        .preview-table td { padding: 0.375rem 0.5rem; border: 1px solid #d1d5db; }
-        .preview-table .right { text-align: right; }
-        .preview-table .bold { font-weight: 700; }
-        .preview-table .total-row td { background: #f8fafc; font-weight: 700; border-top: 2px solid #0f172a; }
-        .preview-flex { display: flex; justify-content: space-between; gap: 1rem; }
-        .preview-flex > div { flex: 1; }
-        .preview-features li { font-size: 9pt; padding: 0.125rem 0; }
-        .preview-features li::marker { color: #2563EB; }
-        .preview-signature { margin-top: 2rem; text-align: right; }
-        .preview-signature .line { border-top: 1px solid #0f172a; width: 200px; margin-left: auto; margin-top: 2.5rem; padding-top: 0.25rem; }
-        .preview-footer { text-align: center; font-size: 8pt; color: #64748b; margin-top: 1rem; padding-top: 0.5rem; border-top: 1px solid #e2e8f0; }
+        .proposal-page:last-child { page-break-after: auto; }
         @media print {
             body * { visibility: hidden; }
             .preview-container, .preview-container * { visibility: visible; }
             .preview-container { background: none; padding: 0; position: absolute; top: 0; left: 0; width: 100%; }
-            .preview-page { box-shadow: none; margin: 0; width: 100%; min-height: auto; padding: 15mm; }
-            .preview-page .watermark { opacity: 0.06 !important; }
+            .proposal-page { box-shadow: none; margin: 0; width: 100%; min-height: auto; padding: 15mm; }
         }
         /* ==================== INVOICE SPECIFIC PREVIEW ==================== */
         .invoice-header-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #000; }
@@ -1744,27 +1716,204 @@
         function onPaymentTermsChange() { document.getElementById('pPaymentTermsCustomGroup').style.display = document.getElementById('pPaymentTerms').value === 'custom' ? 'block' : 'none'; }
         function onValidityChange() { document.getElementById('pValidityCustomGroup').style.display = document.getElementById('pValidity').value === 'custom' ? 'block' : 'none'; }
 
+        function generateProposalHTML(d) {
+            var logo = 'Image/New_Logo.jpeg';
+            var watermark = 'Image/Icon.jpg';
+            var company = d.company || 'Client Name';
+            var pNum = d.proposalNumber || 'GNWS-2026-001';
+            var pDate = d.proposalDate || new Date().toISOString().split('T')[0];
+            var planInfo = PLAN_FEATURES[d.plan] || PLAN_FEATURES.standard;
+            var items = d.items || [];
+            var extras = d.additionalCharges || [];
+            var calc = d.calc || { subtotal:0, gstPct:18, gstAmount:0, discount:0, grand:0 };
+            var payText = d.payText || '50% Advance, 50% on Delivery';
+            var validText = d.validText || '15 Days';
+            var notes = d.notes || '';
+
+            var pgHeader = '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding-bottom:6px;border-bottom:1px solid #e2e8f0;margin-bottom:12px;"><img src="'+logo+'" style="height:40px;width:auto;"><span style="font-size:13pt;font-weight:700;color:#0f172a;">GridNest Web Solutions</span></div>';
+            var pgFooter = '<div style="text-align:center;font-size:7.5pt;color:#64748b;margin-top:auto;padding-top:8px;border-top:1px solid #e2e8f0;">www.gridnestwebsolution.com | Contact@gridnest.com | Confidential Business Document</div>';
+
+            // Page 1: Cover
+            var coverPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:hidden;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +
+                '<div style="position:absolute;top:0;right:0;width:200px;height:200px;background:linear-gradient(135deg,#2563EB 0%,#06B6D4 100%);clip-path:polygon(100% 0,0 0,100% 100%);opacity:0.15;"></div>' +
+                '<div style="position:absolute;bottom:0;left:0;width:250px;height:250px;background:linear-gradient(135deg,#2563EB 0%,#06B6D4 100%);clip-path:polygon(0 100%,100% 100%,0 0);opacity:0.15;"></div>' +
+                '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
+                '<div style="position:relative;z-index:1;">' +
+                '<div style="text-align:center;margin-bottom:1.5rem;"><img src="'+logo+'" style="height:45px;width:auto;"></div>' +
+                '<div style="text-align:center;margin-top:60px;">' +
+                '<div style="display:inline-block;border:2px solid #0f172a;border-radius:12px;padding:30px 40px;text-align:left;background:rgba(255,255,255,0.7);">' +
+                '<h1 style="font-size:24pt;color:#2563EB;margin:0 0 4px 0;font-weight:800;">GridNest Web Solution</h1>' +
+                '<h2 style="font-size:20pt;color:#0f172a;margin:0 0 12px 0;font-weight:700;">Proposal</h2>' +
+                '<div style="width:100%;height:2px;background:#2563EB;margin:8px 0;"></div>' +
+                '<p style="font-size:10pt;color:#475569;margin:6px 0;">Prepared For: <strong>'+company+'</strong></p>' +
+                '<p style="font-size:10pt;color:#475569;margin:6px 0;">Proposal No.: <strong>'+pNum+'</strong></p>' +
+                '<p style="font-size:10pt;color:#475569;margin:6px 0;">Date: <strong>'+pDate+'</strong></p>' +
+                '<div style="width:100%;height:2px;background:#2563EB;margin:8px 0;"></div>' +
+                '</div></div>' +
+                '<div style="position:absolute;bottom:20mm;left:20mm;right:20mm;text-align:center;font-size:7.5pt;color:#64748b;">www.gridnestwebsolution.com | Contact@gridnest.com | Confidential Business Document</div>' +
+                '</div></div>';
+
+            // Page 2: About
+            var aboutPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:hidden;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +
+                '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
+                '<div style="position:relative;z-index:1;">' + pgHeader +
+                '<h2 style="font-size:16pt;color:#2563EB;font-weight:700;margin:16px 0 12px;">About GridNest Web Solutions</h2>' +
+                '<h3 style="font-size:11pt;color:#2563EB;margin:12px 0 6px;">Who We Are</h3>' +
+                '<p style="font-size:9pt;color:#333;line-height:1.6;">GridNest Web Solutions is a modern web development company focused on helping businesses build a powerful online presence. We believe that in today\'s business environment, every company deserves a professional, secure, and beautiful digital identity. We build websites that look great, run fast, and help you get more customers.</p>' +
+                '<h3 style="font-size:11pt;color:#2563EB;margin:14px 0 6px;">Why Businesses Choose GridNest</h3>' +
+                '<ul style="font-size:9pt;color:#333;line-height:1.7;padding-left:20px;list-style:none;">' +
+                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>Custom Website Design:</strong> Bespoke user interface designed entirely around your business goals, target audience, and unique brand voice.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>Mobile Responsive:</strong> Your website will layout and function flawlessly across desktops, tablets, and mobile smartphones naturally.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>SEO Optimized Layouts:</strong> Built from the ground up following clean modern search standards to give you a strong structural start on Google.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>Fast & Secure Infrastructure:</strong> Optimized light code execution models coupled with clean security best practices to protect your data.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>Reliable Ongoing Support:</strong> Friendly, direct technical support channels to update, scale, and maintain your site without any hassle.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>Affordable But Premium:</strong> Elite design standards balanced cleanly within competitive, fixed business pricing packages.</li>' +
+                '</ul>' +
+                '<h3 style="font-size:11pt;color:#2563EB;margin:14px 0 6px;">Industry Vertical Specializations</h3>' +
+                '<p style="font-size:9pt;color:#333;margin-bottom:6px;">We design high-impact website platforms explicitly optimized for the following professional environments:</p>' +
+                '<ul style="font-size:9pt;color:#333;padding-left:24px;line-height:1.7;">' +
+                '<li>Business Websites & High-Growth Brand Landing Systems</li>' +
+                '<li>Hotel & Luxury Resort Frameworks (Third-party Booking Platform Connections)</li>' +
+                '<li>Restaurant Websites (Digital Menus & Delivery Route Integrations)</li>' +
+                '<li>Real Estate Brokerage Platforms (Bespoke Property Filtration Views)</li>' +
+                '<li>Corporate Enterprise Web Portals & Custom Digital Web Solutions</li>' +
+                '</ul>' +
+                pgFooter + '</div></div>';
+
+            // Page 3: Packages
+            var pkgRows = [
+                ['Bespoke Design & Page Limits', 'Premium Template Framework (Up to 5 Pages)', '100% Custom Tailored UI (Up to 10 Pages)'],
+                ['Mobile Optimization', 'Fully Responsive Fluid System', 'Premium Custom Device Layout Tweaks'],
+                ['Branding & Tailoring', 'Basic Logo & Copy Adjustments', 'Advanced Component Architecture & UX Design'],
+                ['Search Engine Ready (SEO)', 'Basic Structuring Setup', 'Advanced Matrix Alignment & Full Strategy Hooks'],
+                ['Third-Party Booking Connectors', 'Standard Link/Form Integration', 'Advanced API Workflow Integration Support'],
+                ['Instant Customer Interaction', 'WhatsApp Live Chat Connected Floating Button', 'Integrated Business Lead Funnel Management'],
+                ['Mapping & Local Strategy', 'Google Maps Business Pin Embedded', 'Google Business Profile & Review Sync Setups'],
+                ['Business Intelligence Analytics', 'Standard Social-Profile Links Setup', 'Google Analytics 4 Tracking Integration Setup'],
+                ['Security Integration Layer', 'Let\'s Encrypt Free SSL Certificate Config', 'Let\'s Encrypt Free SSL Certificate Config'],
+                ['Post-Launch Maintenance Support', '1 Month Standard Support Window', '3 Months Extended Priority Support Cover'],
+                ['Project Planning Lifecycle', 'Free Consultation Lifecycle Session Included', 'Extended Full Digital Strategy Mapping Session']
+            ];
+            var pkgTableRows = pkgRows.map(function(r){return '<tr><td style="font-weight:600;">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>';}).join('');
+
+            var packagesPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:hidden;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +
+                '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
+                '<div style="position:relative;z-index:1;">' + pgHeader +
+                '<h2 style="font-size:16pt;color:#2563EB;font-weight:700;margin:16px 0 6px;">Website Development Packages</h2>' +
+                '<p style="font-size:9pt;color:#475569;margin-bottom:12px;">Select the development framework that best fits your business goals and operational target scale:</p>' +
+                '<table style="width:100%;border-collapse:collapse;font-size:8.5pt;">' +
+                '<thead><tr style="background:#0f172a;color:#fff;">' +
+                '<th style="padding:8px;text-align:left;border:1px solid #0f172a;">Core Features Matrix</th>' +
+                '<th style="padding:8px;text-align:center;border:1px solid #0f172a;">Standard Tier<br>(\u20B912,999)</th>' +
+                '<th style="padding:8px;text-align:center;border:1px solid #0f172a;">Custom Premium Tier<br>(\u20B919,999)</th>' +
+                '</tr></thead><tbody>' + pkgTableRows + '</tbody></table>' +
+                '<div style="margin-top:14px;font-size:8pt;color:#333;">' +
+                '<p style="font-weight:700;margin-bottom:4px;">CRITICAL INFRASTRUCTURE INFORMATION:</p>' +
+                '<ul style="padding-left:16px;line-height:1.7;"><li>Domain Registration charges are separate (Billed directly at actual market cost via naming provider).</li>' +
+                '<li>Web Hosting server space charges are separate (Billed transparently at actual usage pricing configurations).</li>' +
+                '<li>Business Email solutions are available as an optional account add-on customized choice.</li></ul></div>' +
+                pgFooter + '</div></div>';
+
+            // Page 4: Investment
+            var investRows = [
+                ['Website Core Application Development', planInfo.name + ' Tier Framework', '[ \u20B9' + (planInfo.price||0).toLocaleString('en-IN') + ' ]'],
+                ['Corporate Domain Registration', 'Provisioned at actual name supplier cost scales', '[ Actual Cost ]'],
+                ['Managed Web Hosting Server Space', 'Dedicated high-performance optimized cloud platform', '[ Actual Cost ]'],
+                ['Professional Corporate Business Email', 'Optional customized corporate communication inbox modules', '[ Optional Add-on ]'],
+                ['Additional Custom Feature Add-ons', 'Bespoke extensions requested beyond standard packaging', '[ Billed Separately ]'],
+                ['Applicable Goods & Services Tax (GST)', 'Calculated and applied directly during live invoicing', '[ Billed on Invoice ]']
+            ];
+            investRows.push(['Grand Total Project Allocation Cost', 'Fixed scope core solution delivery parameters', '[ \u20B9' + calc.grand.toLocaleString('en-IN',{minimumFractionDigits:0}) + ' ]']);
+            var investTableRows = investRows.map(function(r){return '<tr><td style="font-weight:600;">'+r[0]+'</td><td>'+r[1]+'</td><td style="text-align:center;">'+r[2]+'</td></tr>';}).join('');
+
+            var investmentPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:hidden;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +
+                '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
+                '<div style="position:relative;z-index:1;">' + pgHeader +
+                '<h2 style="font-size:16pt;color:#2563EB;font-weight:700;margin:16px 0 6px;">Project Investment</h2>' +
+                '<p style="font-size:9pt;color:#475569;margin-bottom:12px;">The financial schedule below defines line-item investment parameters based upon selected scope frameworks:</p>' +
+                '<table style="width:100%;border-collapse:collapse;font-size:8.5pt;">' +
+                '<thead><tr style="background:#0f172a;color:#fff;">' +
+                '<th style="padding:8px;text-align:left;border:1px solid #0f172a;">Description of Services</th>' +
+                '<th style="padding:8px;text-align:left;border:1px solid #0f172a;">Scope Limits</th>' +
+                '<th style="padding:8px;text-align:center;border:1px solid #0f172a;">Investment Capital</th>' +
+                '</tr></thead><tbody>' + investTableRows + '</tbody></table>' +
+                '<p style="font-size:8pt;color:#475569;margin-top:8px;font-style:italic;">Note: Domain and Hosting infrastructure access channels are setup in the client\'s corporate name to guarantee total long-term security, control, and strategic ownership.</p>' +
+                '<h3 style="font-size:11pt;color:#2563EB;margin:14px 0 6px;">Project Conditions & Terms</h3>' +
+                '<h4 style="font-size:10pt;color:#2563EB;margin:10px 0 4px;">Commercial Payment Terms</h4>' +
+                '<p style="font-size:9pt;color:#333;margin-bottom:6px;">The payment schedule shall be executed as follows:</p>' +
+                '<ul style="font-size:9pt;color:#333;padding-left:20px;line-height:1.7;">' +
+                '<li>50% Advance Payment: Due upon formal project agreement confirmation to initiate development sprints.</li>' +
+                '<li>50% Final Delivery Payment: Due immediately prior to final server deployment and live cutover controls.</li>' +
+                '<li>OR, 100% Advance Payment Plan: Eligible for a special structural package funding discount.</li>' +
+                '</ul>' +
+                pgFooter + '</div></div>';
+
+            // Page 5: Validity & Terms
+            var termsPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:hidden;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +
+                '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
+                '<div style="position:relative;z-index:1;">' + pgHeader +
+                '<h3 style="font-size:11pt;color:#2563EB;margin:16px 0 6px;">Document Validity</h3>' +
+                '<p style="font-size:9pt;color:#333;line-height:1.6;">This proposal and all referenced financial investment metrics remain strictly valid for '+validText+' from the date of issue.</p>' +
+                '<h3 style="font-size:11pt;color:#2563EB;margin:14px 0 6px;">Post-Launch Maintenance Support Framework</h3>' +
+                '<p style="font-size:9pt;color:#333;margin-bottom:6px;">Technical support windows are handled efficiently via the following channels:</p>' +
+                '<ul style="font-size:9pt;color:#333;padding-left:20px;line-height:1.7;">' +
+                '<li>WhatsApp Chat Support | Direct Email Support Tracking | Google Meet Strategic Sessions</li>' +
+                '<li>Free Technical Maintenance Coverage mapping perfectly to the specific timeline rules of your selected plan.</li>' +
+                '</ul>' +
+                '<h3 style="font-size:11pt;color:#2563EB;margin:14px 0 6px;">Terms & Conditions Agreement</h3>' +
+                '<ul style="font-size:9pt;color:#333;padding-left:20px;line-height:1.8;list-style:none;">' +
+                '<li>\u2713 Domain Registration & Cloud Hosting server space fees are always billed separate from core code fees.</li>' +
+                '<li>\u2713 The client corporate team will provide all primary business logos, structural copy text, and digital image assets.</li>' +
+                '<li>\u2713 The estimated project timeline begins tracking immediately after the advance payment clears our bank.</li>' +
+                '<li>\u2713 Major structural workflow or design changes requested after milestone code approvals may incur additional modification fees.</li>' +
+                '<li>\u2713 Final codebase, site file transfers, and administrative portal log-ins occur strictly after complete payment clear.</li>' +
+                '<li>\u2713 This business document is officially valid for '+validText+' following the stated date of generation.</li>' +
+                '</ul>' +
+                pgFooter + '</div></div>';
+
+            // Page 6: Signature
+            var sigPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:hidden;font-family:Inter,Segoe UI,sans-serif;display:flex;flex-direction:column;">' +
+                '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
+                '<div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;">' + pgHeader +
+                '<h2 style="font-size:18pt;color:#0f172a;font-weight:800;text-align:center;margin:30px 0 12px;letter-spacing:0.5px;">LET\'S BUILD YOUR DIGITAL PRESENCE TOGETHER.</h2>' +
+                '<p style="text-align:center;font-size:10pt;font-weight:600;color:#0f172a;">GridNest Web Solutions Corporate Team</p>' +
+                '<p style="text-align:center;font-size:9pt;color:#475569;margin:4px 0;">Primary Phone Queue: +91 9667195689 | Email Support: Contact@gridnest.com</p>' +
+                '<p style="text-align:center;font-size:9pt;color:#475569;margin:4px 0;">Digital Portal: www.gridnest.com</p>' +
+                '<p style="text-align:center;font-size:9pt;color:#94a3b8;margin:20px 0;">[ QR CODE PLACEHOLDER FOR ARCHIVE ACCESS ]</p>' +
+                '<div style="display:flex;justify-content:space-between;margin-top:auto;padding-top:40px;">' +
+                '<div style="width:45%;"><div style="border-top:1px solid #0f172a;margin-top:60px;padding-top:4px;font-size:9pt;color:#333;">Client Signature / Corporate Authorization</div><p style="font-size:9pt;color:#333;margin-top:8px;">Date: _______________</p></div>' +
+                '<div style="width:45%;"><div style="border-top:1px solid #0f172a;margin-top:60px;padding-top:4px;font-size:9pt;color:#333;">GridNest Authorized Signatory Suite</div><p style="font-size:9pt;color:#333;margin-top:8px;">Date: _______________</p></div>' +
+                '</div>' +
+                '<div style="text-align:center;font-size:7.5pt;color:#64748b;margin-top:auto;padding-top:12px;border-top:1px solid #e2e8f0;">www.gridnestwebsolution.com | Contact@gridnest.com | Confidential Business Document</div>' +
+                '</div></div>';
+
+            return coverPage + aboutPage + packagesPage + investmentPage + termsPage + sigPage;
+        }
+
         function updateProposalPreview() {
             var plan = document.getElementById('pPlan').value;
-            var info = PLAN_FEATURES[plan];
             var items = getProposalItems(), extras = getProposalExtras();
             var calc = recalcProposal();
-            var company = document.getElementById('pClientCompany').value || 'Client Name';
-            var pNum = document.getElementById('pNumber').value || 'GNWS-2026-001';
-            var pDate = document.getElementById('pDate').value || new Date().toISOString().split('T')[0];
-            var featuresHtml = info.features.map(function(f){return '<li>'+f+'</li>'}).join('');
-            var itemsHtml = items.filter(function(i){return i.amount>0}).map(function(it){return '<tr><td>'+it.title+'</td><td class="right">\u20B9'+it.amount.toLocaleString('en-IN')+'</td></tr>'}).join('');
-            var extrasHtml = extras.filter(function(e){return e.title&&e.amount>0}).map(function(e){return '<tr><td>'+e.title+'</td><td class="right">\u20B9'+e.amount.toLocaleString('en-IN')+'</td></tr>'}).join('');
             var payTerms = document.getElementById('pPaymentTerms').value;
             var payText = '50% Advance, 50% on Delivery';
             if (payTerms === '100-advance') payText = '100% Advance Payment';
             if (payTerms === 'custom') payText = document.getElementById('pPaymentTermsCustom').value || 'Custom Terms';
             var validity = document.getElementById('pValidity').value;
             var validText = validity === 'custom' ? (document.getElementById('pValidityCustom').value || '30') + ' Days' : validity + ' Days';
-            var notesVal = document.getElementById('pNotes').value;
-            var notesHtml = notesVal ? '<div class="preview-section"><h3>Notes</h3><p style="font-size:9pt;white-space:pre-line;">'+notesVal+'</p></div>' : '';
 
-            document.getElementById('proposalPreviewContainer').innerHTML = '<div class="preview-page" id="proposalPrintArea"><div class="watermark"><img src="Image/Icon.jpg" alt=""></div><div style="text-align:center;padding-top:60px;"><img src="Image/New_Logo.jpeg" class="preview-logo" style="max-height:70px;"><h1 style="font-size:22pt;color:#0f172a;margin:1rem 0 0.25rem;">GridNest Web Solutions</h1><p style="color:#64748b;font-size:9pt;">Building Digital Success</p><div style="margin-top:2.5rem;padding:1rem;background:#f8fafc;border-radius:0.5rem;display:inline-block;"><p style="font-size:10pt;color:#475569;">Website Proposal for</p><h2 style="font-size:16pt;color:#2563EB;margin:0.25rem 0;">'+company+'</h2></div><div style="margin-top:1.5rem;font-size:9pt;color:#64748b;"><p>Proposal No: <strong>'+pNum+'</strong></p><p>Date: <strong>'+pDate+'</strong></p><p>Plan: <strong>'+info.name+'</strong></p></div></div><div class="preview-section" style="margin-top:2rem;"><h3>About GridNest</h3><p style="font-size:9pt;color:#475569;">GridNest Web Solutions is a professional web design and development agency specializing in creating powerful digital experiences for businesses. We combine modern design with cutting-edge technology to deliver websites that drive growth and success.</p></div><div class="preview-section"><h3>Why Choose GridNest</h3><ul class="preview-features" style="font-size:9pt;color:#475569;"><li>Professional & Modern Design</li><li>Mobile-First Responsive Approach</li><li>SEO Optimized Architecture</li><li>Fast Loading & Performance Focused</li><li>Dedicated Support & Maintenance</li><li>Transparent Pricing, No Hidden Costs</li></ul></div><div class="preview-section"><h3>'+info.name+' \u2014 Features</h3><ul class="preview-features">'+featuresHtml+'</ul></div><div class="preview-section"><h3>Project Investment</h3><table class="preview-table"><thead><tr><th>Item</th><th class="right">Amount</th></tr></thead><tbody>'+itemsHtml+extrasHtml+'<tr><td>Discount</td><td class="right">-\u20B9'+calc.discount.toLocaleString('en-IN')+'</td></tr><tr><td>GST ('+calc.gstPct+'%)</td><td class="right">\u20B9'+calc.gstAmount.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr><tr class="total-row"><td><strong>Grand Total</strong></td><td class="right"><strong>\u20B9'+calc.grand.toLocaleString('en-IN',{minimumFractionDigits:2})+'</strong></td></tr></tbody></table></div><div class="preview-section"><h3>Payment Terms</h3><p style="font-size:9pt;">'+payText+'</p></div><div class="preview-section"><h3>Document Validity</h3><p style="font-size:9pt;">This proposal is valid for <strong>'+validText+'</strong> from the date of issue.</p></div>'+notesHtml+'<div class="preview-section"><h3>Terms & Conditions</h3><ol style="font-size:8pt;color:#475569;padding-left:1.25rem;"><li>Payment is due as per the terms mentioned above.</li><li>Any additional features outside the selected plan will be charged separately.</li><li>Domain, Hosting & Business Email costs are separate if required.</li><li>Source code ownership transfers upon full payment.</li><li>Timeline begins after advance payment and content availability.</li><li>Revision scope is limited to the selected plan specifications.</li></ol></div><div class="preview-signature"><div class="line">Authorized Signatory</div><p style="font-size:8pt;color:#64748b;margin-top:0.25rem;">For GridNest Web Solutions</p></div><div class="preview-footer">This is a computer-generated proposal. For queries, contact Contact@gridnest.com | +91 9667195689</div></div>';
+            var html = generateProposalHTML({
+                company: document.getElementById('pClientCompany').value || 'Client Name',
+                proposalNumber: document.getElementById('pNumber').value || 'GNWS-2026-001',
+                proposalDate: document.getElementById('pDate').value || new Date().toISOString().split('T')[0],
+                plan: plan,
+                items: items,
+                additionalCharges: extras,
+                calc: calc,
+                payText: payText,
+                validText: validText,
+                notes: document.getElementById('pNotes').value
+            });
+            document.getElementById('proposalPreviewContainer').innerHTML = '<div id="proposalPrintArea">' + html + '</div>';
         }
 
         function showProposalList() {
@@ -1914,17 +2063,25 @@
         }
 
         function buildProposalDetailPreview(p) {
-            var info = PLAN_FEATURES[p.plan] || PLAN_FEATURES.standard;
-            var featuresHtml = info.features.map(function(f){return '<li>'+f+'</li>'}).join('');
-            var itemsHtml = (p.items||[]).filter(function(i){return i.amount>0}).map(function(it){return '<tr><td>'+it.title+'</td><td class="right">\u20B9'+it.amount.toLocaleString('en-IN')+'</td></tr>'}).join('');
-            var extrasHtml = (p.additionalCharges||[]).filter(function(e){return e.title&&e.amount>0}).map(function(e){return '<tr><td>'+e.title+'</td><td class="right">\u20B9'+e.amount.toLocaleString('en-IN')+'</td></tr>'}).join('');
             var payText = '50% Advance, 50% on Delivery';
             if (p.paymentTerms === '100-advance') payText = '100% Advance Payment';
             if (p.paymentTerms === 'custom') payText = p.paymentTermsCustom || 'Custom Terms';
             var validText = p.validity === 'custom' ? (p.validityCustom || '30') + ' Days' : (p.validity || '15') + ' Days';
-            var notesHtml = p.notes ? '<div class="preview-section"><h3>Notes</h3><p style="font-size:9pt;white-space:pre-line;">'+p.notes+'</p></div>' : '';
+            var calc = { subtotal: p.subtotal||0, gstPct: p.gst||18, gstAmount: p.gstAmount||0, discount: p.discount||0, grand: p.grandTotal||0 };
 
-            document.getElementById('proposalDetailPreview').innerHTML = '<div class="preview-page" id="proposalPrintArea"><div class="watermark"><img src="Image/Icon.jpg" alt=""></div><div style="text-align:center;padding-top:60px;"><img src="Image/New_Logo.jpeg" class="preview-logo" style="max-height:70px;"><h1 style="font-size:22pt;color:#0f172a;margin:1rem 0 0.25rem;">GridNest Web Solutions</h1><p style="color:#64748b;font-size:9pt;">Building Digital Success</p><div style="margin-top:2.5rem;padding:1rem;background:#f8fafc;border-radius:0.5rem;display:inline-block;"><p style="font-size:10pt;color:#475569;">Website Proposal for</p><h2 style="font-size:16pt;color:#2563EB;margin:0.25rem 0;">'+(p.client?.company||'Client')+'</h2></div><div style="margin-top:1.5rem;font-size:9pt;color:#64748b;"><p>Proposal No: <strong>'+p.proposalNumber+'</strong></p><p>Date: <strong>'+new Date(p.proposalDate||p.createdAt).toLocaleDateString()+'</strong></p><p>Plan: <strong>'+info.name+'</strong></p></div></div><div class="preview-section" style="margin-top:2rem;"><h3>About GridNest</h3><p style="font-size:9pt;color:#475569;">GridNest Web Solutions is a professional web design and development agency specializing in creating powerful digital experiences for businesses.</p></div><div class="preview-section"><h3>Why Choose GridNest</h3><ul class="preview-features" style="font-size:9pt;color:#475569;"><li>Professional & Modern Design</li><li>Mobile-First Responsive Approach</li><li>SEO Optimized Architecture</li><li>Fast Loading & Performance Focused</li><li>Dedicated Support & Maintenance</li><li>Transparent Pricing, No Hidden Costs</li></ul></div><div class="preview-section"><h3>'+info.name+' \u2014 Features</h3><ul class="preview-features">'+featuresHtml+'</ul></div><div class="preview-section"><h3>Project Investment</h3><table class="preview-table"><thead><tr><th>Item</th><th class="right">Amount</th></tr></thead><tbody>'+itemsHtml+extrasHtml+'<tr><td>Discount</td><td class="right">-\u20B9'+(p.discount||0).toLocaleString('en-IN')+'</td></tr><tr><td>GST ('+(p.gst||0)+'%)</td><td class="right">\u20B9'+(p.gstAmount||0).toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr><tr class="total-row"><td><strong>Grand Total</strong></td><td class="right"><strong>\u20B9'+(p.grandTotal||0).toLocaleString('en-IN',{minimumFractionDigits:2})+'</strong></td></tr></tbody></table></div><div class="preview-section"><h3>Payment Terms</h3><p style="font-size:9pt;">'+payText+'</p></div><div class="preview-section"><h3>Document Validity</h3><p style="font-size:9pt;">This proposal is valid for <strong>'+validText+'</strong> from the date of issue.</p></div>'+notesHtml+'<div class="preview-section"><h3>Terms & Conditions</h3><ol style="font-size:8pt;color:#475569;padding-left:1.25rem;"><li>Payment is due as per the terms mentioned above.</li><li>Any additional features outside the selected plan will be charged separately.</li><li>Domain, Hosting & Business Email costs are separate if required.</li><li>Source code ownership transfers upon full payment.</li><li>Timeline begins after advance payment and content availability.</li></ol></div><div class="preview-signature"><div class="line">Authorized Signatory</div><p style="font-size:8pt;color:#64748b;margin-top:0.25rem;">For GridNest Web Solutions</p></div><div class="preview-footer">This is a computer-generated proposal. Contact Contact@gridnest.com | +91 9667195689</div></div>';
+            var html = generateProposalHTML({
+                company: p.client?.company || 'Client',
+                proposalNumber: p.proposalNumber,
+                proposalDate: new Date(p.proposalDate||p.createdAt).toLocaleDateString('en-CA'),
+                plan: p.plan,
+                items: p.items || [],
+                additionalCharges: p.additionalCharges || [],
+                calc: calc,
+                payText: payText,
+                validText: validText,
+                notes: p.notes || ''
+            });
+            document.getElementById('proposalDetailPreview').innerHTML = '<div id="proposalPrintArea">' + html + '</div>';
         }
 
         async function editProposal(id) {
@@ -1989,7 +2146,7 @@
             var area = document.getElementById('proposalPrintArea');
             if (!area) return;
             var w = window.open('', '_blank');
-            w.document.write('<!DOCTYPE html><html><head><title>Proposal</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>@page{size:A4;margin:0;}body{margin:0;font-family:Inter,sans-serif;}.preview-page{width:210mm;min-height:297mm;padding:15mm;position:relative;overflow:hidden;font-size:10pt;line-height:1.5;color:#1a1a1a;}.watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none;z-index:0;}.watermark img{width:300px;} .preview-page>*{position:relative;z-index:1;}h1,h2,h3{margin:0;}table{width:100%;border-collapse:collapse;font-size:9pt;}th{background:#f1f5f9;padding:6px;text-align:left;border:1px solid #d1d5db;font-size:8pt;font-weight:600;}td{padding:6px;border:1px solid #d1d5db;}.right{text-align:right;}.total-row td{background:#f8fafc;font-weight:700;border-top:2px solid #0f172a;}ul,ol{padding-left:1.25rem;}li{font-size:9pt;padding:2px 0;}.preview-section{margin-bottom:12px;}.preview-section h3{font-size:11pt;font-weight:700;color:#0f172a;margin-bottom:4px;padding-bottom:3px;border-bottom:2px solid #2563EB;}.preview-logo{max-height:70px;}.preview-signature{margin-top:40px;text-align:right;}.preview-signature .line{border-top:1px solid #0f172a;width:200px;margin-left:auto;margin-top:40px;padding-top:4px;font-size:8pt;}.preview-footer{text-align:center;font-size:8pt;color:#64748b;margin-top:20px;padding-top:8px;border-top:1px solid #e2e8f0;}</style></head><body>' + area.outerHTML + '</body></html>');
+            w.document.write('<!DOCTYPE html><html><head><title>Proposal</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>@page{size:A4;margin:0;}body{margin:0;font-family:Inter,Segoe UI,sans-serif;font-size:10pt;color:#1a1a1a;}*{margin:0;padding:0;box-sizing:border-box;}.proposal-page{width:210mm;min-height:297mm;padding:20mm;position:relative;overflow:hidden;page-break-after:always;display:flex;flex-direction:column;}.proposal-page:last-child{page-break-after:auto;}table{width:100%;border-collapse:collapse;font-size:8.5pt;}th,td{padding:6px 8px;border:1px solid #d1d5db;}th{background:#f1f5f9;font-weight:600;font-size:8pt;}</style></head><body>' + area.innerHTML + '</body></html>');
             w.document.close();
             setTimeout(function(){ w.print(); w.close(); }, 500);
         }

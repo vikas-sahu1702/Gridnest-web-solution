@@ -180,7 +180,7 @@ const startServer = async () => {
     console.error('Starting server without database - API routes will return 503 until DB connects.');
   }
 
-  app.listen(PORT, () => {
+  app.listen(PORT, "0.0.0.0", () => {
     console.log(`
   ============================================
   ${process.env.CLIENT_NAME || 'Gridnest'} Universal Backend
@@ -188,6 +188,7 @@ const startServer = async () => {
   Environment: ${process.env.NODE_ENV || 'development'}
   Client:      ${process.env.CLIENT_NAME || 'Gridnest Web Solutions'}
   Port:        ${PORT}
+  Bind:        0.0.0.0
   Frontend:    http://localhost:${PORT}
   API:         http://localhost:${PORT}/api
   Health:      http://localhost:${PORT}/api/health

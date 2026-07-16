@@ -1814,16 +1814,23 @@
                 '<li>Business Email solutions are available as an optional account add-on customized choice.</li></ul></div>' +
                 pgFooter + '</div></div>';
 
-            // Page 4: Investment
-            var investRows = [
-                ['Website Core Application Development', planInfo.name + ' Tier Framework', '[ \u20B9' + (planInfo.price||0).toLocaleString('en-IN') + ' ]'],
-                ['Corporate Domain Registration', 'Provisioned at actual name supplier cost scales', '[ Actual Cost ]'],
-                ['Managed Web Hosting Server Space', 'Dedicated high-performance optimized cloud platform', '[ Actual Cost ]'],
-                ['Professional Corporate Business Email', 'Optional customized corporate communication inbox modules', '[ Optional Add-on ]'],
-                ['Additional Custom Feature Add-ons', 'Bespoke extensions requested beyond standard packaging', '[ Billed Separately ]'],
-                ['Applicable Goods & Services Tax (GST)', 'Calculated and applied directly during live invoicing', '[ Billed on Invoice ]']
-            ];
-            investRows.push(['Grand Total Project Allocation Cost', 'Fixed scope core solution delivery parameters', '[ \u20B9' + calc.grand.toLocaleString('en-IN',{minimumFractionDigits:0}) + ' ]']);
+            // Page 4: Investment — dynamically from form items
+            var investRows = [];
+            items.forEach(function(it) {
+                if (it.title || it.amount > 0) {
+                    investRows.push([it.title || 'Service', 'As per selected scope', '[ \u20B9' + it.amount.toLocaleString('en-IN') + ' ]']);
+                }
+            });
+            extras.forEach(function(e) {
+                if (e.title && e.amount > 0) {
+                    investRows.push([e.title, 'Additional service', '[ \u20B9' + e.amount.toLocaleString('en-IN') + ' ]']);
+                }
+            });
+            if (calc.discount > 0) {
+                investRows.push(['Discount', 'Applied on total', '[ -\u20B9' + calc.discount.toLocaleString('en-IN') + ' ]']);
+            }
+            investRows.push(['Applicable GST (' + calc.gstPct + '%)', 'Calculated on taxable amount', '[ \u20B9' + calc.gstAmount.toLocaleString('en-IN', {minimumFractionDigits:2}) + ' ]']);
+            investRows.push(['Grand Total Project Allocation Cost', 'Fixed scope core solution delivery', '[ \u20B9' + calc.grand.toLocaleString('en-IN', {minimumFractionDigits:2}) + ' ]']);
             var investTableRows = investRows.map(function(r){return '<tr><td style="font-weight:600;">'+r[0]+'</td><td>'+r[1]+'</td><td style="text-align:center;">'+r[2]+'</td></tr>';}).join('');
 
             var investmentPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:hidden;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +

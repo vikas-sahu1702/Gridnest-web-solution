@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">Admin - Gridnest Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; color: #0f172a; min-height: 100vh; }
@@ -302,6 +303,190 @@
             .modal-card { padding: 1.5rem; }
             .session-bar { flex-direction: column; text-align: center; padding: 0.75rem 1rem; }
         }
+        /* ==================== SIDEBAR NAVIGATION ==================== */
+        .admin-layout { display: flex; min-height: 100vh; }
+        .sidebar {
+            width: 240px; background: #0f172a; color: #fff; position: fixed; top: 0; left: 0; bottom: 0;
+            display: flex; flex-direction: column; z-index: 100; transition: transform 0.3s;
+        }
+        .sidebar-header { padding: 1.25rem 1.25rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .sidebar-header h2 { font-size: 1.125rem; font-weight: 700; }
+        .sidebar-header h2 span { color: #06B6D4; }
+        .sidebar-header p { font-size: 0.75rem; color: #94a3b8; margin-top: 0.125rem; }
+        .sidebar-nav { flex: 1; padding: 0.75rem 0; overflow-y: auto; }
+        .sidebar-nav a {
+            display: flex; align-items: center; gap: 0.75rem; padding: 0.625rem 1.25rem;
+            color: #94a3b8; text-decoration: none; font-size: 0.875rem; font-weight: 500;
+            transition: all 0.2s; border-left: 3px solid transparent;
+        }
+        .sidebar-nav a:hover { background: rgba(255,255,255,0.05); color: #e2e8f0; }
+        .sidebar-nav a.active { background: rgba(37,99,235,0.15); color: #fff; border-left-color: #2563EB; }
+        .sidebar-nav a i { width: 20px; text-align: center; font-size: 0.9375rem; }
+        .sidebar-footer { padding: 1rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.08); }
+        .sidebar-footer a {
+            display: flex; align-items: center; gap: 0.5rem; color: #94a3b8; text-decoration: none;
+            font-size: 0.8125rem; padding: 0.375rem 0; transition: color 0.2s;
+        }
+        .sidebar-footer a:hover { color: #fff; }
+        .main-content { flex: 1; margin-left: 240px; }
+        .top-bar {
+            background: #fff; padding: 0.875rem 1.5rem; display: flex; justify-content: space-between;
+            align-items: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 50;
+        }
+        .top-bar h2 { font-size: 1.125rem; font-weight: 700; color: #0f172a; }
+        .top-bar-actions { display: flex; align-items: center; gap: 0.75rem; }
+        .mobile-toggle {
+            display: none; background: none; border: none; font-size: 1.25rem; color: #0f172a; cursor: pointer;
+        }
+        .content-area { padding: 1.5rem; }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .mobile-toggle { display: block; }
+            .content-area { padding: 1rem; }
+        }
+        /* ==================== MODULE VIEWS ==================== */
+        .view { display: none; }
+        .view.active { display: block; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+        .page-header h2 { font-size: 1.25rem; font-weight: 700; }
+        .page-header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
+        .filter-bar input, .filter-bar select {
+            padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;
+            font-size: 0.8125rem; font-family: inherit; background: #fff;
+        }
+        .filter-bar input:focus, .filter-bar select:focus { outline: none; border-color: #2563EB; box-shadow: 0 0 0 2px rgba(37,99,235,0.1); }
+        .stats-row { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .stat-mini {
+            background: #fff; border-radius: 0.5rem; padding: 0.875rem 1.125rem; flex: 1; min-width: 130px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .stat-mini .num { font-size: 1.5rem; font-weight: 700; color: #2563EB; }
+        .stat-mini .label { font-size: 0.75rem; color: #64748b; margin-top: 0.125rem; }
+        .stat-mini.green .num { color: #059669; }
+        .stat-mini.amber .num { color: #d97706; }
+        .stat-mini.red .num { color: #dc2626; }
+        .stat-mini.purple .num { color: #7c3aed; }
+        /* ==================== FORM STYLES ==================== */
+        .form-card {
+            background: #fff; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .form-card-title {
+            font-size: 0.9375rem; font-weight: 700; color: #0f172a; margin-bottom: 1rem;
+            padding-bottom: 0.625rem; border-bottom: 1px solid #e2e8f0;
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; }
+        .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+        .form-group label { display: block; font-size: 0.8125rem; font-weight: 600; color: #475569; margin-bottom: 0.25rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;
+            font-size: 0.875rem; font-family: inherit; transition: border-color 0.2s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: #2563EB; box-shadow: 0 0 0 2px rgba(37,99,235,0.1);
+        }
+        .form-group textarea { min-height: 80px; resize: vertical; }
+        .form-group.full { grid-column: 1 / -1; }
+        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .form-row.three { grid-template-columns: 1fr; } }
+        /* ==================== ITEMS TABLE ==================== */
+        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 0.75rem; }
+        .items-table th {
+            background: #f8fafc; padding: 0.5rem; font-size: 0.75rem; text-transform: uppercase;
+            letter-spacing: 0.5px; color: #64748b; font-weight: 600; border-bottom: 2px solid #e2e8f0; text-align: left;
+        }
+        .items-table td { padding: 0.375rem; border-bottom: 1px solid #f1f5f9; }
+        .items-table input {
+            width: 100%; padding: 0.375rem 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.25rem;
+            font-size: 0.8125rem; font-family: inherit;
+        }
+        .items-table input:focus { outline: none; border-color: #2563EB; }
+        .items-table .amount-col { text-align: right; }
+        .items-table .btn-remove {
+            background: none; border: none; color: #dc2626; cursor: pointer; padding: 0.25rem; font-size: 0.875rem;
+        }
+        .totals-box { text-align: right; }
+        .totals-box div { padding: 0.25rem 0; font-size: 0.875rem; }
+        .totals-box .grand { font-size: 1.125rem; font-weight: 700; color: #0f172a; border-top: 2px solid #0f172a; padding-top: 0.5rem; }
+        /* ==================== PROPOSAL & INVOICE PREVIEW ==================== */
+        .preview-container { background: #e2e8f0; padding: 1rem; border-radius: 0.5rem; }
+        .preview-page {
+            background: #fff; width: 210mm; min-height: 297mm; margin: 0 auto; padding: 20mm;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15); position: relative; overflow: hidden;
+            font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 10pt; line-height: 1.5; color: #1a1a1a;
+            page-break-after: always;
+        }
+        .preview-page .watermark {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            opacity: 0.06; pointer-events: none; z-index: 0;
+        }
+        .preview-page .watermark img { width: 300px; height: auto; }
+        .preview-page > * { position: relative; z-index: 1; }
+        .preview-logo { max-height: 50px; width: auto; margin-bottom: 0.5rem; }
+        .preview-section { margin-bottom: 1rem; }
+        .preview-section h3 {
+            font-size: 11pt; font-weight: 700; color: #0f172a; margin-bottom: 0.375rem;
+            padding-bottom: 0.25rem; border-bottom: 2px solid #2563EB;
+        }
+        .preview-table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-size: 9pt; }
+        .preview-table th {
+            background: #f1f5f9; padding: 0.375rem 0.5rem; text-align: left;
+            font-weight: 600; border: 1px solid #d1d5db; font-size: 8pt; text-transform: uppercase;
+        }
+        .preview-table td { padding: 0.375rem 0.5rem; border: 1px solid #d1d5db; }
+        .preview-table .right { text-align: right; }
+        .preview-table .bold { font-weight: 700; }
+        .preview-table .total-row td { background: #f8fafc; font-weight: 700; border-top: 2px solid #0f172a; }
+        .preview-flex { display: flex; justify-content: space-between; gap: 1rem; }
+        .preview-flex > div { flex: 1; }
+        .preview-features li { font-size: 9pt; padding: 0.125rem 0; }
+        .preview-features li::marker { color: #2563EB; }
+        .preview-signature { margin-top: 2rem; text-align: right; }
+        .preview-signature .line { border-top: 1px solid #0f172a; width: 200px; margin-left: auto; margin-top: 2.5rem; padding-top: 0.25rem; }
+        .preview-footer { text-align: center; font-size: 8pt; color: #64748b; margin-top: 1rem; padding-top: 0.5rem; border-top: 1px solid #e2e8f0; }
+        @media print {
+            body * { visibility: hidden; }
+            .preview-container, .preview-container * { visibility: visible; }
+            .preview-container { background: none; padding: 0; position: absolute; top: 0; left: 0; width: 100%; }
+            .preview-page { box-shadow: none; margin: 0; width: 100%; min-height: auto; padding: 15mm; }
+            .preview-page .watermark { opacity: 0.06 !important; }
+        }
+        /* ==================== INVOICE SPECIFIC PREVIEW ==================== */
+        .invoice-header-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #000; }
+        .invoice-header-grid > div { padding: 0.5rem; border: 1px solid #000; font-size: 8.5pt; }
+        .invoice-parties { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #000; }
+        .invoice-parties > div { padding: 0.5rem; border: 1px solid #000; font-size: 8.5pt; }
+        .invoice-parties .label { font-weight: 600; font-size: 8pt; text-transform: uppercase; margin-bottom: 0.25rem; color: #333; }
+        .invoice-table { width: 100%; border-collapse: collapse; border: 1px solid #000; font-size: 8.5pt; }
+        .invoice-table th {
+            background: #f5f5f5; padding: 0.375rem; border: 1px solid #000;
+            font-weight: 600; text-align: center; font-size: 8pt;
+        }
+        .invoice-table td { padding: 0.375rem; border: 1px solid #000; vertical-align: top; }
+        .invoice-table .right { text-align: right; }
+        .invoice-table .center { text-align: center; }
+        .invoice-tax-table { width: 100%; border-collapse: collapse; border: 1px solid #000; font-size: 8.5pt; margin-top: 0.5rem; }
+        .invoice-tax-table th, .invoice-tax-table td { padding: 0.375rem; border: 1px solid #000; text-align: center; }
+        .invoice-tax-table th { background: #f5f5f5; font-weight: 600; font-size: 8pt; }
+        .invoice-bank { font-size: 8.5pt; margin-top: 0.5rem; }
+        .invoice-bank td { padding: 0.125rem 0.5rem; }
+        .invoice-bank .label { font-weight: 600; white-space: nowrap; }
+        /* ==================== TWO COLUMN LAYOUT ==================== */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 1200px) { .two-col { grid-template-columns: 1fr; } }
+        .two-col.preview-col { grid-template-columns: 1fr 1.2fr; }
+        @media (max-width: 1200px) { .two-col.preview-col { grid-template-columns: 1fr; } }
+        .sticky-preview { position: sticky; top: 4rem; align-self: start; }
+        /* ==================== BADGES ==================== */
+        .badge-draft { background: #e2e8f0; color: #475569; }
+        .badge-sent { background: #dbeafe; color: #1d4ed8; }
+        .badge-approved { background: #d1fae5; color: #059669; }
+        .badge-rejected { background: #fef2f2; color: #dc2626; }
+        .badge-converted { background: #ede9fe; color: #7c3aed; }
+        .badge-paid { background: #d1fae5; color: #059669; }
+        .badge-cancelled { background: #fef2f2; color: #dc2626; }
     </style>
 </head>
 <body>
@@ -403,61 +588,396 @@
 
     <!-- Dashboard (protected) -->
     <div id="dashboard" class="hidden">
-        <div class="header">
-            <div class="header-top">
-                <div>
-                    <h1>Gridnest Dashboard</h1>
-                    <p>Contact inquiries & newsletter subscribers</p>
+        <div class="admin-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <h2>Grid<span>nest</span></h2>
+                    <p>Admin Panel</p>
                 </div>
-                <div class="header-actions">
-                    <span class="user-badge"><i class="fas fa-user-circle"></i> <span id="adminName">Admin</span></span>
-                    <button class="logout-btn" onclick="openChangePassword()"><i class="fas fa-key left-icon"></i> Change Password</button>
-                    <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                    <a href="/" class="nav-link">← Back to Site</a>
+                <nav class="sidebar-nav">
+                    <a href="#" class="active" data-view="dashboard-view" onclick="switchView('dashboard-view', this); return false;"><i class="fas fa-th-large"></i> Dashboard</a>
+                    <a href="#" data-view="proposals-view" onclick="switchView('proposals-view', this); return false;"><i class="fas fa-file-alt"></i> Proposals</a>
+                    <a href="#" data-view="invoices-view" onclick="switchView('invoices-view', this); return false;"><i class="fas fa-file-invoice-dollar"></i> Invoices</a>
+                </nav>
+                <div class="sidebar-footer">
+                    <a href="#" onclick="openChangePassword(); return false;"><i class="fas fa-key"></i> Change Password</a>
+                    <a href="#" onclick="handleLogout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a href="/"><i class="fas fa-arrow-left"></i> Back to Site</a>
                 </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="stats" id="stats"></div>
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="contacts">Contact Inquiries</button>
-                <button class="tab-btn" data-tab="newsletter">Newsletter Subscribers</button>
-            </div>
-            <div class="panel active" id="panel-contacts">
-                <div class="toolbar">
-                    <button class="btn btn-success btn-sm" onclick="downloadCSV('contact')">⬇ Download CSV</button>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="top-bar">
+                    <div style="display:flex; align-items:center; gap:0.75rem;">
+                        <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')"><i class="fas fa-bars"></i></button>
+                        <h2 id="viewTitle">Dashboard</h2>
+                    </div>
+                    <div class="top-bar-actions">
+                        <span class="user-badge" style="color:#0f172a;"><i class="fas fa-user-circle"></i> <span id="adminName">Admin</span></span>
+                    </div>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Company</th>
-                            <th>Service</th>
-                            <th>Template</th>
-                            <th>Message</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="contactsBody"></tbody>
-                </table>
-            </div>
-            <div class="panel" id="panel-newsletter">
-                <div class="toolbar">
-                    <button class="btn btn-success btn-sm" onclick="downloadCSV('newsletter')">⬇ Download CSV</button>
+                <div class="content-area">
+
+                    <!-- ========== DASHBOARD VIEW ========== -->
+                    <div class="view active" id="dashboard-view">
+                        <div class="stats" id="stats"></div>
+                        <div class="tabs">
+                            <button class="tab-btn active" data-tab="contacts">Contact Inquiries</button>
+                            <button class="tab-btn" data-tab="newsletter">Newsletter Subscribers</button>
+                        </div>
+                        <div class="panel active" id="panel-contacts">
+                            <div class="toolbar">
+                                <button class="btn btn-success btn-sm" onclick="downloadCSV('contact')">⬇ Download CSV</button>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr><th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th>Service</th><th>Template</th><th>Message</th><th>Status</th></tr>
+                                </thead>
+                                <tbody id="contactsBody"></tbody>
+                            </table>
+                        </div>
+                        <div class="panel" id="panel-newsletter">
+                            <div class="toolbar">
+                                <button class="btn btn-success btn-sm" onclick="downloadCSV('newsletter')">⬇ Download CSV</button>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr><th>Date</th><th>Email</th><th>Status</th></tr>
+                                </thead>
+                                <tbody id="newsletterBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- ========== PROPOSALS VIEW ========== -->
+                    <div class="view" id="proposals-view">
+                        <!-- Proposal List -->
+                        <div id="proposalListSection">
+                            <div class="page-header">
+                                <h2>Proposals</h2>
+                                <div class="page-header-actions">
+                                    <button class="btn btn-success btn-sm" onclick="downloadProposalCSV()">⬇ CSV</button>
+                                    <button class="btn btn-primary btn-sm" onclick="showProposalForm()"><i class="fas fa-plus"></i> New Proposal</button>
+                                </div>
+                            </div>
+                            <div class="stats-row" id="proposalStats"></div>
+                            <div class="filter-bar">
+                                <input type="text" id="proposalSearch" placeholder="Search proposals..." oninput="fetchProposals()">
+                                <select id="proposalStatusFilter" onchange="fetchProposals()">
+                                    <option value="">All Status</option>
+                                    <option value="draft">Draft</option>
+                                    <option value="sent">Sent</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                    <option value="converted">Converted</option>
+                                </select>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr><th>Number</th><th>Client</th><th>Plan</th><th>Amount</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="proposalsBody"></tbody>
+                            </table>
+                        </div>
+
+                        <!-- Proposal Form -->
+                        <div id="proposalFormSection" style="display:none;">
+                            <div class="page-header">
+                                <h2 id="proposalFormTitle">New Proposal</h2>
+                                <div class="page-header-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="showProposalList()">← Back</button>
+                                    <button class="btn btn-primary btn-sm" onclick="saveProposal()"><i class="fas fa-save"></i> Save</button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="proposalId">
+                            <div class="two-col preview-col">
+                                <!-- Form Column -->
+                                <div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Client Details</div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Company Name</label><input type="text" id="pClientCompany"></div>
+                                            <div class="form-group"><label>Email</label><input type="email" id="pClientEmail"></div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Phone</label><input type="text" id="pClientPhone"></div>
+                                            <div class="form-group"><label>GST Number</label><input type="text" id="pClientGst"></div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group full"><label>Address</label><textarea id="pClientAddress" rows="2"></textarea></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Proposal Info</div>
+                                        <div class="form-row three">
+                                            <div class="form-group"><label>Proposal Number</label><input type="text" id="pNumber"></div>
+                                            <div class="form-group"><label>Date</label><input type="date" id="pDate"></div>
+                                            <div class="form-group"><label>Plan</label>
+                                                <select id="pPlan" onchange="onPlanChange()">
+                                                    <option value="standard">Standard Website</option>
+                                                    <option value="custom-premium">Custom Premium Website</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row three">
+                                            <div class="form-group"><label>GST %</label><input type="number" id="pGst" value="18" oninput="recalcProposal()"></div>
+                                            <div class="form-group"><label>Discount (₹)</label><input type="number" id="pDiscount" value="0" oninput="recalcProposal()"></div>
+                                            <div class="form-group"><label>Status</label>
+                                                <select id="pStatus">
+                                                    <option value="draft">Draft</option>
+                                                    <option value="sent">Sent</option>
+                                                    <option value="approved">Approved</option>
+                                                    <option value="rejected">Rejected</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Project Investment</div>
+                                        <table class="items-table">
+                                            <thead><tr><th>Title</th><th style="width:120px" class="amount-col">Amount (₹)</th><th style="width:40px"></th></tr></thead>
+                                            <tbody id="pItemsBody"></tbody>
+                                        </table>
+                                        <button class="btn btn-outline btn-sm" onclick="addProposalItem()" style="margin-top:0.5rem;"><i class="fas fa-plus"></i> Add Item</button>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Additional Charges</div>
+                                        <table class="items-table">
+                                            <thead><tr><th>Title</th><th style="width:120px" class="amount-col">Amount (₹)</th><th style="width:40px"></th></tr></thead>
+                                            <tbody id="pExtraBody"></tbody>
+                                        </table>
+                                        <button class="btn btn-outline btn-sm" onclick="addProposalExtra()" style="margin-top:0.5rem;"><i class="fas fa-plus"></i> Add Item</button>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Totals</div>
+                                        <div class="totals-box" id="pTotals"></div>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Terms & Conditions</div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Payment Terms</label>
+                                                <select id="pPaymentTerms" onchange="onPaymentTermsChange()">
+                                                    <option value="50-advance">50% Advance, 50% on Delivery</option>
+                                                    <option value="100-advance">100% Advance</option>
+                                                    <option value="custom">Custom</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group" id="pPaymentTermsCustomGroup" style="display:none;"><label>Custom Terms</label><textarea id="pPaymentTermsCustom" rows="2"></textarea></div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Validity</label>
+                                                <select id="pValidity" onchange="onValidityChange()">
+                                                    <option value="7">7 Days</option>
+                                                    <option value="15" selected>15 Days</option>
+                                                    <option value="30">30 Days</option>
+                                                    <option value="custom">Custom</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group" id="pValidityCustomGroup" style="display:none;"><label>Custom Days</label><input type="number" id="pValidityCustom"></div>
+                                        </div>
+                                        <div class="form-group"><label>Notes</label><textarea id="pNotes" rows="3" placeholder="Additional notes for the client..."></textarea></div>
+                                    </div>
+                                </div>
+                                <!-- Preview Column -->
+                                <div class="sticky-preview">
+                                    <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+                                        <button class="btn btn-outline btn-sm" onclick="printProposal()"><i class="fas fa-print"></i> Print</button>
+                                        <button class="btn btn-success btn-sm" onclick="downloadProposalPDF()"><i class="fas fa-download"></i> PDF</button>
+                                    </div>
+                                    <div class="preview-container" id="proposalPreviewContainer"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Proposal Detail / Revision History -->
+                        <div id="proposalDetailSection" style="display:none;">
+                            <div class="page-header">
+                                <h2 id="proposalDetailTitle">Proposal Detail</h2>
+                                <div class="page-header-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="showProposalList()">← Back</button>
+                                    <button class="btn btn-primary btn-sm" onclick="editCurrentProposal()"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn btn-outline btn-sm" onclick="createProposalRevision()"><i class="fas fa-copy"></i> New Revision</button>
+                                    <button class="btn btn-success btn-sm" id="convertToInvoiceBtn" onclick="convertProposalToInvoice()" style="display:none;"><i class="fas fa-exchange-alt"></i> Convert to Invoice</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteProposal()"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </div>
+                            <div class="two-col preview-col">
+                                <div>
+                                    <div class="form-card" id="proposalDetailInfo"></div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Revision History</div>
+                                        <div id="proposalRevisionHistory"></div>
+                                    </div>
+                                </div>
+                                <div class="sticky-preview">
+                                    <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+                                        <button class="btn btn-outline btn-sm" onclick="printProposal()"><i class="fas fa-print"></i> Print</button>
+                                        <button class="btn btn-success btn-sm" onclick="downloadProposalPDF()"><i class="fas fa-download"></i> PDF</button>
+                                    </div>
+                                    <div class="preview-container" id="proposalDetailPreview"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========== INVOICES VIEW ========== -->
+                    <div class="view" id="invoices-view">
+                        <!-- Invoice List -->
+                        <div id="invoiceListSection">
+                            <div class="page-header">
+                                <h2>Proforma Invoices</h2>
+                                <div class="page-header-actions">
+                                    <button class="btn btn-success btn-sm" onclick="downloadInvoiceCSV()">⬇ CSV</button>
+                                    <button class="btn btn-primary btn-sm" onclick="showInvoiceForm()"><i class="fas fa-plus"></i> New Invoice</button>
+                                </div>
+                            </div>
+                            <div class="stats-row" id="invoiceStats"></div>
+                            <div class="filter-bar">
+                                <input type="text" id="invoiceSearch" placeholder="Search invoices..." oninput="fetchInvoices()">
+                                <select id="invoiceStatusFilter" onchange="fetchInvoices()">
+                                    <option value="">All Status</option>
+                                    <option value="draft">Draft</option>
+                                    <option value="sent">Sent</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr><th>Number</th><th>Client</th><th>Amount</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="invoicesBody"></tbody>
+                            </table>
+                        </div>
+
+                        <!-- Invoice Form -->
+                        <div id="invoiceFormSection" style="display:none;">
+                            <div class="page-header">
+                                <h2 id="invoiceFormTitle">New Invoice</h2>
+                                <div class="page-header-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="showInvoiceList()">← Back</button>
+                                    <button class="btn btn-primary btn-sm" onclick="saveInvoice()"><i class="fas fa-save"></i> Save</button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="invoiceId">
+                            <div class="two-col preview-col">
+                                <!-- Form Column -->
+                                <div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Invoice Info</div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Invoice Number</label><input type="text" id="iNumber"></div>
+                                            <div class="form-group"><label>Invoice Date</label><input type="date" id="iDate"></div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Status</label>
+                                                <select id="iStatus">
+                                                    <option value="draft">Draft</option>
+                                                    <option value="sent">Sent</option>
+                                                    <option value="paid">Paid</option>
+                                                    <option value="cancelled">Cancelled</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group"><label>HSN/SAC Code</label><input type="text" id="iHsn" value="998314"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Client Details</div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Company Name</label><input type="text" id="iClientCompany"></div>
+                                            <div class="form-group"><label>GST Number</label><input type="text" id="iClientGst"></div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Email</label><input type="email" id="iClientEmail"></div>
+                                            <div class="form-group"><label>Phone</label><input type="text" id="iClientPhone"></div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Billing Address</label><textarea id="iBillingAddress" rows="2"></textarea></div>
+                                            <div class="form-group"><label>Shipping Address</label><textarea id="iShippingAddress" rows="2"></textarea></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Line Items</div>
+                                        <table class="items-table">
+                                            <thead><tr><th>Description</th><th style="width:80px">Rate</th><th style="width:50px">Qty</th><th style="width:70px">GST%</th><th style="width:100px" class="amount-col">Amount</th><th style="width:40px"></th></tr></thead>
+                                            <tbody id="iItemsBody"></tbody>
+                                        </table>
+                                        <button class="btn btn-outline btn-sm" onclick="addInvoiceItem()" style="margin-top:0.5rem;"><i class="fas fa-plus"></i> Add Item</button>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Tax & Totals</div>
+                                        <div class="form-row three">
+                                            <div class="form-group"><label>Total Discount (₹)</label><input type="number" id="iDiscount" value="0" oninput="recalcInvoice()"></div>
+                                            <div class="form-group"><label>Additional Charges (₹)</label><input type="number" id="iAdditional" value="0" oninput="recalcInvoice()"></div>
+                                            <div class="form-group"><label>Tax Type</label>
+                                                <select id="iTaxType" onchange="recalcInvoice()">
+                                                    <option value="local">Local (CGST + SGST)</option>
+                                                    <option value="interstate">Interstate (IGST)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="totals-box" id="iTotals"></div>
+                                        <div class="form-group" style="margin-top:0.75rem;"><label>Amount in Words</label><input type="text" id="iAmountWords" readonly style="background:#f8fafc;"></div>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Bank Details</div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Account Holder</label><input type="text" id="iBankHolder" value="GridNest Solution"></div>
+                                            <div class="form-group"><label>Bank Name</label><input type="text" id="iBankName"></div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>Account No</label><input type="text" id="iBankAccount"></div>
+                                            <div class="form-group"><label>IFSC Code</label><input type="text" id="iBankIfsc"></div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>SWIFT Code</label><input type="text" id="iBankSwift"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Terms & Notes</div>
+                                        <div class="form-group"><label>Terms & Conditions</label><textarea id="iTerms" rows="3"></textarea></div>
+                                        <div class="form-group"><label>Notes</label><textarea id="iNotes" rows="2"></textarea></div>
+                                    </div>
+                                </div>
+                                <!-- Preview Column -->
+                                <div class="sticky-preview">
+                                    <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+                                        <button class="btn btn-outline btn-sm" onclick="printInvoice()"><i class="fas fa-print"></i> Print</button>
+                                        <button class="btn btn-success btn-sm" onclick="downloadInvoicePDF()"><i class="fas fa-download"></i> PDF</button>
+                                    </div>
+                                    <div class="preview-container" id="invoicePreviewContainer"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Invoice Detail -->
+                        <div id="invoiceDetailSection" style="display:none;">
+                            <div class="page-header">
+                                <h2 id="invoiceDetailTitle">Invoice Detail</h2>
+                                <div class="page-header-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="showInvoiceList()">← Back</button>
+                                    <button class="btn btn-primary btn-sm" onclick="editCurrentInvoice()"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteInvoice()"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </div>
+                            <div class="two-col preview-col">
+                                <div>
+                                    <div class="form-card" id="invoiceDetailInfo"></div>
+                                </div>
+                                <div class="sticky-preview">
+                                    <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+                                        <button class="btn btn-outline btn-sm" onclick="printInvoice()"><i class="fas fa-print"></i> Print</button>
+                                        <button class="btn btn-success btn-sm" onclick="downloadInvoicePDF()"><i class="fas fa-download"></i> PDF</button>
+                                    </div>
+                                    <div class="preview-container" id="invoiceDetailPreview"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="newsletterBody"></tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -1111,6 +1631,635 @@
         document.getElementById('loginPassword').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') document.getElementById('loginForm').dispatchEvent(new Event('submit'));
         });
+
+        // ====================== VIEW SWITCHING ======================
+        function switchView(viewId, el) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+            if (el) el.classList.add('active');
+            const titles = { 'dashboard-view': 'Dashboard', 'proposals-view': 'Proposals', 'invoices-view': 'Invoices' };
+            document.getElementById('viewTitle').textContent = titles[viewId] || 'Dashboard';
+            if (viewId === 'proposals-view') { showProposalList(); fetchProposals(); fetchProposalStats(); }
+            if (viewId === 'invoices-view') { showInvoiceList(); fetchInvoices(); fetchInvoiceStats(); }
+            document.getElementById('sidebar').classList.remove('open');
+        }
+
+        // ====================== NUMBER TO WORDS (Indian) ======================
+        function numberToWords(num) {
+            if (num === 0) return 'INR Zero Only';
+            const ones = ['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
+            const tens = ['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+            function conv(n) {
+                if (n === 0) return '';
+                if (n < 20) return ones[n];
+                if (n < 100) return tens[Math.floor(n/10)] + (n%10 ? ' ' + ones[n%10] : '');
+                return ones[Math.floor(n/100)] + ' Hundred' + (n%100 ? ' and ' + conv(n%100) : '');
+            }
+            let r = '';
+            if (num >= 10000000) { r += conv(Math.floor(num/10000000)) + ' Crore '; num %= 10000000; }
+            if (num >= 100000) { r += conv(Math.floor(num/100000)) + ' Lakh '; num %= 100000; }
+            if (num >= 1000) { r += conv(Math.floor(num/1000)) + ' Thousand '; num %= 1000; }
+            if (num > 0) r += conv(num);
+            return 'INR ' + r.trim() + ' Only';
+        }
+
+        // ====================== GENERIC CSV DOWNLOAD ======================
+        function downloadFile(content, filename, type) {
+            const blob = new Blob(['\uFEFF' + content], { type: type + ';charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = filename;
+            document.body.appendChild(a); a.click();
+            document.body.removeChild(a); URL.revokeObjectURL(url);
+        }
+
+        // ====================== PROPOSAL MODULE ======================
+        let proposalsData = [];
+        let currentProposalData = null;
+        const PLAN_FEATURES = {
+            standard: {
+                name: 'Standard Website', price: 12999,
+                features: ['1-5 Page Website','Mobile Responsive Design','Premium Template-Based Design','Branding & Content Customization','Basic SEO Setup','Booking Engine Connection','Contact Form','WhatsApp Chat Button','Google Maps Embed','Social Media Links','SSL Certificate','1 Month Free Support','Free Consultation & Project Planning'],
+                support: '1 Month Free Support'
+            },
+            'custom-premium': {
+                name: 'Custom Premium Website', price: 19999,
+                features: ['Fully Custom Website Design','Up to 10 Pages','Premium UI/UX Design','Advanced SEO Optimization','Booking Engine Connection','Contact Form + Lead Management','WhatsApp Chat Button','Google Maps Embed','Google Reviews Widget','Google Analytics Setup','Social Media Links','Google Business Profile Setup','Premium Animations','Mobile & Tablet Optimized','Priority Email Support','3 Months Free Support','Free Consultation & Project Planning'],
+                support: '3 Months Free Support'
+            }
+        };
+
+        function onPlanChange() {
+            const plan = document.getElementById('pPlan').value;
+            const info = PLAN_FEATURES[plan];
+            const tbody = document.getElementById('pItemsBody');
+            tbody.innerHTML = '';
+            addProposalItem('Website Development', info.price);
+            addProposalItem('Domain', 0);
+            addProposalItem('Hosting', 0);
+            addProposalItem('Business Email', 0);
+            recalcProposal();
+            updateProposalPreview();
+        }
+
+        function addProposalItem(title, amount) {
+            const tbody = document.getElementById('pItemsBody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = '<td><input type="text" data-field="title" value="' + (title||'') + '" oninput="recalcProposal();updateProposalPreview()"></td><td><input type="number" data-field="amount" value="' + (amount||0) + '" oninput="recalcProposal();updateProposalPreview()"></td><td><button class="btn-remove" onclick="this.closest(\'tr\').remove();recalcProposal();updateProposalPreview()"><i class="fas fa-times"></i></button></td>';
+            tbody.appendChild(tr);
+        }
+
+        function addProposalExtra(title, amount) {
+            const tbody = document.getElementById('pExtraBody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = '<td><input type="text" data-field="title" value="' + (title||'') + '" oninput="recalcProposal();updateProposalPreview()"></td><td><input type="number" data-field="amount" value="' + (amount||0) + '" oninput="recalcProposal();updateProposalPreview()"></td><td><button class="btn-remove" onclick="this.closest(\'tr\').remove();recalcProposal();updateProposalPreview()"><i class="fas fa-times"></i></button></td>';
+            tbody.appendChild(tr);
+        }
+
+        function getProposalItems() {
+            return Array.from(document.getElementById('pItemsBody').querySelectorAll('tr')).map(function(r) {
+                return { title: r.querySelector('input[data-field="title"]').value, amount: parseFloat(r.querySelector('input[data-field="amount"]').value)||0, category: 'core' };
+            });
+        }
+
+        function getProposalExtras() {
+            return Array.from(document.getElementById('pExtraBody').querySelectorAll('tr')).map(function(r) {
+                return { title: r.querySelector('input[data-field="title"]').value, amount: parseFloat(r.querySelector('input[data-field="amount"]').value)||0 };
+            });
+        }
+
+        function recalcProposal() {
+            var items = getProposalItems(), extras = getProposalExtras();
+            var subtotal = items.reduce(function(s,i){return s+i.amount},0) + extras.reduce(function(s,e){return s+e.amount},0);
+            var gstPct = parseFloat(document.getElementById('pGst').value)||0;
+            var discount = parseFloat(document.getElementById('pDiscount').value)||0;
+            var taxable = subtotal - discount;
+            var gstAmount = taxable * gstPct / 100;
+            var grand = taxable + gstAmount;
+            document.getElementById('pTotals').innerHTML = '<div>Subtotal: \u20B9' + subtotal.toLocaleString('en-IN') + '</div><div>Discount: -\u20B9' + discount.toLocaleString('en-IN') + '</div><div>GST (' + gstPct + '%): \u20B9' + gstAmount.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div><div class="grand">Grand Total: \u20B9' + grand.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div>';
+            return { subtotal: subtotal, gstPct: gstPct, gstAmount: gstAmount, discount: discount, grand: grand };
+        }
+
+        function onPaymentTermsChange() { document.getElementById('pPaymentTermsCustomGroup').style.display = document.getElementById('pPaymentTerms').value === 'custom' ? 'block' : 'none'; }
+        function onValidityChange() { document.getElementById('pValidityCustomGroup').style.display = document.getElementById('pValidity').value === 'custom' ? 'block' : 'none'; }
+
+        function updateProposalPreview() {
+            var plan = document.getElementById('pPlan').value;
+            var info = PLAN_FEATURES[plan];
+            var items = getProposalItems(), extras = getProposalExtras();
+            var calc = recalcProposal();
+            var company = document.getElementById('pClientCompany').value || 'Client Name';
+            var pNum = document.getElementById('pNumber').value || 'GNWS-2026-001';
+            var pDate = document.getElementById('pDate').value || new Date().toISOString().split('T')[0];
+            var featuresHtml = info.features.map(function(f){return '<li>'+f+'</li>'}).join('');
+            var itemsHtml = items.filter(function(i){return i.amount>0}).map(function(it){return '<tr><td>'+it.title+'</td><td class="right">\u20B9'+it.amount.toLocaleString('en-IN')+'</td></tr>'}).join('');
+            var extrasHtml = extras.filter(function(e){return e.title&&e.amount>0}).map(function(e){return '<tr><td>'+e.title+'</td><td class="right">\u20B9'+e.amount.toLocaleString('en-IN')+'</td></tr>'}).join('');
+            var payTerms = document.getElementById('pPaymentTerms').value;
+            var payText = '50% Advance, 50% on Delivery';
+            if (payTerms === '100-advance') payText = '100% Advance Payment';
+            if (payTerms === 'custom') payText = document.getElementById('pPaymentTermsCustom').value || 'Custom Terms';
+            var validity = document.getElementById('pValidity').value;
+            var validText = validity === 'custom' ? (document.getElementById('pValidityCustom').value || '30') + ' Days' : validity + ' Days';
+            var notesVal = document.getElementById('pNotes').value;
+            var notesHtml = notesVal ? '<div class="preview-section"><h3>Notes</h3><p style="font-size:9pt;white-space:pre-line;">'+notesVal+'</p></div>' : '';
+
+            document.getElementById('proposalPreviewContainer').innerHTML = '<div class="preview-page" id="proposalPrintArea"><div class="watermark"><img src="Image/Icon.jpg" alt=""></div><div style="text-align:center;padding-top:60px;"><img src="Image/New_Logo.jpeg" class="preview-logo" style="max-height:70px;"><h1 style="font-size:22pt;color:#0f172a;margin:1rem 0 0.25rem;">GridNest Web Solutions</h1><p style="color:#64748b;font-size:9pt;">Building Digital Success</p><div style="margin-top:2.5rem;padding:1rem;background:#f8fafc;border-radius:0.5rem;display:inline-block;"><p style="font-size:10pt;color:#475569;">Website Proposal for</p><h2 style="font-size:16pt;color:#2563EB;margin:0.25rem 0;">'+company+'</h2></div><div style="margin-top:1.5rem;font-size:9pt;color:#64748b;"><p>Proposal No: <strong>'+pNum+'</strong></p><p>Date: <strong>'+pDate+'</strong></p><p>Plan: <strong>'+info.name+'</strong></p></div></div><div class="preview-section" style="margin-top:2rem;"><h3>About GridNest</h3><p style="font-size:9pt;color:#475569;">GridNest Web Solutions is a professional web design and development agency specializing in creating powerful digital experiences for businesses. We combine modern design with cutting-edge technology to deliver websites that drive growth and success.</p></div><div class="preview-section"><h3>Why Choose GridNest</h3><ul class="preview-features" style="font-size:9pt;color:#475569;"><li>Professional & Modern Design</li><li>Mobile-First Responsive Approach</li><li>SEO Optimized Architecture</li><li>Fast Loading & Performance Focused</li><li>Dedicated Support & Maintenance</li><li>Transparent Pricing, No Hidden Costs</li></ul></div><div class="preview-section"><h3>'+info.name+' \u2014 Features</h3><ul class="preview-features">'+featuresHtml+'</ul></div><div class="preview-section"><h3>Project Investment</h3><table class="preview-table"><thead><tr><th>Item</th><th class="right">Amount</th></tr></thead><tbody>'+itemsHtml+extrasHtml+'<tr><td>Discount</td><td class="right">-\u20B9'+calc.discount.toLocaleString('en-IN')+'</td></tr><tr><td>GST ('+calc.gstPct+'%)</td><td class="right">\u20B9'+calc.gstAmount.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr><tr class="total-row"><td><strong>Grand Total</strong></td><td class="right"><strong>\u20B9'+calc.grand.toLocaleString('en-IN',{minimumFractionDigits:2})+'</strong></td></tr></tbody></table></div><div class="preview-section"><h3>Payment Terms</h3><p style="font-size:9pt;">'+payText+'</p></div><div class="preview-section"><h3>Document Validity</h3><p style="font-size:9pt;">This proposal is valid for <strong>'+validText+'</strong> from the date of issue.</p></div>'+notesHtml+'<div class="preview-section"><h3>Terms & Conditions</h3><ol style="font-size:8pt;color:#475569;padding-left:1.25rem;"><li>Payment is due as per the terms mentioned above.</li><li>Any additional features outside the selected plan will be charged separately.</li><li>Domain, Hosting & Business Email costs are separate if required.</li><li>Source code ownership transfers upon full payment.</li><li>Timeline begins after advance payment and content availability.</li><li>Revision scope is limited to the selected plan specifications.</li></ol></div><div class="preview-signature"><div class="line">Authorized Signatory</div><p style="font-size:8pt;color:#64748b;margin-top:0.25rem;">For GridNest Web Solutions</p></div><div class="preview-footer">This is a computer-generated proposal. For queries, contact Contact@gridnest.com | +91 9667195689</div></div>';
+        }
+
+        function showProposalList() {
+            document.getElementById('proposalListSection').style.display = 'block';
+            document.getElementById('proposalFormSection').style.display = 'none';
+            document.getElementById('proposalDetailSection').style.display = 'none';
+        }
+
+        function showProposalForm(proposal) {
+            document.getElementById('proposalListSection').style.display = 'none';
+            document.getElementById('proposalFormSection').style.display = 'block';
+            document.getElementById('proposalDetailSection').style.display = 'none';
+            document.getElementById('pItemsBody').innerHTML = '';
+            document.getElementById('pExtraBody').innerHTML = '';
+            if (proposal) {
+                document.getElementById('proposalFormTitle').textContent = 'Edit Proposal';
+                document.getElementById('proposalId').value = proposal._id;
+                document.getElementById('pClientCompany').value = proposal.client?.company || '';
+                document.getElementById('pClientEmail').value = proposal.client?.email || '';
+                document.getElementById('pClientPhone').value = proposal.client?.phone || '';
+                document.getElementById('pClientGst').value = proposal.client?.gstNumber || '';
+                document.getElementById('pClientAddress').value = proposal.client?.address || '';
+                document.getElementById('pNumber').value = proposal.proposalNumber;
+                document.getElementById('pDate').value = proposal.proposalDate ? new Date(proposal.proposalDate).toISOString().split('T')[0] : '';
+                document.getElementById('pPlan').value = proposal.plan || 'standard';
+                document.getElementById('pGst').value = proposal.gst ?? 18;
+                document.getElementById('pDiscount').value = proposal.discount ?? 0;
+                document.getElementById('pStatus').value = proposal.status || 'draft';
+                document.getElementById('pPaymentTerms').value = proposal.paymentTerms || '50-advance';
+                document.getElementById('pPaymentTermsCustom').value = proposal.paymentTermsCustom || '';
+                document.getElementById('pValidity').value = proposal.validity || '15';
+                document.getElementById('pValidityCustom').value = proposal.validityCustom || '';
+                document.getElementById('pNotes').value = proposal.notes || '';
+                (proposal.items || []).forEach(function(it) { addProposalItem(it.title, it.amount); });
+                (proposal.additionalCharges || []).forEach(function(e) { addProposalExtra(e.title, e.amount); });
+            } else {
+                document.getElementById('proposalFormTitle').textContent = 'New Proposal';
+                document.getElementById('proposalId').value = '';
+                var year = new Date().getFullYear();
+                document.getElementById('pNumber').value = 'GNWS-' + year + '-001';
+                document.getElementById('pDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('pClientCompany').value = '';
+                document.getElementById('pClientEmail').value = '';
+                document.getElementById('pClientPhone').value = '';
+                document.getElementById('pClientGst').value = '';
+                document.getElementById('pClientAddress').value = '';
+                document.getElementById('pPlan').value = 'standard';
+                document.getElementById('pGst').value = 18;
+                document.getElementById('pDiscount').value = 0;
+                document.getElementById('pStatus').value = 'draft';
+                document.getElementById('pPaymentTerms').value = '50-advance';
+                document.getElementById('pValidity').value = '15';
+                document.getElementById('pNotes').value = '';
+            }
+            onPaymentTermsChange();
+            onValidityChange();
+            recalcProposal();
+            updateProposalPreview();
+        }
+
+        function newProposalData() {
+            return {
+                proposalNumber: document.getElementById('pNumber').value,
+                client: { company: document.getElementById('pClientCompany').value, email: document.getElementById('pClientEmail').value, phone: document.getElementById('pClientPhone').value, address: document.getElementById('pClientAddress').value, gstNumber: document.getElementById('pClientGst').value },
+                proposalDate: document.getElementById('pDate').value,
+                plan: document.getElementById('pPlan').value,
+                items: getProposalItems(),
+                additionalCharges: getProposalExtras(),
+                gst: parseFloat(document.getElementById('pGst').value)||0,
+                discount: parseFloat(document.getElementById('pDiscount').value)||0,
+                paymentTerms: document.getElementById('pPaymentTerms').value,
+                paymentTermsCustom: document.getElementById('pPaymentTermsCustom').value,
+                validity: document.getElementById('pValidity').value,
+                validityCustom: document.getElementById('pValidityCustom').value,
+                notes: document.getElementById('pNotes').value,
+                status: document.getElementById('pStatus').value,
+                subtotal: 0, gstAmount: 0, discountAmount: 0, grandTotal: 0
+            };
+        }
+
+        async function saveProposal() {
+            var id = document.getElementById('proposalId').value;
+            var data = newProposalData();
+            var calc = recalcProposal();
+            data.subtotal = calc.subtotal; data.gstAmount = calc.gstAmount; data.discountAmount = calc.discount; data.grandTotal = calc.grand;
+            try {
+                var res = await fetch(API + '/proposals' + (id ? '/' + id : ''), { method: id ? 'PUT' : 'POST', headers: getHeaders(), body: JSON.stringify(data) });
+                var json = await res.json();
+                if (json.success) { toast(json.message); showProposalList(); fetchProposals(); fetchProposalStats(); }
+                else toast(json.message, 'error');
+            } catch (e) { toast('Error: ' + e.message, 'error'); }
+        }
+
+        async function fetchProposals() {
+            try {
+                var status = document.getElementById('proposalStatusFilter').value;
+                var search = document.getElementById('proposalSearch').value;
+                var params = new URLSearchParams();
+                if (status) params.set('status', status);
+                if (search) params.set('search', search);
+                var res = await fetch(API + '/proposals?' + params, { headers: getHeaders() });
+                var json = await res.json();
+                if (!json.success) throw new Error(json.message);
+                proposalsData = json.data || [];
+                renderProposals();
+            } catch (e) { document.getElementById('proposalsBody').innerHTML = '<tr><td colspan="7"><div class="error-msg">Error: '+e.message+'</div></td></tr>'; }
+        }
+
+        function renderProposals() {
+            var tbody = document.getElementById('proposalsBody');
+            if (!proposalsData.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty">No proposals yet</div></td></tr>'; return; }
+            var planLabels = { standard: 'Standard', 'custom-premium': 'Custom Premium' };
+            tbody.innerHTML = proposalsData.map(function(p) {
+                return '<tr><td><strong>'+p.proposalNumber+'</strong>'+(p.revision>1?' <small style="color:#64748b;">R'+p.revision+'</small>':'')+'</td><td>'+(p.client?.company||'-')+'</td><td>'+(planLabels[p.plan]||p.plan)+'</td><td>\u20B9'+(p.grandTotal||0).toLocaleString('en-IN')+'</td><td><span class="badge badge-'+p.status+'">'+p.status+'</span></td><td>'+new Date(p.createdAt).toLocaleDateString()+'</td><td><button class="btn btn-outline btn-sm" onclick="viewProposal(\''+p._id+'\')" title="View"><i class="fas fa-eye"></i></button> <button class="btn btn-outline btn-sm" onclick="editProposal(\''+p._id+'\')" title="Edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="deleteProposalById(\''+p._id+'\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
+            }).join('');
+        }
+
+        async function fetchProposalStats() {
+            try {
+                var res = await fetch(API + '/proposals/stats', { headers: getHeaders() });
+                var json = await res.json();
+                if (!json.success) return;
+                var d = json.data;
+                document.getElementById('proposalStats').innerHTML = '<div class="stat-mini"><div class="num">'+d.total+'</div><div class="label">Total</div></div><div class="stat-mini"><div class="num">'+d.draft+'</div><div class="label">Draft</div></div><div class="stat-mini"><div class="num">'+d.sent+'</div><div class="label">Sent</div></div><div class="stat-mini green"><div class="num">'+d.approved+'</div><div class="label">Approved</div></div><div class="stat-mini purple"><div class="num">'+d.converted+'</div><div class="label">Converted</div></div><div class="stat-mini red"><div class="num">'+d.rejected+'</div><div class="label">Rejected</div></div>';
+            } catch (e) {}
+        }
+
+        async function viewProposal(id) {
+            try {
+                var res = await fetch(API + '/proposals/' + id, { headers: getHeaders() });
+                var json = await res.json();
+                if (!json.success) return toast(json.message, 'error');
+                currentProposalData = json.data;
+                showProposalDetail(json.data);
+            } catch (e) { toast('Error', 'error'); }
+        }
+
+        function showProposalDetail(p) {
+            document.getElementById('proposalListSection').style.display = 'none';
+            document.getElementById('proposalFormSection').style.display = 'none';
+            document.getElementById('proposalDetailSection').style.display = 'block';
+            document.getElementById('proposalDetailTitle').textContent = p.proposalNumber;
+            var planLabels = { standard: 'Standard Website', 'custom-premium': 'Custom Premium Website' };
+            document.getElementById('proposalDetailInfo').innerHTML = '<div class="form-card-title">Proposal Details</div><div class="form-row"><div><strong>Client:</strong> '+(p.client?.company||'-')+'</div><div><strong>Email:</strong> '+(p.client?.email||'-')+'</div></div><div class="form-row"><div><strong>Phone:</strong> '+(p.client?.phone||'-')+'</div><div><strong>GST:</strong> '+(p.client?.gstNumber||'-')+'</div></div><div class="form-row"><div><strong>Plan:</strong> '+(planLabels[p.plan]||p.plan)+'</div><div><strong>Status:</strong> <span class="badge badge-'+p.status+'">'+p.status+'</span></div></div><div class="form-row"><div><strong>Amount:</strong> \u20B9'+(p.grandTotal||0).toLocaleString('en-IN')+'</div><div><strong>Date:</strong> '+new Date(p.proposalDate||p.createdAt).toLocaleDateString()+'</div></div>';
+            document.getElementById('convertToInvoiceBtn').style.display = (p.status !== 'converted') ? 'inline-flex' : 'none';
+            buildProposalDetailPreview(p);
+        }
+
+        function buildProposalDetailPreview(p) {
+            var info = PLAN_FEATURES[p.plan] || PLAN_FEATURES.standard;
+            var featuresHtml = info.features.map(function(f){return '<li>'+f+'</li>'}).join('');
+            var itemsHtml = (p.items||[]).filter(function(i){return i.amount>0}).map(function(it){return '<tr><td>'+it.title+'</td><td class="right">\u20B9'+it.amount.toLocaleString('en-IN')+'</td></tr>'}).join('');
+            var extrasHtml = (p.additionalCharges||[]).filter(function(e){return e.title&&e.amount>0}).map(function(e){return '<tr><td>'+e.title+'</td><td class="right">\u20B9'+e.amount.toLocaleString('en-IN')+'</td></tr>'}).join('');
+            var payText = '50% Advance, 50% on Delivery';
+            if (p.paymentTerms === '100-advance') payText = '100% Advance Payment';
+            if (p.paymentTerms === 'custom') payText = p.paymentTermsCustom || 'Custom Terms';
+            var validText = p.validity === 'custom' ? (p.validityCustom || '30') + ' Days' : (p.validity || '15') + ' Days';
+            var notesHtml = p.notes ? '<div class="preview-section"><h3>Notes</h3><p style="font-size:9pt;white-space:pre-line;">'+p.notes+'</p></div>' : '';
+
+            document.getElementById('proposalDetailPreview').innerHTML = '<div class="preview-page" id="proposalPrintArea"><div class="watermark"><img src="Image/Icon.jpg" alt=""></div><div style="text-align:center;padding-top:60px;"><img src="Image/New_Logo.jpeg" class="preview-logo" style="max-height:70px;"><h1 style="font-size:22pt;color:#0f172a;margin:1rem 0 0.25rem;">GridNest Web Solutions</h1><p style="color:#64748b;font-size:9pt;">Building Digital Success</p><div style="margin-top:2.5rem;padding:1rem;background:#f8fafc;border-radius:0.5rem;display:inline-block;"><p style="font-size:10pt;color:#475569;">Website Proposal for</p><h2 style="font-size:16pt;color:#2563EB;margin:0.25rem 0;">'+(p.client?.company||'Client')+'</h2></div><div style="margin-top:1.5rem;font-size:9pt;color:#64748b;"><p>Proposal No: <strong>'+p.proposalNumber+'</strong></p><p>Date: <strong>'+new Date(p.proposalDate||p.createdAt).toLocaleDateString()+'</strong></p><p>Plan: <strong>'+info.name+'</strong></p></div></div><div class="preview-section" style="margin-top:2rem;"><h3>About GridNest</h3><p style="font-size:9pt;color:#475569;">GridNest Web Solutions is a professional web design and development agency specializing in creating powerful digital experiences for businesses.</p></div><div class="preview-section"><h3>Why Choose GridNest</h3><ul class="preview-features" style="font-size:9pt;color:#475569;"><li>Professional & Modern Design</li><li>Mobile-First Responsive Approach</li><li>SEO Optimized Architecture</li><li>Fast Loading & Performance Focused</li><li>Dedicated Support & Maintenance</li><li>Transparent Pricing, No Hidden Costs</li></ul></div><div class="preview-section"><h3>'+info.name+' \u2014 Features</h3><ul class="preview-features">'+featuresHtml+'</ul></div><div class="preview-section"><h3>Project Investment</h3><table class="preview-table"><thead><tr><th>Item</th><th class="right">Amount</th></tr></thead><tbody>'+itemsHtml+extrasHtml+'<tr><td>Discount</td><td class="right">-\u20B9'+(p.discount||0).toLocaleString('en-IN')+'</td></tr><tr><td>GST ('+(p.gst||0)+'%)</td><td class="right">\u20B9'+(p.gstAmount||0).toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr><tr class="total-row"><td><strong>Grand Total</strong></td><td class="right"><strong>\u20B9'+(p.grandTotal||0).toLocaleString('en-IN',{minimumFractionDigits:2})+'</strong></td></tr></tbody></table></div><div class="preview-section"><h3>Payment Terms</h3><p style="font-size:9pt;">'+payText+'</p></div><div class="preview-section"><h3>Document Validity</h3><p style="font-size:9pt;">This proposal is valid for <strong>'+validText+'</strong> from the date of issue.</p></div>'+notesHtml+'<div class="preview-section"><h3>Terms & Conditions</h3><ol style="font-size:8pt;color:#475569;padding-left:1.25rem;"><li>Payment is due as per the terms mentioned above.</li><li>Any additional features outside the selected plan will be charged separately.</li><li>Domain, Hosting & Business Email costs are separate if required.</li><li>Source code ownership transfers upon full payment.</li><li>Timeline begins after advance payment and content availability.</li></ol></div><div class="preview-signature"><div class="line">Authorized Signatory</div><p style="font-size:8pt;color:#64748b;margin-top:0.25rem;">For GridNest Web Solutions</p></div><div class="preview-footer">This is a computer-generated proposal. Contact Contact@gridnest.com | +91 9667195689</div></div>';
+        }
+
+        async function editProposal(id) {
+            var res = await fetch(API + '/proposals/' + id, { headers: getHeaders() });
+            var json = await res.json();
+            if (json.success) showProposalForm(json.data);
+        }
+        function editCurrentProposal() { if (currentProposalData) showProposalForm(currentProposalData); }
+
+        async function createProposalRevision() {
+            if (!currentProposalData) return;
+            try {
+                var res = await fetch(API + '/proposals/' + currentProposalData._id + '/revise', { method: 'POST', headers: getHeaders() });
+                var json = await res.json();
+                if (json.success) { toast(json.message); showProposalForm(json.data); fetchProposals(); }
+                else toast(json.message, 'error');
+            } catch (e) { toast('Error', 'error'); }
+        }
+
+        async function convertProposalToInvoice() {
+            if (!currentProposalData || currentProposalData.status === 'converted') return;
+            if (!confirm('Convert this proposal to a Proforma Invoice?')) return;
+            try {
+                var res = await fetch(API + '/proposals/' + currentProposalData._id + '/convert', { method: 'POST', headers: getHeaders() });
+                var json = await res.json();
+                if (json.success) { toast(json.message); currentProposalData.status = 'converted'; document.getElementById('convertToInvoiceBtn').style.display = 'none'; fetchProposals(); fetchProposalStats(); }
+                else toast(json.message, 'error');
+            } catch (e) { toast('Error', 'error'); }
+        }
+
+        async function deleteProposal() {
+            if (!currentProposalData) return;
+            if (!confirm('Delete this proposal?')) return;
+            try {
+                var res = await fetch(API + '/proposals/' + currentProposalData._id, { method: 'DELETE', headers: getHeaders() });
+                var json = await res.json();
+                if (json.success) { toast(json.message); showProposalList(); fetchProposals(); fetchProposalStats(); }
+                else toast(json.message, 'error');
+            } catch (e) { toast('Error', 'error'); }
+        }
+
+        async function deleteProposalById(id) {
+            if (!confirm('Delete this proposal?')) return;
+            try {
+                var res = await fetch(API + '/proposals/' + id, { method: 'DELETE', headers: getHeaders() });
+                var json = await res.json();
+                if (json.success) { toast(json.message); fetchProposals(); fetchProposalStats(); }
+                else toast(json.message, 'error');
+            } catch (e) { toast('Error', 'error'); }
+        }
+
+        function downloadProposalCSV() {
+            if (!proposalsData.length) return toast('No data to download');
+            var headers = ['Number','Revision','Client','Email','Phone','Plan','Subtotal','GST%','GST Amount','Discount','Grand Total','Status','Date'];
+            var rows = proposalsData.map(function(p) { return [p.proposalNumber,p.revision,p.client?.company||'',p.client?.email||'',p.client?.phone||'',p.plan,p.subtotal||0,p.gst||0,p.gstAmount||0,p.discount||0,p.grandTotal||0,p.status,new Date(p.createdAt).toISOString()]; });
+            var csv = [headers.join(','), ...rows.map(function(r){return r.map(function(v){return '"'+v+'"'}).join(',')})].join('\n');
+            downloadFile(csv, 'proposals.csv', 'text/csv');
+            toast('Proposals CSV downloaded');
+        }
+
+        function printProposal() {
+            var area = document.getElementById('proposalPrintArea');
+            if (!area) return;
+            var w = window.open('', '_blank');
+            w.document.write('<!DOCTYPE html><html><head><title>Proposal</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>@page{size:A4;margin:0;}body{margin:0;font-family:Inter,sans-serif;}.preview-page{width:210mm;min-height:297mm;padding:15mm;position:relative;overflow:hidden;font-size:10pt;line-height:1.5;color:#1a1a1a;}.watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none;z-index:0;}.watermark img{width:300px;} .preview-page>*{position:relative;z-index:1;}h1,h2,h3{margin:0;}table{width:100%;border-collapse:collapse;font-size:9pt;}th{background:#f1f5f9;padding:6px;text-align:left;border:1px solid #d1d5db;font-size:8pt;font-weight:600;}td{padding:6px;border:1px solid #d1d5db;}.right{text-align:right;}.total-row td{background:#f8fafc;font-weight:700;border-top:2px solid #0f172a;}ul,ol{padding-left:1.25rem;}li{font-size:9pt;padding:2px 0;}.preview-section{margin-bottom:12px;}.preview-section h3{font-size:11pt;font-weight:700;color:#0f172a;margin-bottom:4px;padding-bottom:3px;border-bottom:2px solid #2563EB;}.preview-logo{max-height:70px;}.preview-signature{margin-top:40px;text-align:right;}.preview-signature .line{border-top:1px solid #0f172a;width:200px;margin-left:auto;margin-top:40px;padding-top:4px;font-size:8pt;}.preview-footer{text-align:center;font-size:8pt;color:#64748b;margin-top:20px;padding-top:8px;border-top:1px solid #e2e8f0;}</style></head><body>' + area.outerHTML + '</body></html>');
+            w.document.close();
+            setTimeout(function(){ w.print(); w.close(); }, 500);
+        }
+        function downloadProposalPDF() { printProposal(); }
+
+        // ====================== INVOICE MODULE ======================
+        let invoicesData = [];
+        let currentInvoiceData = null;
+
+        function addInvoiceItem(desc, rate, qty, gstRate) {
+            var tbody = document.getElementById('iItemsBody');
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td><input type="text" data-field="desc" value="'+(desc||'')+'" oninput="recalcInvoice();updateInvoicePreview()"></td><td><input type="number" data-field="rate" value="'+(rate||0)+'" oninput="recalcInvoice();updateInvoicePreview()"></td><td><input type="number" data-field="qty" value="'+(qty||1)+'" min="1" oninput="recalcInvoice();updateInvoicePreview()"></td><td><input type="number" data-field="gst" value="'+(gstRate||18)+'" oninput="recalcInvoice();updateInvoicePreview()"></td><td class="amount-col" data-field="amount">\u20B90</td><td><button class="btn-remove" onclick="this.closest(\'tr\').remove();recalcInvoice();updateInvoicePreview()"><i class="fas fa-times"></i></button></td>';
+            tbody.appendChild(tr);
+            recalcInvoice();
+            updateInvoicePreview();
+        }
+
+        function getInvoiceItems() {
+            return Array.from(document.getElementById('iItemsBody').querySelectorAll('tr')).map(function(r) {
+                var rate = parseFloat(r.querySelector('input[data-field="rate"]').value)||0;
+                var qty = parseInt(r.querySelector('input[data-field="qty"]').value)||1;
+                var gst = parseFloat(r.querySelector('input[data-field="gst"]').value)||18;
+                var amount = rate * qty;
+                r.querySelector('td[data-field="amount"]').textContent = '\u20B9' + amount.toLocaleString('en-IN');
+                return { description: r.querySelector('input[data-field="desc"]').value, hsnSac: document.getElementById('iHsn').value||'998314', rate: rate, quantity: qty, gstRate: gst, amount: amount };
+            });
+        }
+
+        function recalcInvoice() {
+            var items = getInvoiceItems();
+            var taxType = document.getElementById('iTaxType').value;
+            var discount = parseFloat(document.getElementById('iDiscount').value)||0;
+            var additional = parseFloat(document.getElementById('iAdditional').value)||0;
+            var taxable = items.reduce(function(s,i){return s+i.amount},0);
+            var avgGst = items.length ? items.reduce(function(s,i){return s+i.gstRate},0)/items.length : 18;
+            var totalTax = taxable * avgGst / 100;
+            var cgst = 0, sgst = 0, igst = 0;
+            if (taxType === 'local') { cgst = totalTax / 2; sgst = totalTax / 2; } else { igst = totalTax; }
+            var grand = taxable + totalTax - discount + additional;
+            document.getElementById('iTotals').innerHTML = '<div>Taxable Amount: \u20B9'+taxable.toLocaleString('en-IN',{minimumFractionDigits:2})+'</div>' + (taxType==='local' ? '<div>CGST ('+avgGst/2+'%): \u20B9'+cgst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</div><div>SGST ('+avgGst/2+'%): \u20B9'+sgst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</div>' : '<div>IGST ('+avgGst+'%): \u20B9'+igst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</div>') + '<div>Discount: -\u20B9'+discount.toLocaleString('en-IN')+'</div>' + (additional>0 ? '<div>Additional: +\u20B9'+additional.toLocaleString('en-IN')+'</div>' : '') + '<div class="grand">Grand Total: \u20B9'+grand.toLocaleString('en-IN',{minimumFractionDigits:2})+'</div>';
+            document.getElementById('iAmountWords').value = numberToWords(Math.round(grand));
+            return { taxable: taxable, cgst: Math.round(cgst*100)/100, sgst: Math.round(sgst*100)/100, igst: Math.round(igst*100)/100, totalTax: Math.round(totalTax*100)/100, discount: discount, additional: additional, grand: grand };
+        }
+
+        function updateInvoicePreview() {
+            var items = getInvoiceItems();
+            var calc = recalcInvoice();
+            var company = document.getElementById('iClientCompany').value || 'Client Name';
+            var invNo = document.getElementById('iNumber').value || 'GNWS-INV-2026-001';
+            var invDate = document.getElementById('iDate').value || new Date().toISOString().split('T')[0];
+            var hsn = document.getElementById('iHsn').value || '998314';
+            var clientGst = document.getElementById('iClientGst').value || '';
+            var billing = document.getElementById('iBillingAddress').value || '';
+            var taxType = document.getElementById('iTaxType').value;
+            var avgGst = items.length ? items.reduce(function(s,i){return s+i.gstRate},0)/items.length : 18;
+            var holder = document.getElementById('iBankHolder').value || 'GridNest Solution';
+            var bank = document.getElementById('iBankName').value || '';
+            var acc = document.getElementById('iBankAccount').value || '';
+            var ifsc = document.getElementById('iBankIfsc').value || '';
+            var swift = document.getElementById('iBankSwift').value || '';
+            var terms = document.getElementById('iTerms').value || '';
+            var itemRows = items.map(function(it,idx) {
+                return '<tr><td class="center">'+(idx+1)+'</td><td>'+it.description+'</td><td class="center">'+hsn+'</td><td class="right">'+it.rate.toLocaleString('en-IN')+'</td><td class="center">'+it.quantity+'</td><td class="right">'+it.amount.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr>';
+            }).join('');
+
+            document.getElementById('invoicePreviewContainer').innerHTML = '<div class="preview-page" id="invoicePrintArea" style="font-size:9pt;padding:12mm;"><div style="text-align:center;font-size:14pt;font-weight:700;border-bottom:2px solid #000;padding-bottom:4px;margin-bottom:8px;">PROFORMA INVOICE</div><div class="invoice-header-grid" style="margin-bottom:0;"><div style="display:flex;gap:8px;align-items:flex-start;"><img src="Image/New_Logo.jpeg" style="max-height:45px;margin-top:2px;"><div><strong>GridNest Solution</strong><br>Osho Nagar, Kanaushi, Manak Nagar,<br>Lucknow 226023, Uttar Pradesh<br>GSTIN/UIN: ___________<br>State Name: Uttar Pradesh, Code: 09<br>Contact: +91 9667195689</div></div><div><table style="width:100%;border:none;font-size:8.5pt;"><tr><td style="border:none;font-weight:600;width:40%;">Invoice No.</td><td style="border:none;font-weight:700;">'+invNo+'</td></tr><tr><td style="border:none;font-weight:600;">Dated</td><td style="border:none;">'+invDate+'</td></tr><tr><td style="border:none;font-weight:600;">Mode/Terms of Payment</td><td style="border:none;">Advance</td></tr><tr><td style="border:none;font-weight:600;">Reference No. & Date</td><td style="border:none;">-</td></tr></table></div></div><div class="invoice-parties"><div><div class="label">Consignee (Ship to)</div><strong>'+company+'</strong><br>'+(billing||'-')+'<br>GSTIN/UIN: '+(clientGst||'-')+'<br>State Name: ___________</div><div><div class="label">Buyer (Bill to)</div><strong>'+company+'</strong><br>'+(billing||'-')+'<br>GSTIN/UIN: '+(clientGst||'-')+'<br>State Name: ___________<br>Place of Supply: ___________</div></div><table class="invoice-table"><thead><tr><th style="width:35px;">Sl<br>No.</th><th>Particulars</th><th style="width:65px;">HSN/SAC</th><th style="width:60px;">Rate</th><th style="width:35px;">per</th><th style="width:80px;">Amount</th></tr></thead><tbody>'+itemRows+'<tr><td colspan="5" class="right bold">Total</td><td class="right bold">\u20B9'+calc.taxable.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr></tbody></table><table class="invoice-tax-table"><thead><tr><th>HSN/SAC</th><th>Taxable Value</th>'+(taxType==='local'?'<th>CGST Rate</th><th>CGST Amt</th><th>SGST Rate</th><th>SGST Amt</th>':'<th>IGST Rate</th><th>IGST Amt</th>')+'<th>Total Tax</th></tr></thead><tbody><tr><td>'+hsn+'</td><td>'+calc.taxable.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td>'+(taxType==='local'?'<td>'+avgGst/2+'%</td><td>'+calc.cgst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td><td>'+avgGst/2+'%</td><td>'+calc.sgst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td>':'<td>'+avgGst+'%</td><td>'+calc.igst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td>')+'<td>'+calc.totalTax.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr><tr class="bold"><td>Total</td><td>'+calc.taxable.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td>'+(taxType==='local'?'<td></td><td>'+calc.cgst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td><td></td><td>'+calc.sgst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td>':'<td></td><td>'+calc.igst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td>')+'<td>'+calc.totalTax.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr></tbody></table><div style="text-align:right;font-size:10pt;font-weight:700;margin:6px 0;border:1px solid #000;padding:4px 8px;display:inline-block;float:right;">\u20B9'+calc.grand.toLocaleString('en-IN',{minimumFractionDigits:2})+'</div><div style="clear:both;"></div><div style="font-size:8.5pt;margin:4px 0;"><strong>Amount Chargeable (in words):</strong> '+numberToWords(Math.round(calc.grand))+'</div><div style="font-size:8pt;text-align:right;margin-bottom:4px;"><em>E. & O.E</em></div><div style="font-size:8.5pt;border-top:1px solid #000;padding-top:4px;"><strong>Terms & Conditions of Sales</strong><br><ol style="margin:4px 0;padding-left:20px;font-size:8pt;">'+(terms?terms.split('\n').map(function(t){return '<li>'+t+'</li>'}).join(''):'<li>All disputes subject to Lucknow jurisdiction.</li><li>Payment to be made within the specified terms.</li>')+'</ol></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;font-size:8.5pt;"><div><strong>Company\'s Bank Details</strong><br><table class="invoice-bank"><tr><td class="label">A/c Holder\'s Name:</td><td>'+holder+'</td></tr><tr><td class="label">Bank Name:</td><td>'+bank+'</td></tr><tr><td class="label">A/c No.:</td><td>'+acc+'</td></tr><tr><td class="label">Branch & IFSC Code:</td><td>'+ifsc+'</td></tr><tr><td class="label">SWIFT Code:</td><td>'+swift+'</td></tr></table></div><div style="text-align:right;"><div style="margin-top:40px;border-top:1px solid #000;width:180px;margin-left:auto;padding-top:4px;"><strong>for GridNest Solution</strong><br><span style="font-size:8pt;">Authorised Signatory</span></div></div></div><div style="text-align:center;font-size:7.5pt;color:#666;margin-top:8px;clear:both;">This is a Computer Generated Invoice</div></div>';
+        }
+
+        function showInvoiceList() {
+            document.getElementById('invoiceListSection').style.display = 'block';
+            document.getElementById('invoiceFormSection').style.display = 'none';
+            document.getElementById('invoiceDetailSection').style.display = 'none';
+        }
+
+        function showInvoiceForm(invoice) {
+            document.getElementById('invoiceListSection').style.display = 'none';
+            document.getElementById('invoiceFormSection').style.display = 'block';
+            document.getElementById('invoiceDetailSection').style.display = 'none';
+            document.getElementById('iItemsBody').innerHTML = '';
+            if (invoice) {
+                document.getElementById('invoiceFormTitle').textContent = 'Edit Invoice';
+                document.getElementById('invoiceId').value = invoice._id;
+                document.getElementById('iNumber').value = invoice.invoiceNumber;
+                document.getElementById('iDate').value = invoice.invoiceDate ? new Date(invoice.invoiceDate).toISOString().split('T')[0] : '';
+                document.getElementById('iStatus').value = invoice.status || 'draft';
+                document.getElementById('iHsn').value = (invoice.items && invoice.items[0]) ? invoice.items[0].hsnSac : '998314';
+                document.getElementById('iClientCompany').value = invoice.client?.company || '';
+                document.getElementById('iClientGst').value = invoice.client?.gstNumber || '';
+                document.getElementById('iClientEmail').value = invoice.client?.email || '';
+                document.getElementById('iClientPhone').value = invoice.client?.phone || '';
+                document.getElementById('iBillingAddress').value = invoice.client?.billingAddress || '';
+                document.getElementById('iShippingAddress').value = invoice.client?.shippingAddress || '';
+                document.getElementById('iDiscount').value = invoice.totalDiscount || 0;
+                document.getElementById('iAdditional').value = invoice.additionalCharges || 0;
+                document.getElementById('iTaxType').value = (invoice.igst > 0) ? 'interstate' : 'local';
+                document.getElementById('iBankHolder').value = (invoice.bankDetails && invoice.bankDetails.holderName) || 'GridNest Solution';
+                document.getElementById('iBankName').value = (invoice.bankDetails && invoice.bankDetails.bankName) || '';
+                document.getElementById('iBankAccount').value = (invoice.bankDetails && invoice.bankDetails.accountNo) || '';
+                document.getElementById('iBankIfsc').value = (invoice.bankDetails && invoice.bankDetails.ifscCode) || '';
+                document.getElementById('iBankSwift').value = (invoice.bankDetails && invoice.bankDetails.swiftCode) || '';
+                document.getElementById('iTerms').value = invoice.terms || '';
+                document.getElementById('iNotes').value = invoice.notes || '';
+                (invoice.items || []).forEach(function(it) { addInvoiceItem(it.description, it.rate, it.quantity, it.gstRate); });
+            } else {
+                document.getElementById('invoiceFormTitle').textContent = 'New Invoice';
+                document.getElementById('invoiceId').value = '';
+                var year = new Date().getFullYear();
+                document.getElementById('iNumber').value = 'GNWS-INV-' + year + '-001';
+                document.getElementById('iDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('iStatus').value = 'draft';
+                document.getElementById('iClientCompany').value = '';
+                document.getElementById('iClientGst').value = '';
+                document.getElementById('iClientEmail').value = '';
+                document.getElementById('iClientPhone').value = '';
+                document.getElementById('iBillingAddress').value = '';
+                document.getElementById('iShippingAddress').value = '';
+                document.getElementById('iDiscount').value = 0;
+                document.getElementById('iAdditional').value = 0;
+                document.getElementById('iTaxType').value = 'local';
+                document.getElementById('iBankHolder').value = 'GridNest Solution';
+                document.getElementById('iBankName').value = '';
+                document.getElementById('iBankAccount').value = '';
+                document.getElementById('iBankIfsc').value = '';
+                document.getElementById('iBankSwift').value = '';
+                document.getElementById('iTerms').value = '';
+                document.getElementById('iNotes').value = '';
+                addInvoiceItem('Website Development', 0, 1, 18);
+            }
+            recalcInvoice();
+            updateInvoicePreview();
+        }
+
+        function newInvoiceData() {
+            var items = getInvoiceItems();
+            var calc = recalcInvoice();
+            return {
+                invoiceNumber: document.getElementById('iNumber').value,
+                invoiceDate: document.getElementById('iDate').value,
+                status: document.getElementById('iStatus').value,
+                client: { company: document.getElementById('iClientCompany').value, email: document.getElementById('iClientEmail').value, phone: document.getElementById('iClientPhone').value, gstNumber: document.getElementById('iClientGst').value, billingAddress: document.getElementById('iBillingAddress').value, shippingAddress: document.getElementById('iShippingAddress').value },
+                items: items,
+                taxableAmount: calc.taxable, cgst: calc.cgst, sgst: calc.sgst, igst: calc.igst, totalTax: calc.totalTax,
+                totalDiscount: calc.discount, additionalCharges: calc.additional, grandTotal: calc.grand,
+                amountInWords: numberToWords(Math.round(calc.grand)),
+                bankDetails: { holderName: document.getElementById('iBankHolder').value, bankName: document.getElementById('iBankName').value, accountNo: document.getElementById('iBankAccount').value, ifscCode: document.getElementById('iBankIfsc').value, swiftCode: document.getElementById('iBankSwift').value },
+                terms: document.getElementById('iTerms').value,
+                notes: document.getElementById('iNotes').value,
+            };
+        }
+
+        async function saveInvoice() {
+            var id = document.getElementById('invoiceId').value;
+            var data = newInvoiceData();
+            try {
+                var res = await fetch(API + '/invoices' + (id ? '/' + id : ''), { method: id ? 'PUT' : 'POST', headers: getHeaders(), body: JSON.stringify(data) });
+                var json = await res.json();
+                if (json.success) { toast(json.message); showInvoiceList(); fetchInvoices(); fetchInvoiceStats(); }
+                else toast(json.message, 'error');
+            } catch (e) { toast('Error: ' + e.message, 'error'); }
+        }
+
+        async function fetchInvoices() {
+            try {
+                var status = document.getElementById('invoiceStatusFilter').value;
+                var search = document.getElementById('invoiceSearch').value;
+                var params = new URLSearchParams();
+                if (status) params.set('status', status);
+                if (search) params.set('search', search);
+                var res = await fetch(API + '/invoices?' + params, { headers: getHeaders() });
+                var json = await res.json();
+                if (!json.success) throw new Error(json.message);
+                invoicesData = json.data || [];
+                renderInvoices();
+            } catch (e) { document.getElementById('invoicesBody').innerHTML = '<tr><td colspan="6"><div class="error-msg">Error: '+e.message+'</div></td></tr>'; }
+        }
+
+        function renderInvoices() {
+            var tbody = document.getElementById('invoicesBody');
+            if (!invoicesData.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty">No invoices yet</div></td></tr>'; return; }
+            tbody.innerHTML = invoicesData.map(function(inv) {
+                return '<tr><td><strong>'+inv.invoiceNumber+'</strong></td><td>'+(inv.client?.company||'-')+'</td><td>\u20B9'+(inv.grandTotal||0).toLocaleString('en-IN')+'</td><td><span class="badge badge-'+inv.status+'">'+inv.status+'</span></td><td>'+new Date(inv.createdAt).toLocaleDateString()+'</td><td><button class="btn btn-outline btn-sm" onclick="viewInvoice(\''+inv._id+'\')" title="View"><i class="fas fa-eye"></i></button> <button class="btn btn-outline btn-sm" onclick="editInvoice(\''+inv._id+'\')" title="Edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="deleteInvoiceById(\''+inv._id+'\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
+            }).join('');
+        }
+
+        async function fetchInvoiceStats() {
+            try {
+                var res = await fetch(API + '/invoices/stats', { headers: getHeaders() });
+                var json = await res.json();
+                if (!json.success) return;
+                var d = json.data;
+                document.getElementById('invoiceStats').innerHTML = '<div class="stat-mini"><div class="num">'+d.total+'</div><div class="label">Total</div></div><div class="stat-mini"><div class="num">'+d.draft+'</div><div class="label">Draft</div></div><div class="stat-mini"><div class="num">'+d.sent+'</div><div class="label">Sent</div></div><div class="stat-mini green"><div class="num">'+d.paid+'</div><div class="label">Paid</div></div><div class="stat-mini red"><div class="num">'+d.cancelled+'</div><div class="label">Cancelled</div></div>';
+            } catch (e) {}
+        }
+
+        async function viewInvoice(id) {
+            try {
+                var res = await fetch(API + '/invoices/' + id, { headers: getHeaders() });
+                var json = await res.json();
+                if (!json.success) return toast(json.message, 'error');
+                currentInvoiceData = json.data;
+                showInvoiceDetail(json.data);
+            } catch (e) { toast('Error', 'error'); }
+        }
+
+        function showInvoiceDetail(inv) {
+            document.getElementById('invoiceListSection').style.display = 'none';
+            document.getElementById('invoiceFormSection').style.display = 'none';
+            document.getElementById('invoiceDetailSection').style.display = 'block';
+            document.getElementById('invoiceDetailTitle').textContent = inv.invoiceNumber;
+            document.getElementById('invoiceDetailInfo').innerHTML = '<div class="form-card-title">Invoice Details</div><div class="form-row"><div><strong>Client:</strong> '+(inv.client?.company||'-')+'</div><div><strong>Email:</strong> '+(inv.client?.email||'-')+'</div></div><div class="form-row"><div><strong>Phone:</strong> '+(inv.client?.phone||'-')+'</div><div><strong>GST:</strong> '+(inv.client?.gstNumber||'-')+'</div></div><div class="form-row"><div><strong>Status:</strong> <span class="badge badge-'+inv.status+'">'+inv.status+'</span></div><div><strong>Date:</strong> '+new Date(inv.invoiceDate||inv.createdAt).toLocaleDateString()+'</div></div><div class="form-row"><div><strong>Taxable:</strong> \u20B9'+(inv.taxableAmount||0).toLocaleString('en-IN')+'</div><div><strong>Grand Total:</strong> \u20B9'+(inv.grandTotal||0).toLocaleString('en-IN')+'</div></div><div class="form-row"><div><strong>Amount in Words:</strong> '+(inv.amountInWords||'-')+'</div></div>';
+
+            var calc = { taxable: inv.taxableAmount||0, cgst: inv.cgst||0, sgst: inv.sgst||0, igst: inv.igst||0, totalTax: inv.totalTax||0, discount: inv.totalDiscount||0, additional: inv.additionalCharges||0, grand: inv.grandTotal||0 };
+            var hsn = (inv.items && inv.items[0]) ? inv.items[0].hsnSac : '998314';
+            var taxType = inv.igst > 0 ? 'interstate' : 'local';
+            var avgGst = inv.items && inv.items.length ? inv.items.reduce(function(s,i){return s+i.gstRate},0)/inv.items.length : 18;
+            var itemRows = (inv.items||[]).map(function(it,idx) {
+                return '<tr><td class="center">'+(idx+1)+'</td><td>'+it.description+'</td><td class="center">'+hsn+'</td><td class="right">'+it.rate.toLocaleString('en-IN')+'</td><td class="center">'+it.quantity+'</td><td class="right">'+it.amount.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr>';
+            }).join('');
+
+            var bank = inv.bankDetails || {};
+            document.getElementById('invoiceDetailPreview').innerHTML = '<div class="preview-page" id="invoicePrintArea" style="font-size:9pt;padding:12mm;"><div style="text-align:center;font-size:14pt;font-weight:700;border-bottom:2px solid #000;padding-bottom:4px;margin-bottom:8px;">PROFORMA INVOICE</div><div class="invoice-header-grid" style="margin-bottom:0;"><div style="display:flex;gap:8px;align-items:flex-start;"><img src="Image/New_Logo.jpeg" style="max-height:45px;margin-top:2px;"><div><strong>GridNest Solution</strong><br>Osho Nagar, Kanaushi, Manak Nagar,<br>Lucknow 226023, Uttar Pradesh<br>GSTIN/UIN: ___________<br>State Name: Uttar Pradesh, Code: 09<br>Contact: +91 9667195689</div></div><div><table style="width:100%;border:none;font-size:8.5pt;"><tr><td style="border:none;font-weight:600;width:40%;">Invoice No.</td><td style="border:none;font-weight:700;">'+inv.invoiceNumber+'</td></tr><tr><td style="border:none;font-weight:600;">Dated</td><td style="border:none;">'+new Date(inv.invoiceDate||inv.createdAt).toLocaleDateString()+'</td></tr><tr><td style="border:none;font-weight:600;">Mode/Terms of Payment</td><td style="border:none;">Advance</td></tr></table></div></div><div class="invoice-parties"><div><div class="label">Consignee (Ship to)</div><strong>'+(inv.client?.company||'-')+'</strong><br>'+(inv.client?.billingAddress||'-')+'<br>GSTIN/UIN: '+(inv.client?.gstNumber||'-')+'</div><div><div class="label">Buyer (Bill to)</div><strong>'+(inv.client?.company||'-')+'</strong><br>'+(inv.client?.billingAddress||'-')+'<br>GSTIN/UIN: '+(inv.client?.gstNumber||'-')+'</div></div><table class="invoice-table"><thead><tr><th style="width:35px;">Sl<br>No.</th><th>Particulars</th><th style="width:65px;">HSN/SAC</th><th style="width:60px;">Rate</th><th style="width:35px;">per</th><th style="width:80px;">Amount</th></tr></thead><tbody>'+itemRows+'<tr><td colspan="5" class="right bold">Total</td><td class="right bold">\u20B9'+calc.taxable.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr></tbody></table><table class="invoice-tax-table"><thead><tr><th>HSN/SAC</th><th>Taxable Value</th>'+(taxType==='local'?'<th>CGST Rate</th><th>CGST Amt</th><th>SGST Rate</th><th>SGST Amt</th>':'<th>IGST Rate</th><th>IGST Amt</th>')+'<th>Total Tax</th></tr></thead><tbody><tr><td>'+hsn+'</td><td>'+calc.taxable.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td>'+(taxType==='local'?'<td>'+avgGst/2+'%</td><td>'+calc.cgst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td><td>'+avgGst/2+'%</td><td>'+calc.sgst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td>':'<td>'+avgGst+'%</td><td>'+calc.igst.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td>')+'<td>'+calc.totalTax.toLocaleString('en-IN',{minimumFractionDigits:2})+'</td></tr></tbody></table><div style="text-align:right;font-size:10pt;font-weight:700;margin:6px 0;border:1px solid #000;padding:4px 8px;display:inline-block;float:right;">\u20B9'+calc.grand.toLocaleString('en-IN',{minimumFractionDigits:2})+'</div><div style="clear:both;"></div><div style="font-size:8.5pt;margin:4px 0;"><strong>Amount Chargeable (in words):</strong> '+(inv.amountInWords||numberToWords(Math.round(calc.grand)))+'</div><div style="font-size:8pt;text-align:right;margin-bottom:4px;"><em>E. & O.E</em></div><div style="font-size:8.5pt;border-top:1px solid #000;padding-top:4px;"><strong>Terms & Conditions of Sales</strong><br><p style="font-size:8pt;">'+(inv.terms||'All disputes subject to Lucknow jurisdiction.')+'</p></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;font-size:8.5pt;"><div><strong>Company\'s Bank Details</strong><br><table class="invoice-bank"><tr><td class="label">A/c Holder:</td><td>'+(bank.holderName||'GridNest Solution')+'</td></tr><tr><td class="label">Bank:</td><td>'+(bank.bankName||'-')+'</td></tr><tr><td class="label">A/c No.:</td><td>'+(bank.accountNo||'-')+'</td></tr><tr><td class="label">IFSC:</td><td>'+(bank.ifscCode||'-')+'</td></tr></table></div><div style="text-align:right;"><div style="margin-top:40px;border-top:1px solid #000;width:180px;margin-left:auto;padding-top:4px;"><strong>for GridNest Solution</strong><br><span style="font-size:8pt;">Authorised Signatory</span></div></div></div><div style="text-align:center;font-size:7.5pt;color:#666;margin-top:8px;clear:both;">This is a Computer Generated Invoice</div></div>';
+        }
+
+        async function editInvoice(id) {
+            var res = await fetch(API + '/invoices/' + id, { headers: getHeaders() });
+            var json = await res.json();
+            if (json.success) showInvoiceForm(json.data);
+        }
+        function editCurrentInvoice() { if (currentInvoiceData) showInvoiceForm(currentInvoiceData); }
+
+        async function deleteInvoice() {
+            if (!currentInvoiceData) return;
+            if (!confirm('Delete this invoice?')) return;
+            try {
+                var res = await fetch(API + '/invoices/' + currentInvoiceData._id, { method: 'DELETE', headers: getHeaders() });
+                var json = await res.json();
+                if (json.success) { toast(json.message); showInvoiceList(); fetchInvoices(); fetchInvoiceStats(); }
+                else toast(json.message, 'error');
+            } catch (e) { toast('Error', 'error'); }
+        }
+
+        async function deleteInvoiceById(id) {
+            if (!confirm('Delete this invoice?')) return;
+            try {
+                var res = await fetch(API + '/invoices/' + id, { method: 'DELETE', headers: getHeaders() });
+                var json = await res.json();
+                if (json.success) { toast(json.message); fetchInvoices(); fetchInvoiceStats(); }
+                else toast(json.message, 'error');
+            } catch (e) { toast('Error', 'error'); }
+        }
+
+        function downloadInvoiceCSV() {
+            if (!invoicesData.length) return toast('No data to download');
+            var headers = ['Number','Client','Email','Phone','Taxable','CGST','SGST','IGST','Total Tax','Discount','Additional','Grand Total','Status','Date'];
+            var rows = invoicesData.map(function(inv) { return [inv.invoiceNumber,inv.client?.company||'',inv.client?.email||'',inv.client?.phone||'',inv.taxableAmount||0,inv.cgst||0,inv.sgst||0,inv.igst||0,inv.totalTax||0,inv.totalDiscount||0,inv.additionalCharges||0,inv.grandTotal||0,inv.status,new Date(inv.createdAt).toISOString()]; });
+            var csv = [headers.join(','), ...rows.map(function(r){return r.map(function(v){return '"'+v+'"'}).join(',')})].join('\n');
+            downloadFile(csv, 'invoices.csv', 'text/csv');
+            toast('Invoices CSV downloaded');
+        }
+
+        function printInvoice() {
+            var area = document.getElementById('invoicePrintArea');
+            if (!area) return;
+            var w = window.open('', '_blank');
+            w.document.write('<!DOCTYPE html><html><head><title>Proforma Invoice</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>@page{size:A4;margin:0;}body{margin:0;font-family:Inter,sans-serif;font-size:9pt;}table{width:100%;border-collapse:collapse;}th,td{padding:4px 6px;border:1px solid #000;font-size:8.5pt;}.center{text-align:center;}.right{text-align:right;}.bold{font-weight:700;}th{background:#f5f5f5;font-weight:600;font-size:8pt;}.invoice-header-grid{display:grid;grid-template-columns:1fr 1fr;}.invoice-parties{display:grid;grid-template-columns:1fr 1fr;}.invoice-tax-table{margin-top:8px;}.invoice-tax-table th,.invoice-tax-table td{padding:4px 6px;border:1px solid #000;text-align:center;}.invoice-tax-table th{background:#f5f5f5;font-weight:600;font-size:8pt;}.invoice-bank td{padding:2px 6px;border:none;}.invoice-bank .label{font-weight:600;white-space:nowrap;}.label{font-weight:600;font-size:8pt;text-transform:uppercase;margin-bottom:2px;color:#333;}</style></head><body>' + area.outerHTML + '</body></html>');
+            w.document.close();
+            setTimeout(function(){ w.print(); w.close(); }, 500);
+        }
+        function downloadInvoicePDF() { printInvoice(); }
     </script>
 </body>
 </html>

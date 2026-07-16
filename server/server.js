@@ -19,6 +19,8 @@ const contactRoutes = require('./routes/contactRoutes');
 const newsletterRoutes = require('./routes/newsletterRoutes');
 const contentRoutes = require('./routes/contentRoutes');
 const authRoutes = require('./routes/authRoutes');
+const proposalRoutes = require('./routes/proposalRoutes');
+const invoiceRoutes = require('./routes/invoiceRoutes');
 
 const app = express();
 
@@ -75,6 +77,8 @@ app.use('/api/auth', checkDB, authRoutes);
 app.use('/api/contact', checkDB, contactRoutes);
 app.use('/api/newsletter', checkDB, newsletterRoutes);
 app.use('/api/content', checkDB, protect, contentRoutes);
+app.use('/api/proposals', checkDB, protect, proposalRoutes);
+app.use('/api/invoices', checkDB, protect, invoiceRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -114,6 +118,8 @@ app.get('/api', (req, res) => {
         images: '/api/content/images',
         footer: '/api/content/footers',
         navigation: '/api/content/navigation',
+        proposals: '/api/proposals',
+        invoices: '/api/invoices',
       },
     },
   });

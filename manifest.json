@@ -1,0 +1,21 @@
+{
+  "name": "GridNest Web Solutions - Website Design & Development",
+  "short_name": "GridNest",
+  "description": "Professional website design and development agency in Lucknow, India. Specializing in hotels, restaurants, and business websites.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#2563EB",
+  "orientation": "any",
+  "categories": ["business", "web development", "design"],
+  "lang": "en-IN",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/Image/New_Logo.jpeg",
+      "sizes": "any",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

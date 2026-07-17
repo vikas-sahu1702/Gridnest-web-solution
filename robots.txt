@@ -1,0 +1,15 @@
+# robots.txt for GridNest Web Solutions
+# https://gridnest-web-solution-production.up.railway.app
+
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+Disallow: /uploads/
+Disallow: /server/
+
+# Sitemap
+Sitemap: https://gridnest-web-solution-production.up.railway.app/sitemap.xml
+
+# Crawl delay for polite crawling
+Crawl-delay: 10

@@ -289,19 +289,116 @@
             .header { padding: 1rem; }
             .stats { flex-direction: column; }
             .stat-card { min-width: auto; }
+            .stat-card .num { font-size: 1.5rem; }
             .tabs { flex-direction: column; border-radius: 0.5rem; }
+            .tab-btn { padding: 0.625rem; font-size: 0.8125rem; }
             .toolbar { flex-direction: column; }
             .toolbar .btn { width: 100%; justify-content: center; }
-            table { font-size: 0.8125rem; display: block; overflow-x: auto; }
+            table { font-size: 0.8125rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             th, td { padding: 0.5rem; white-space: nowrap; }
             .truncate { max-width: 120px; }
             .header-actions { width: 100%; justify-content: space-between; }
+            /* Sidebar improvements */
+            .sidebar { width: 260px; }
+            .sidebar-nav a { padding: 0.75rem 1.25rem; font-size: 0.9375rem; }
+            /* Filter bar */
+            .filter-bar input, .filter-bar select { width: 100%; }
+            .filter-bar { flex-direction: column; }
+            /* Stats row */
+            .stats-row { flex-direction: column; }
+            .stat-mini { min-width: auto; }
+            /* Page header */
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .page-header-actions { width: 100%; }
+            .page-header-actions .btn { flex: 1; text-align: center; justify-content: center; }
+            /* Modal */
+            .modal-overlay { padding: 1rem; align-items: flex-end; }
+            .modal-card { border-radius: 1rem 1rem 0 0; max-height: 85vh; }
+            .modal-close { top: 0.75rem; right: 0.75rem; }
+            /* Top bar */
+            .top-bar { padding: 0.75rem 1rem; }
+            .top-bar h2 { font-size: 1rem; }
+            .top-bar-actions .user-badge span { display: none; }
+            .top-bar-actions .user-badge i { font-size: 1.25rem; }
+            /* Two-col layout for forms */
+            .two-col { grid-template-columns: 1fr; gap: 0.75rem; }
+            .two-col.preview-col { grid-template-columns: 1fr; }
+            .sticky-preview { position: static; }
+            .preview-container { max-height: 60vh; }
+        }
+        @media (max-width: 640px) {
+            /* Invoice header grid — stack on small screens */
+            .invoice-header-grid { grid-template-columns: 1fr; }
+            .invoice-parties { grid-template-columns: 1fr; }
+            /* Invoice preview adjustments */
+            .proposal-page { padding: 10mm; }
+            .proposal-page table { font-size: 7.5pt; }
+            .proposal-page th, .proposal-page td { padding: 4px; }
+            /* Form rows to single column */
+            .form-row { grid-template-columns: 1fr; }
+            .form-row.three { grid-template-columns: 1fr; }
+            /* Items table inputs larger for touch */
+            .items-table input[type="text"],
+            .items-table input[type="number"] { padding: 0.5rem; font-size: 0.9375rem; min-height: 38px; }
+            .items-table th, .items-table td { padding: 0.375rem; }
+            /* Card-based table on mobile for readability */
+            table.responsive-cards thead { display: none; }
+            table.responsive-cards tbody tr {
+                display: block;
+                border: 1px solid #e2e8f0;
+                border-radius: 0.5rem;
+                margin-bottom: 0.75rem;
+                padding: 0.75rem;
+                background: #fff;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            }
+            table.responsive-cards tbody tr:hover td { background: transparent; }
+            table.responsive-cards tbody td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.375rem 0;
+                border-bottom: 1px solid #f1f5f9;
+                white-space: normal;
+                text-align: right;
+                gap: 0.5rem;
+            }
+            table.responsive-cards tbody td:last-child { border-bottom: none; }
+            table.responsive-cards tbody td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                font-size: 0.75rem;
+                color: #64748b;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+                text-align: left;
+                flex-shrink: 0;
+            }
+            table.responsive-cards tbody td .badge { margin-left: auto; }
         }
         @media (max-width: 480px) {
             .auth-card { padding: 1.25rem; }
+            .auth-card .auth-title { font-size: 1.125rem; }
             .form-options { flex-direction: column; gap: 0.75rem; align-items: flex-start; }
-            .modal-card { padding: 1.5rem; }
+            .modal-card { padding: 1.25rem; }
+            .modal-title { font-size: 1rem; }
             .session-bar { flex-direction: column; text-align: center; padding: 0.75rem 1rem; }
+            .session-bar .btn { width: 100%; }
+            .content-area { padding: 0.75rem; }
+            .form-card { padding: 1rem; }
+            .form-card-title { font-size: 0.875rem; }
+            /* Buttons touch-friendly */
+            .btn { padding: 0.625rem 1rem; min-height: 44px; }
+            .btn-sm { padding: 0.5rem 0.75rem; min-height: 38px; }
+            /* Proposal/Invoice action buttons in tables */
+            td .btn-sm { padding: 0.375rem 0.5rem; min-height: 36px; }
+            /* Stats as 2-col grid on small phones */
+            .stat-mini { min-width: calc(50% - 0.5rem); flex: none; }
+            .stats-row { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
+            /* Truncate less aggressively */
+            .truncate { max-width: 80px; }
+            /* Auth input sizing */
+            .form-group .input-wrap input { padding: 0.75rem 2.75rem 0.75rem 2.25rem; font-size: 16px; }
         }
         /* ==================== SIDEBAR NAVIGATION ==================== */
         .admin-layout { display: flex; min-height: 100vh; }
@@ -329,6 +426,13 @@
         }
         .sidebar-footer a:hover { color: #fff; }
         .main-content { flex: 1; margin-left: 240px; }
+        /* Sidebar backdrop on mobile */
+        .sidebar-backdrop {
+            display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.5);
+            z-index: 99; -webkit-tap-highlight-color: transparent;
+        }
+        .sidebar-backdrop.show { display: block; }
+        @media (min-width: 769px) { .sidebar-backdrop { display: none !important; } }
         .top-bar {
             background: #fff; padding: 0.875rem 1.5rem; display: flex; justify-content: space-between;
             align-items: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 50;
@@ -345,6 +449,7 @@
             .main-content { margin-left: 0; }
             .mobile-toggle { display: block; }
             .content-area { padding: 1rem; }
+            body.sidebar-open { overflow: hidden; }
         }
         /* ==================== MODULE VIEWS ==================== */
         .view { display: none; }
@@ -407,6 +512,8 @@
         .items-table .btn-remove {
             background: none; border: none; color: #dc2626; cursor: pointer; padding: 0.25rem; font-size: 0.875rem;
         }
+        .items-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        @media (max-width: 768px) { .items-table-wrap { margin: 0 -0.75rem; padding: 0 0.75rem; } }
         .totals-box { text-align: right; }
         .totals-box div { padding: 0.25rem 0; font-size: 0.875rem; }
         .totals-box .grand { font-size: 1.125rem; font-weight: 700; color: #0f172a; border-top: 2px solid #0f172a; padding-top: 0.5rem; }
@@ -579,11 +686,14 @@
                 </div>
             </aside>
 
+            <!-- Sidebar backdrop (mobile) -->
+            <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="document.getElementById('sidebar').classList.remove('open');this.classList.remove('show');document.body.classList.remove('sidebar-open');"></div>
+
             <!-- Main Content -->
             <div class="main-content">
                 <div class="top-bar">
                     <div style="display:flex; align-items:center; gap:0.75rem;">
-                        <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')"><i class="fas fa-bars"></i></button>
+                        <button class="mobile-toggle" onclick="var s=document.getElementById('sidebar'),b=document.getElementById('sidebarBackdrop');s.classList.toggle('open');b.classList.toggle('show');document.body.classList.toggle('sidebar-open');"><i class="fas fa-bars"></i></button>
                         <h2 id="viewTitle">Dashboard</h2>
                     </div>
                     <div class="top-bar-actions">
@@ -603,7 +713,7 @@
                             <div class="toolbar">
                                 <button class="btn btn-success btn-sm" onclick="downloadCSV('contact')">⬇ Download CSV</button>
                             </div>
-                            <table>
+                            <table class="responsive-cards">
                                 <thead>
                                     <tr><th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th>Service</th><th>Template</th><th>Message</th><th>Status</th></tr>
                                 </thead>
@@ -614,7 +724,7 @@
                             <div class="toolbar">
                                 <button class="btn btn-success btn-sm" onclick="downloadCSV('newsletter')">⬇ Download CSV</button>
                             </div>
-                            <table>
+                            <table class="responsive-cards">
                                 <thead>
                                     <tr><th>Date</th><th>Email</th><th>Status</th></tr>
                                 </thead>
@@ -646,7 +756,7 @@
                                     <option value="converted">Converted</option>
                                 </select>
                             </div>
-                            <table>
+                            <table class="responsive-cards">
                                 <thead>
                                     <tr><th>Number</th><th>Client</th><th>Plan</th><th>Amount</th><th>Status</th><th>Date</th><th>Actions</th></tr>
                                 </thead>
@@ -708,18 +818,18 @@
                                     </div>
                                     <div class="form-card">
                                         <div class="form-card-title">Project Investment</div>
-                                        <table class="items-table">
+                                        <div class="items-table-wrap"><table class="items-table">
                                             <thead><tr><th>Title</th><th style="width:120px" class="amount-col">Amount (₹)</th><th style="width:40px"></th></tr></thead>
                                             <tbody id="pItemsBody"></tbody>
-                                        </table>
+                                        </table></div>
                                         <button class="btn btn-outline btn-sm" onclick="addProposalItem()" style="margin-top:0.5rem;"><i class="fas fa-plus"></i> Add Item</button>
                                     </div>
                                     <div class="form-card">
                                         <div class="form-card-title">Additional Charges</div>
-                                        <table class="items-table">
+                                        <div class="items-table-wrap"><table class="items-table">
                                             <thead><tr><th>Title</th><th style="width:120px" class="amount-col">Amount (₹)</th><th style="width:40px"></th></tr></thead>
                                             <tbody id="pExtraBody"></tbody>
-                                        </table>
+                                        </table></div>
                                         <button class="btn btn-outline btn-sm" onclick="addProposalExtra()" style="margin-top:0.5rem;"><i class="fas fa-plus"></i> Add Item</button>
                                     </div>
                                     <div class="form-card">
@@ -816,7 +926,7 @@
                                     <option value="cancelled">Cancelled</option>
                                 </select>
                             </div>
-                            <table>
+                            <table class="responsive-cards">
                                 <thead>
                                     <tr><th>Number</th><th>Client</th><th>Amount</th><th>Status</th><th>Date</th><th>Actions</th></tr>
                                 </thead>
@@ -872,10 +982,10 @@
                                     </div>
                                     <div class="form-card">
                                         <div class="form-card-title">Line Items</div>
-                                        <table class="items-table">
+                                        <div class="items-table-wrap"><table class="items-table">
                                             <thead><tr><th>Description</th><th style="width:80px">Rate</th><th style="width:50px">Qty</th><th style="width:70px">GST%</th><th style="width:100px" class="amount-col">Amount</th><th style="width:40px"></th></tr></thead>
                                             <tbody id="iItemsBody"></tbody>
-                                        </table>
+                                        </table></div>
                                         <button class="btn btn-outline btn-sm" onclick="addInvoiceItem()" style="margin-top:0.5rem;"><i class="fas fa-plus"></i> Add Item</button>
                                     </div>
                                     <div class="form-card">
@@ -1416,15 +1526,15 @@
             }
             tbody.innerHTML = filtered.map(c => `
                 <tr>
-                    <td>${new Date(c.createdAt).toLocaleString()}</td>
-                    <td>${c.fullName}</td>
-                    <td>${c.email}</td>
-                    <td>${c.phone || '-'}</td>
-                    <td>${c.company || '-'}</td>
-                    <td>${labels[c.service] || c.service}</td>
-                    <td>${c.templateSource || '-'}</td>
-                    <td><span class="truncate" title="${(c.message || '').replace(/"/g,'&quot;')}">${c.message || '-'}</span></td>
-                    <td><span class="badge badge-${c.status}">${c.status}</span></td>
+                    <td data-label="Date">${new Date(c.createdAt).toLocaleString()}</td>
+                    <td data-label="Name">${c.fullName}</td>
+                    <td data-label="Email">${c.email}</td>
+                    <td data-label="Phone">${c.phone || '-'}</td>
+                    <td data-label="Company">${c.company || '-'}</td>
+                    <td data-label="Service">${labels[c.service] || c.service}</td>
+                    <td data-label="Template">${c.templateSource || '-'}</td>
+                    <td data-label="Message"><span class="truncate" title="${(c.message || '').replace(/"/g,'&quot;')}">${c.message || '-'}</span></td>
+                    <td data-label="Status"><span class="badge badge-${c.status}">${c.status}</span></td>
                 </tr>
             `).join('');
         }
@@ -1453,9 +1563,9 @@
             }
             tbody.innerHTML = filtered.map(s => `
                 <tr>
-                    <td>${new Date(s.subscribedAt || s.createdAt).toLocaleString()}</td>
-                    <td>${s.email}</td>
-                    <td><span class="badge badge-${s.status}">${s.status}</span></td>
+                    <td data-label="Date">${new Date(s.subscribedAt || s.createdAt).toLocaleString()}</td>
+                    <td data-label="Email">${s.email}</td>
+                    <td data-label="Status"><span class="badge badge-${s.status}">${s.status}</span></td>
                 </tr>
             `).join('');
         }
@@ -1615,6 +1725,8 @@
             if (viewId === 'proposals-view') { showProposalList(); fetchProposals(); fetchProposalStats(); }
             if (viewId === 'invoices-view') { showInvoiceList(); fetchInvoices(); fetchInvoiceStats(); }
             document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebarBackdrop')?.classList.remove('show');
+            document.body.classList.remove('sidebar-open');
         }
 
         // ====================== NUMBER TO WORDS (Indian) ======================
@@ -2034,7 +2146,7 @@
             if (!proposalsData.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty">No proposals yet</div></td></tr>'; return; }
             var planLabels = { standard: 'Standard', 'custom-premium': 'Custom Premium' };
             tbody.innerHTML = proposalsData.map(function(p) {
-                return '<tr><td><strong>'+p.proposalNumber+'</strong>'+(p.revision>1?' <small style="color:#64748b;">R'+p.revision+'</small>':'')+'</td><td>'+(p.client?.company||'-')+'</td><td>'+(planLabels[p.plan]||p.plan)+'</td><td>\u20B9'+(p.grandTotal||0).toLocaleString('en-IN')+'</td><td><span class="badge badge-'+p.status+'">'+p.status+'</span></td><td>'+new Date(p.createdAt).toLocaleDateString()+'</td><td><button class="btn btn-outline btn-sm" onclick="viewProposal(\''+p._id+'\')" title="View"><i class="fas fa-eye"></i></button> <button class="btn btn-outline btn-sm" onclick="editProposal(\''+p._id+'\')" title="Edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="deleteProposalById(\''+p._id+'\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
+                return '<tr><td data-label="Number"><strong>'+p.proposalNumber+'</strong>'+(p.revision>1?' <small style="color:#64748b;">R'+p.revision+'</small>':'')+'</td><td data-label="Client">'+(p.client?.company||'-')+'</td><td data-label="Plan">'+(planLabels[p.plan]||p.plan)+'</td><td data-label="Amount">\u20B9'+(p.grandTotal||0).toLocaleString('en-IN')+'</td><td data-label="Status"><span class="badge badge-'+p.status+'">'+p.status+'</span></td><td data-label="Date">'+new Date(p.createdAt).toLocaleDateString()+'</td><td data-label="Actions"><button class="btn btn-outline btn-sm" onclick="viewProposal(\''+p._id+'\')" title="View"><i class="fas fa-eye"></i></button> <button class="btn btn-outline btn-sm" onclick="editProposal(\''+p._id+'\')" title="Edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="deleteProposalById(\''+p._id+'\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
             }).join('');
         }
 
@@ -2335,7 +2447,7 @@
             var tbody = document.getElementById('invoicesBody');
             if (!invoicesData.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty">No invoices yet</div></td></tr>'; return; }
             tbody.innerHTML = invoicesData.map(function(inv) {
-                return '<tr><td><strong>'+inv.invoiceNumber+'</strong></td><td>'+(inv.client?.company||'-')+'</td><td>\u20B9'+(inv.grandTotal||0).toLocaleString('en-IN')+'</td><td><span class="badge badge-'+inv.status+'">'+inv.status+'</span></td><td>'+new Date(inv.createdAt).toLocaleDateString()+'</td><td><button class="btn btn-outline btn-sm" onclick="viewInvoice(\''+inv._id+'\')" title="View"><i class="fas fa-eye"></i></button> <button class="btn btn-outline btn-sm" onclick="editInvoice(\''+inv._id+'\')" title="Edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="deleteInvoiceById(\''+inv._id+'\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
+                return '<tr><td data-label="Number"><strong>'+inv.invoiceNumber+'</strong></td><td data-label="Client">'+(inv.client?.company||'-')+'</td><td data-label="Amount">\u20B9'+(inv.grandTotal||0).toLocaleString('en-IN')+'</td><td data-label="Status"><span class="badge badge-'+inv.status+'">'+inv.status+'</span></td><td data-label="Date">'+new Date(inv.createdAt).toLocaleDateString()+'</td><td data-label="Actions"><button class="btn btn-outline btn-sm" onclick="viewInvoice(\''+inv._id+'\')" title="View"><i class="fas fa-eye"></i></button> <button class="btn btn-outline btn-sm" onclick="editInvoice(\''+inv._id+'\')" title="Edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="deleteInvoiceById(\''+inv._id+'\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
             }).join('');
         }
 

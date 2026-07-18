@@ -8,14 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; color: #0f172a; min-height: 100vh; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; color: #111827; min-height: 100vh; }
         /* Auth Pages */
         .auth-wrapper {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #111827 0%, #1F2937 100%);
             padding: 1.5rem;
         }
         .auth-card {
@@ -27,11 +27,11 @@
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
         .auth-logo { text-align: center; margin-bottom: 2rem; }
-        .auth-logo h1 { font-size: 1.5rem; color: #0f172a; }
-        .auth-logo h1 span { color: #2563EB; }
-        .auth-logo p { color: #64748b; font-size: 0.875rem; margin-top: 0.25rem; }
+        .auth-logo h1 { font-size: 1.5rem; color: #111827; }
+        .auth-logo h1 span { color: #1F2937; }
+        .auth-logo p { color: #6B7280; font-size: 0.875rem; margin-top: 0.25rem; }
         .auth-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
-        .auth-subtitle { color: #64748b; font-size: 0.875rem; margin-bottom: 1.5rem; }
+        .auth-subtitle { color: #6B7280; font-size: 0.875rem; margin-bottom: 1.5rem; }
         .auth-error {
             background: #fef2f2;
             color: #dc2626;
@@ -53,16 +53,16 @@
             border: 1px solid #bbf7d0;
         }
         .form-group { margin-bottom: 1.25rem; }
-        .form-group label { display: block; font-size: 0.875rem; font-weight: 600; color: #0f172a; margin-bottom: 0.375rem; }
+        .form-group label { display: block; font-size: 0.875rem; font-weight: 600; color: #111827; margin-bottom: 0.375rem; }
         .form-group .input-wrap {
             position: relative;
             display: flex;
             align-items: center;
-            border: 2px solid #e2e8f0;
+            border: 2px solid #E5E7EB;
             border-radius: 0.5rem;
             transition: border-color 0.2s;
         }
-        .form-group .input-wrap:focus-within { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .form-group .input-wrap:focus-within { border-color: #1F2937; box-shadow: 0 0 0 3px rgba(31,41,55,0.1); }
         .form-group .input-wrap .left-icon {
             position: absolute;
             left: 0.875rem;
@@ -105,7 +105,7 @@
             align-items: center;
             justify-content: center;
         }
-        .form-group .input-wrap .toggle-pass:hover { color: #2563EB; }
+        .form-group .input-wrap .toggle-pass:hover { color: #1F2937; }
         .form-options {
             display: flex;
             justify-content: space-between;
@@ -114,8 +114,8 @@
             font-size: 0.875rem;
         }
         .form-options label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #475569; }
-        .form-options label input[type="checkbox"] { width: 16px; height: 16px; accent-color: #2563EB; }
-        .form-options a { color: #2563EB; text-decoration: none; font-weight: 600; }
+        .form-options label input[type="checkbox"] { width: 16px; height: 16px; accent-color: #1F2937; }
+        .form-options a { color: #1F2937; text-decoration: none; font-weight: 600; }
         .form-options a:hover { text-decoration: underline; }
         .btn {
             display: inline-flex;
@@ -132,18 +132,18 @@
             width: 100%;
             text-decoration: none;
         }
-        .btn-primary { background: #2563EB; color: #fff; }
-        .btn-primary:hover { background: #1d4ed8; }
+        .btn-primary { background: #1F2937; color: #fff; }
+        .btn-primary:hover { background: #111827; }
         .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-        .btn-outline { background: transparent; color: #0f172a; border: 2px solid #e2e8f0; }
-        .btn-outline:hover { background: #f8fafc; }
+        .btn-outline { background: transparent; color: #111827; border: 2px solid #E5E7EB; }
+        .btn-outline:hover { background: #F3F4F6; }
         .btn-success { background: #059669; color: #fff; }
         .btn-success:hover { background: #047857; }
         .btn-sm { padding: 0.5rem 1rem; font-size: 0.8125rem; width: auto; }
         .btn-danger { background: #dc2626; color: #fff; }
         .btn-danger:hover { background: #b91c1c; }
-        .auth-footer { text-align: center; margin-top: 1.5rem; font-size: 0.8125rem; color: #64748b; }
-        .auth-footer a { color: #2563EB; text-decoration: none; font-weight: 600; cursor: pointer; }
+        .auth-footer { text-align: center; margin-top: 1.5rem; font-size: 0.8125rem; color: #6B7280; }
+        .auth-footer a { color: #1F2937; text-decoration: none; font-weight: 600; cursor: pointer; }
         .auth-footer a:hover { text-decoration: underline; }
         .hidden { display: none !important; }
         .spinner {
@@ -156,7 +156,7 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         /* Existing Admin Dashboard Styles */
-        .header { background: linear-gradient(135deg, #2563EB, #06B6D4); color: #fff; padding: 1.5rem 2rem; }
+        .header { background: linear-gradient(135deg, #1F2937, #F97316); color: #fff; padding: 1.5rem 2rem; }
         .header-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .header h1 { font-size: 1.5rem; }
         .header p { opacity: 0.9; font-size: 0.875rem; }
@@ -166,26 +166,26 @@
         .stats { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
         .stat-card { background: #fff; border-radius: 0.5rem; padding: 1.25rem; flex: 1; min-width: 140px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.2s; border: 2px solid transparent; user-select: none; }
         .stat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(-1px); }
-        .stat-card.active { border-color: #2563EB; background: #eff6ff; }
-        .stat-card.active .num { color: #1d4ed8; }
-        .stat-card .num { font-size: 2rem; font-weight: 700; color: #2563EB; }
-        .stat-card .label { font-size: 0.875rem; color: #64748b; }
+        .stat-card.active { border-color: #1F2937; background: #eff6ff; }
+        .stat-card.active .num { color: #111827; }
+        .stat-card .num { font-size: 2rem; font-weight: 700; color: #1F2937; }
+        .stat-card .label { font-size: 0.875rem; color: #6B7280; }
         .tabs { display: flex; gap: 0; margin-bottom: 1rem; background: #fff; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .tab-btn { flex: 1; padding: 0.75rem; border: none; background: #fff; cursor: pointer; font-size: 0.875rem; font-weight: 600; color: #64748b; transition: all 0.2s; }
-        .tab-btn.active { background: #2563EB; color: #fff; }
-        .tab-btn:hover:not(.active) { background: #f8fafc; }
+        .tab-btn { flex: 1; padding: 0.75rem; border: none; background: #fff; cursor: pointer; font-size: 0.875rem; font-weight: 600; color: #6B7280; transition: all 0.2s; }
+        .tab-btn.active { background: #1F2937; color: #fff; }
+        .tab-btn:hover:not(.active) { background: #F3F4F6; }
         .panel { display: none; }
         .panel.active { display: block; }
         .toolbar { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
         table { width: 100%; background: #fff; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-collapse: collapse; }
-        th { background: #f8fafc; padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; border-bottom: 2px solid #e2e8f0; }
+        th { background: #F3F4F6; padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: #6B7280; font-weight: 600; border-bottom: 2px solid #E5E7EB; }
         td { padding: 0.75rem 1rem; border-bottom: 1px solid #f1f5f9; font-size: 0.875rem; }
-        tr:hover td { background: #f8fafc; }
+        tr:hover td { background: #F3F4F6; }
         .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
-        .badge-new { background: #dbeafe; color: #1d4ed8; }
+        .badge-new { background: #dbeafe; color: #111827; }
         .badge-read { background: #fef3c7; color: #d97706; }
         .badge-replied { background: #d1fae5; color: #059669; }
-        .badge-archived { background: #e2e8f0; color: #64748b; }
+        .badge-archived { background: #E5E7EB; color: #6B7280; }
         .badge-active { background: #d1fae5; color: #059669; }
         .badge-unsubscribed { background: #fef2f2; color: #dc2626; }
         .empty { text-align: center; padding: 3rem; color: #94a3b8; }
@@ -232,7 +232,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #0f172a;
+            background: #111827;
             color: #fff;
             padding: 0.75rem 1.5rem;
             display: none;
@@ -279,9 +279,9 @@
             cursor: pointer;
             padding: 0.25rem;
         }
-        .modal-close:hover { color: #0f172a; }
+        .modal-close:hover { color: #111827; }
         .modal-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem; }
-        .modal-subtitle { color: #64748b; font-size: 0.875rem; margin-bottom: 1.5rem; }
+        .modal-subtitle { color: #6B7280; font-size: 0.875rem; margin-bottom: 1.5rem; }
         /* Mobile Responsive for admin */
         @media (max-width: 768px) {
             .auth-card { padding: 1.5rem; }
@@ -345,7 +345,7 @@
             table.responsive-cards thead { display: none; }
             table.responsive-cards tbody tr {
                 display: block;
-                border: 1px solid #e2e8f0;
+                border: 1px solid #E5E7EB;
                 border-radius: 0.5rem;
                 margin-bottom: 0.75rem;
                 padding: 0.75rem;
@@ -368,7 +368,7 @@
                 content: attr(data-label);
                 font-weight: 600;
                 font-size: 0.75rem;
-                color: #64748b;
+                color: #6B7280;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
                 text-align: left;
@@ -403,12 +403,12 @@
         /* ==================== SIDEBAR NAVIGATION ==================== */
         .admin-layout { display: flex; min-height: 100vh; }
         .sidebar {
-            width: 240px; background: #0f172a; color: #fff; position: fixed; top: 0; left: 0; bottom: 0;
+            width: 240px; background: #111827; color: #fff; position: fixed; top: 0; left: 0; bottom: 0;
             display: flex; flex-direction: column; z-index: 100; transition: transform 0.3s;
         }
         .sidebar-header { padding: 1.25rem 1.25rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
         .sidebar-header h2 { font-size: 1.125rem; font-weight: 700; }
-        .sidebar-header h2 span { color: #06B6D4; }
+        .sidebar-header h2 span { color: #F97316; }
         .sidebar-header p { font-size: 0.75rem; color: #94a3b8; margin-top: 0.125rem; }
         .sidebar-nav { flex: 1; padding: 0.75rem 0; overflow-y: auto; }
         .sidebar-nav a {
@@ -416,8 +416,8 @@
             color: #94a3b8; text-decoration: none; font-size: 0.875rem; font-weight: 500;
             transition: all 0.2s; border-left: 3px solid transparent;
         }
-        .sidebar-nav a:hover { background: rgba(255,255,255,0.05); color: #e2e8f0; }
-        .sidebar-nav a.active { background: rgba(37,99,235,0.15); color: #fff; border-left-color: #2563EB; }
+        .sidebar-nav a:hover { background: rgba(255,255,255,0.05); color: #E5E7EB; }
+        .sidebar-nav a.active { background: rgba(31,41,55,0.15); color: #fff; border-left-color: #1F2937; }
         .sidebar-nav a i { width: 20px; text-align: center; font-size: 0.9375rem; }
         .sidebar-footer { padding: 1rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.08); }
         .sidebar-footer a {
@@ -435,12 +435,12 @@
         @media (min-width: 769px) { .sidebar-backdrop { display: none !important; } }
         .top-bar {
             background: #fff; padding: 0.875rem 1.5rem; display: flex; justify-content: space-between;
-            align-items: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 50;
+            align-items: center; border-bottom: 1px solid #E5E7EB; position: sticky; top: 0; z-index: 50;
         }
-        .top-bar h2 { font-size: 1.125rem; font-weight: 700; color: #0f172a; }
+        .top-bar h2 { font-size: 1.125rem; font-weight: 700; color: #111827; }
         .top-bar-actions { display: flex; align-items: center; gap: 0.75rem; }
         .mobile-toggle {
-            display: none; background: none; border: none; font-size: 1.25rem; color: #0f172a; cursor: pointer;
+            display: none; background: none; border: none; font-size: 1.25rem; color: #111827; cursor: pointer;
         }
         .content-area { padding: 1.5rem; }
         @media (max-width: 768px) {
@@ -459,17 +459,17 @@
         .page-header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
         .filter-bar input, .filter-bar select {
-            padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;
+            padding: 0.5rem 0.75rem; border: 1px solid #E5E7EB; border-radius: 0.375rem;
             font-size: 0.8125rem; font-family: inherit; background: #fff;
         }
-        .filter-bar input:focus, .filter-bar select:focus { outline: none; border-color: #2563EB; box-shadow: 0 0 0 2px rgba(37,99,235,0.1); }
+        .filter-bar input:focus, .filter-bar select:focus { outline: none; border-color: #1F2937; box-shadow: 0 0 0 2px rgba(31,41,55,0.1); }
         .stats-row { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
         .stat-mini {
             background: #fff; border-radius: 0.5rem; padding: 0.875rem 1.125rem; flex: 1; min-width: 130px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
-        .stat-mini .num { font-size: 1.5rem; font-weight: 700; color: #2563EB; }
-        .stat-mini .label { font-size: 0.75rem; color: #64748b; margin-top: 0.125rem; }
+        .stat-mini .num { font-size: 1.5rem; font-weight: 700; color: #1F2937; }
+        .stat-mini .label { font-size: 0.75rem; color: #6B7280; margin-top: 0.125rem; }
         .stat-mini.green .num { color: #059669; }
         .stat-mini.amber .num { color: #d97706; }
         .stat-mini.red .num { color: #dc2626; }
@@ -480,18 +480,18 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
         .form-card-title {
-            font-size: 0.9375rem; font-weight: 700; color: #0f172a; margin-bottom: 1rem;
-            padding-bottom: 0.625rem; border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9375rem; font-weight: 700; color: #111827; margin-bottom: 1rem;
+            padding-bottom: 0.625rem; border-bottom: 1px solid #E5E7EB;
         }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; }
         .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
         .form-group label { display: block; font-size: 0.8125rem; font-weight: 600; color: #475569; margin-bottom: 0.25rem; }
         .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;
+            width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #E5E7EB; border-radius: 0.375rem;
             font-size: 0.875rem; font-family: inherit; transition: border-color 0.2s;
         }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none; border-color: #2563EB; box-shadow: 0 0 0 2px rgba(37,99,235,0.1);
+            outline: none; border-color: #1F2937; box-shadow: 0 0 0 2px rgba(31,41,55,0.1);
         }
         .form-group textarea { min-height: 80px; resize: vertical; }
         .form-group.full { grid-column: 1 / -1; }
@@ -499,15 +499,15 @@
         /* ==================== ITEMS TABLE ==================== */
         .items-table { width: 100%; border-collapse: collapse; margin-bottom: 0.75rem; }
         .items-table th {
-            background: #f8fafc; padding: 0.5rem; font-size: 0.75rem; text-transform: uppercase;
-            letter-spacing: 0.5px; color: #64748b; font-weight: 600; border-bottom: 2px solid #e2e8f0; text-align: left;
+            background: #F3F4F6; padding: 0.5rem; font-size: 0.75rem; text-transform: uppercase;
+            letter-spacing: 0.5px; color: #6B7280; font-weight: 600; border-bottom: 2px solid #E5E7EB; text-align: left;
         }
         .items-table td { padding: 0.375rem; border-bottom: 1px solid #f1f5f9; }
         .items-table input {
-            width: 100%; padding: 0.375rem 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.25rem;
+            width: 100%; padding: 0.375rem 0.5rem; border: 1px solid #E5E7EB; border-radius: 0.25rem;
             font-size: 0.8125rem; font-family: inherit;
         }
-        .items-table input:focus { outline: none; border-color: #2563EB; }
+        .items-table input:focus { outline: none; border-color: #1F2937; }
         .items-table .amount-col { text-align: right; }
         .items-table .btn-remove {
             background: none; border: none; color: #dc2626; cursor: pointer; padding: 0.25rem; font-size: 0.875rem;
@@ -516,9 +516,9 @@
         @media (max-width: 768px) { .items-table-wrap { margin: 0 -0.75rem; padding: 0 0.75rem; } }
         .totals-box { text-align: right; }
         .totals-box div { padding: 0.25rem 0; font-size: 0.875rem; }
-        .totals-box .grand { font-size: 1.125rem; font-weight: 700; color: #0f172a; border-top: 2px solid #0f172a; padding-top: 0.5rem; }
+        .totals-box .grand { font-size: 1.125rem; font-weight: 700; color: #111827; border-top: 2px solid #111827; padding-top: 0.5rem; }
         /* ==================== PROPOSAL & INVOICE PREVIEW ==================== */
-        .preview-container { background: #e2e8f0; padding: 1rem; border-radius: 0.5rem; max-height: 80vh; overflow-y: auto; }
+        .preview-container { background: #E5E7EB; padding: 1rem; border-radius: 0.5rem; max-height: 80vh; overflow-y: auto; }
         .proposal-page {
             background: #fff; width: 100%; min-height: 297mm; margin: 0 auto 1rem; padding: 20mm;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15); position: relative; overflow: hidden;
@@ -559,8 +559,8 @@
         @media (max-width: 1200px) { .two-col.preview-col { grid-template-columns: 1fr; } }
         .sticky-preview { position: sticky; top: 4rem; align-self: start; }
         /* ==================== BADGES ==================== */
-        .badge-draft { background: #e2e8f0; color: #475569; }
-        .badge-sent { background: #dbeafe; color: #1d4ed8; }
+        .badge-draft { background: #E5E7EB; color: #475569; }
+        .badge-sent { background: #dbeafe; color: #111827; }
         .badge-approved { background: #d1fae5; color: #059669; }
         .badge-rejected { background: #fef2f2; color: #dc2626; }
         .badge-converted { background: #ede9fe; color: #7c3aed; }
@@ -573,7 +573,7 @@
     <div id="loginPage" class="auth-wrapper">
         <div class="auth-card">
             <div class="auth-logo">
-                <h1>Grid<span style="color:#2563EB;">nest</span></h1>
+                <h1>Grid<span style="color:#1F2937;">nest</span></h1>
                 <p>Admin Dashboard</p>
             </div>
             <div class="auth-title">Welcome back</div>
@@ -610,7 +610,7 @@
     <div id="forgotPage" class="auth-wrapper hidden">
         <div class="auth-card">
             <div class="auth-logo">
-                <h1>Grid<span style="color:#2563EB;">nest</span></h1>
+                <h1>Grid<span style="color:#1F2937;">nest</span></h1>
                 <p>Admin Dashboard</p>
             </div>
             <div class="auth-title">Reset password</div>
@@ -635,7 +635,7 @@
     <div id="resetPage" class="auth-wrapper hidden">
         <div class="auth-card">
             <div class="auth-logo">
-                <h1>Grid<span style="color:#2563EB;">nest</span></h1>
+                <h1>Grid<span style="color:#1F2937;">nest</span></h1>
                 <p>Admin Dashboard</p>
             </div>
             <div class="auth-title">Set new password</div>
@@ -697,7 +697,7 @@
                         <h2 id="viewTitle">Dashboard</h2>
                     </div>
                     <div class="top-bar-actions">
-                        <span class="user-badge" style="color:#0f172a;"><i class="fas fa-user-circle"></i> <span id="adminName">Admin</span></span>
+                        <span class="user-badge" style="color:#111827;"><i class="fas fa-user-circle"></i> <span id="adminName">Admin</span></span>
                     </div>
                 </div>
                 <div class="content-area">
@@ -1001,7 +1001,7 @@
                                             </div>
                                         </div>
                                         <div class="totals-box" id="iTotals"></div>
-                                        <div class="form-group" style="margin-top:0.75rem;"><label>Amount in Words</label><input type="text" id="iAmountWords" readonly style="background:#f8fafc;"></div>
+                                        <div class="form-group" style="margin-top:0.75rem;"><label>Amount in Words</label><input type="text" id="iAmountWords" readonly style="background:#F3F4F6;"></div>
                                     </div>
                                     <div class="form-card">
                                         <div class="form-card-title">Bank Details</div>
@@ -1842,46 +1842,46 @@
             var validText = d.validText || '15 Days';
             var notes = d.notes || '';
 
-            var pgHeader = '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding-bottom:6px;border-bottom:1px solid #e2e8f0;margin-bottom:12px;"><img src="'+logo+'" style="height:40px;width:auto;"><span style="font-size:13pt;font-weight:700;color:#0f172a;">GridNest Web Solutions</span></div>';
-            var pgFooter = '<div style="text-align:center;font-size:7.5pt;color:#64748b;margin-top:auto;padding-top:8px;border-top:1px solid #e2e8f0;">www.gridnestwebsolution.com | Contact@gridnestwebsolution.com | Confidential Business Document</div>';
+            var pgHeader = '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin-bottom:12px;"><img src="'+logo+'" style="height:40px;width:auto;"><span style="font-size:13pt;font-weight:700;color:#111827;">GridNest Web Solutions</span></div>';
+            var pgFooter = '<div style="text-align:center;font-size:7.5pt;color:#6B7280;margin-top:auto;padding-top:8px;border-top:1px solid #E5E7EB;">www.gridnestwebsolution.com | Contact@gridnestwebsolution.com | Confidential Business Document</div>';
 
             // Page 1: Cover
             var coverPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:visible;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +
-                '<div style="position:absolute;top:0;right:0;width:200px;height:200px;background:linear-gradient(135deg,#2563EB 0%,#06B6D4 100%);clip-path:polygon(100% 0,0 0,100% 100%);opacity:0.15;"></div>' +
-                '<div style="position:absolute;bottom:0;left:0;width:250px;height:250px;background:linear-gradient(135deg,#2563EB 0%,#06B6D4 100%);clip-path:polygon(0 100%,100% 100%,0 0);opacity:0.15;"></div>' +
+                '<div style="position:absolute;top:0;right:0;width:200px;height:200px;background:linear-gradient(135deg,#1F2937 0%,#F97316 100%);clip-path:polygon(100% 0,0 0,100% 100%);opacity:0.15;"></div>' +
+                '<div style="position:absolute;bottom:0;left:0;width:250px;height:250px;background:linear-gradient(135deg,#1F2937 0%,#F97316 100%);clip-path:polygon(0 100%,100% 100%,0 0);opacity:0.15;"></div>' +
                 '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
                 '<div style="position:relative;z-index:1;">' +
                 '<div style="text-align:center;margin-bottom:1.5rem;"><img src="'+logo+'" style="height:45px;width:auto;"></div>' +
                 '<div style="text-align:center;margin-top:60px;">' +
-                '<div style="display:inline-block;border:2px solid #0f172a;border-radius:12px;padding:30px 40px;text-align:left;background:rgba(255,255,255,0.7);">' +
-                '<h1 style="font-size:24pt;color:#2563EB;margin:0 0 4px 0;font-weight:800;">GridNest Web Solution</h1>' +
-                '<h2 style="font-size:20pt;color:#0f172a;margin:0 0 12px 0;font-weight:700;">Proposal</h2>' +
-                '<div style="width:100%;height:2px;background:#2563EB;margin:8px 0;"></div>' +
+                '<div style="display:inline-block;border:2px solid #111827;border-radius:12px;padding:30px 40px;text-align:left;background:rgba(255,255,255,0.7);">' +
+                '<h1 style="font-size:24pt;color:#1F2937;margin:0 0 4px 0;font-weight:800;">GridNest Web Solution</h1>' +
+                '<h2 style="font-size:20pt;color:#111827;margin:0 0 12px 0;font-weight:700;">Proposal</h2>' +
+                '<div style="width:100%;height:2px;background:#1F2937;margin:8px 0;"></div>' +
                 '<p style="font-size:10pt;color:#475569;margin:6px 0;">Prepared For: <strong>'+company+'</strong></p>' +
                 '<p style="font-size:10pt;color:#475569;margin:6px 0;">Proposal No.: <strong>'+pNum+'</strong></p>' +
                 '<p style="font-size:10pt;color:#475569;margin:6px 0;">Date: <strong>'+pDate+'</strong></p>' +
-                '<div style="width:100%;height:2px;background:#2563EB;margin:8px 0;"></div>' +
+                '<div style="width:100%;height:2px;background:#1F2937;margin:8px 0;"></div>' +
                 '</div></div>' +
-                '<div style="position:absolute;bottom:20mm;left:20mm;right:20mm;text-align:center;font-size:7.5pt;color:#64748b;">www.gridnestwebsolution.com | Contact@gridnestwebsolution.com | Confidential Business Document</div>' +
+                '<div style="position:absolute;bottom:20mm;left:20mm;right:20mm;text-align:center;font-size:7.5pt;color:#6B7280;">www.gridnestwebsolution.com | Contact@gridnestwebsolution.com | Confidential Business Document</div>' +
                 '</div></div>';
 
             // Page 2: About
             var aboutPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:visible;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +
                 '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
                 '<div style="position:relative;z-index:1;">' + pgHeader +
-                '<h2 style="font-size:16pt;color:#2563EB;font-weight:700;margin:16px 0 12px;">About GridNest Web Solutions</h2>' +
-                '<h3 style="font-size:11pt;color:#2563EB;margin:12px 0 6px;">Who We Are</h3>' +
+                '<h2 style="font-size:16pt;color:#1F2937;font-weight:700;margin:16px 0 12px;">About GridNest Web Solutions</h2>' +
+                '<h3 style="font-size:11pt;color:#1F2937;margin:12px 0 6px;">Who We Are</h3>' +
                 '<p style="font-size:9pt;color:#333;line-height:1.6;">GridNest Web Solutions is a modern web development company focused on helping businesses build a powerful online presence. We believe that in today\'s business environment, every company deserves a professional, secure, and beautiful digital identity. We build websites that look great, run fast, and help you get more customers.</p>' +
-                '<h3 style="font-size:11pt;color:#2563EB;margin:14px 0 6px;">Why Businesses Choose GridNest</h3>' +
+                '<h3 style="font-size:11pt;color:#1F2937;margin:14px 0 6px;">Why Businesses Choose GridNest</h3>' +
                 '<ul style="font-size:9pt;color:#333;line-height:1.7;padding-left:20px;list-style:none;">' +
-                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>Custom Website Design:</strong> Bespoke user interface designed entirely around your business goals, target audience, and unique brand voice.</li>' +
-                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>Mobile Responsive:</strong> Your website will layout and function flawlessly across desktops, tablets, and mobile smartphones naturally.</li>' +
-                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>SEO Optimized Layouts:</strong> Built from the ground up following clean modern search standards to give you a strong structural start on Google.</li>' +
-                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>Fast & Secure Infrastructure:</strong> Optimized light code execution models coupled with clean security best practices to protect your data.</li>' +
-                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>Reliable Ongoing Support:</strong> Friendly, direct technical support channels to update, scale, and maintain your site without any hassle.</li>' +
-                '<li style="margin:4px 0;"><span style="color:#2563EB;margin-right:6px;">\u25A0</span><strong>Affordable But Premium:</strong> Elite design standards balanced cleanly within competitive, fixed business pricing packages.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#1F2937;margin-right:6px;">\u25A0</span><strong>Custom Website Design:</strong> Bespoke user interface designed entirely around your business goals, target audience, and unique brand voice.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#1F2937;margin-right:6px;">\u25A0</span><strong>Mobile Responsive:</strong> Your website will layout and function flawlessly across desktops, tablets, and mobile smartphones naturally.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#1F2937;margin-right:6px;">\u25A0</span><strong>SEO Optimized Layouts:</strong> Built from the ground up following clean modern search standards to give you a strong structural start on Google.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#1F2937;margin-right:6px;">\u25A0</span><strong>Fast & Secure Infrastructure:</strong> Optimized light code execution models coupled with clean security best practices to protect your data.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#1F2937;margin-right:6px;">\u25A0</span><strong>Reliable Ongoing Support:</strong> Friendly, direct technical support channels to update, scale, and maintain your site without any hassle.</li>' +
+                '<li style="margin:4px 0;"><span style="color:#1F2937;margin-right:6px;">\u25A0</span><strong>Affordable But Premium:</strong> Elite design standards balanced cleanly within competitive, fixed business pricing packages.</li>' +
                 '</ul>' +
-                '<h3 style="font-size:11pt;color:#2563EB;margin:14px 0 6px;">Industry Vertical Specializations</h3>' +
+                '<h3 style="font-size:11pt;color:#1F2937;margin:14px 0 6px;">Industry Vertical Specializations</h3>' +
                 '<p style="font-size:9pt;color:#333;margin-bottom:6px;">We design high-impact website platforms explicitly optimized for the following professional environments:</p>' +
                 '<ul style="font-size:9pt;color:#333;padding-left:24px;line-height:1.7;">' +
                 '<li>Business Websites & High-Growth Brand Landing Systems</li>' +
@@ -1911,13 +1911,13 @@
             var packagesPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:visible;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +
                 '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
                 '<div style="position:relative;z-index:1;">' + pgHeader +
-                '<h2 style="font-size:16pt;color:#2563EB;font-weight:700;margin:16px 0 6px;">Website Development Packages</h2>' +
+                '<h2 style="font-size:16pt;color:#1F2937;font-weight:700;margin:16px 0 6px;">Website Development Packages</h2>' +
                 '<p style="font-size:9pt;color:#475569;margin-bottom:12px;">Select the development framework that best fits your business goals and operational target scale:</p>' +
                 '<table style="width:100%;border-collapse:collapse;font-size:8.5pt;">' +
-                '<thead><tr style="background:#0f172a;color:#fff;">' +
-                '<th style="padding:8px;text-align:left;border:1px solid #0f172a;">Core Features Matrix</th>' +
-                '<th style="padding:8px;text-align:center;border:1px solid #0f172a;">Standard Tier<br>(\u20B912,999)</th>' +
-                '<th style="padding:8px;text-align:center;border:1px solid #0f172a;">Custom Premium Tier<br>(\u20B919,999)</th>' +
+                '<thead><tr style="background:#111827;color:#fff;">' +
+                '<th style="padding:8px;text-align:left;border:1px solid #111827;">Core Features Matrix</th>' +
+                '<th style="padding:8px;text-align:center;border:1px solid #111827;">Standard Tier<br>(\u20B912,999)</th>' +
+                '<th style="padding:8px;text-align:center;border:1px solid #111827;">Custom Premium Tier<br>(\u20B919,999)</th>' +
                 '</tr></thead><tbody>' + pkgTableRows + '</tbody></table>' +
                 '<div style="margin-top:14px;font-size:8pt;color:#333;">' +
                 '<p style="font-weight:700;margin-bottom:4px;">CRITICAL INFRASTRUCTURE INFORMATION:</p>' +
@@ -1948,17 +1948,17 @@
             var investmentPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:visible;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +
                 '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
                 '<div style="position:relative;z-index:1;">' + pgHeader +
-                '<h2 style="font-size:16pt;color:#2563EB;font-weight:700;margin:16px 0 6px;">Project Investment</h2>' +
+                '<h2 style="font-size:16pt;color:#1F2937;font-weight:700;margin:16px 0 6px;">Project Investment</h2>' +
                 '<p style="font-size:9pt;color:#475569;margin-bottom:12px;">The financial schedule below defines line-item investment parameters based upon selected scope frameworks:</p>' +
                 '<table style="width:100%;border-collapse:collapse;font-size:8.5pt;">' +
-                '<thead><tr style="background:#0f172a;color:#fff;">' +
-                '<th style="padding:8px;text-align:left;border:1px solid #0f172a;">Description of Services</th>' +
-                '<th style="padding:8px;text-align:left;border:1px solid #0f172a;">Scope Limits</th>' +
-                '<th style="padding:8px;text-align:center;border:1px solid #0f172a;">Investment Capital</th>' +
+                '<thead><tr style="background:#111827;color:#fff;">' +
+                '<th style="padding:8px;text-align:left;border:1px solid #111827;">Description of Services</th>' +
+                '<th style="padding:8px;text-align:left;border:1px solid #111827;">Scope Limits</th>' +
+                '<th style="padding:8px;text-align:center;border:1px solid #111827;">Investment Capital</th>' +
                 '</tr></thead><tbody>' + investTableRows + '</tbody></table>' +
                 '<p style="font-size:8pt;color:#475569;margin-top:8px;font-style:italic;">Note: Domain and Hosting infrastructure access channels are setup in the client\'s corporate name to guarantee total long-term security, control, and strategic ownership.</p>' +
-                '<h3 style="font-size:11pt;color:#2563EB;margin:14px 0 6px;">Project Conditions & Terms</h3>' +
-                '<h4 style="font-size:10pt;color:#2563EB;margin:10px 0 4px;">Commercial Payment Terms</h4>' +
+                '<h3 style="font-size:11pt;color:#1F2937;margin:14px 0 6px;">Project Conditions & Terms</h3>' +
+                '<h4 style="font-size:10pt;color:#1F2937;margin:10px 0 4px;">Commercial Payment Terms</h4>' +
                 '<p style="font-size:9pt;color:#333;margin-bottom:6px;">The payment schedule shall be executed as follows:</p>' +
                 '<ul style="font-size:9pt;color:#333;padding-left:20px;line-height:1.7;">' +
                 '<li>50% Advance Payment: Due upon formal project agreement confirmation to initiate development sprints.</li>' +
@@ -1971,15 +1971,15 @@
             var termsPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:visible;page-break-after:always;font-family:Inter,Segoe UI,sans-serif;">' +
                 '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
                 '<div style="position:relative;z-index:1;">' + pgHeader +
-                '<h3 style="font-size:11pt;color:#2563EB;margin:16px 0 6px;">Document Validity</h3>' +
+                '<h3 style="font-size:11pt;color:#1F2937;margin:16px 0 6px;">Document Validity</h3>' +
                 '<p style="font-size:9pt;color:#333;line-height:1.6;">This proposal and all referenced financial investment metrics remain strictly valid for '+validText+' from the date of issue.</p>' +
-                '<h3 style="font-size:11pt;color:#2563EB;margin:14px 0 6px;">Post-Launch Maintenance Support Framework</h3>' +
+                '<h3 style="font-size:11pt;color:#1F2937;margin:14px 0 6px;">Post-Launch Maintenance Support Framework</h3>' +
                 '<p style="font-size:9pt;color:#333;margin-bottom:6px;">Technical support windows are handled efficiently via the following channels:</p>' +
                 '<ul style="font-size:9pt;color:#333;padding-left:20px;line-height:1.7;">' +
                 '<li>WhatsApp Chat Support | Direct Email Support Tracking | Google Meet Strategic Sessions</li>' +
                 '<li>Free Technical Maintenance Coverage mapping perfectly to the specific timeline rules of your selected plan.</li>' +
                 '</ul>' +
-                '<h3 style="font-size:11pt;color:#2563EB;margin:14px 0 6px;">Terms & Conditions Agreement</h3>' +
+                '<h3 style="font-size:11pt;color:#1F2937;margin:14px 0 6px;">Terms & Conditions Agreement</h3>' +
                 '<ul style="font-size:9pt;color:#333;padding-left:20px;line-height:1.8;list-style:none;">' +
                 '<li>\u2713 Domain Registration & Cloud Hosting server space fees are always billed separate from core code fees.</li>' +
                 '<li>\u2713 The client corporate team will provide all primary business logos, structural copy text, and digital image assets.</li>' +
@@ -1994,16 +1994,16 @@
             var sigPage = '<div class="proposal-page" style="position:relative;min-height:297mm;padding:20mm;overflow:visible;font-family:Inter,Segoe UI,sans-serif;display:flex;flex-direction:column;">' +
                 '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;z-index:0;"><img src="'+watermark+'" style="width:350px;height:auto;"></div>' +
                 '<div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;">' + pgHeader +
-                '<h2 style="font-size:18pt;color:#0f172a;font-weight:800;text-align:center;margin:30px 0 12px;letter-spacing:0.5px;">LET\'S BUILD YOUR DIGITAL PRESENCE TOGETHER.</h2>' +
-                '<p style="text-align:center;font-size:10pt;font-weight:600;color:#0f172a;">GridNest Web Solutions Corporate Team</p>' +
+                '<h2 style="font-size:18pt;color:#111827;font-weight:800;text-align:center;margin:30px 0 12px;letter-spacing:0.5px;">LET\'S BUILD YOUR DIGITAL PRESENCE TOGETHER.</h2>' +
+                '<p style="text-align:center;font-size:10pt;font-weight:600;color:#111827;">GridNest Web Solutions Corporate Team</p>' +
                 '<p style="text-align:center;font-size:9pt;color:#475569;margin:4px 0;">Primary Phone Queue: +91 9667195689 | Email Support: Contact@gridnestwebsolution.com</p>' +
                 '<p style="text-align:center;font-size:9pt;color:#475569;margin:4px 0;">Digital Portal: www.gridnestwebsolution.com</p>' +
                 '<p style="text-align:center;font-size:9pt;color:#94a3b8;margin:20px 0;">[ QR CODE PLACEHOLDER FOR ARCHIVE ACCESS ]</p>' +
                 '<div style="display:flex;justify-content:space-between;margin-top:auto;padding-top:40px;">' +
-                '<div style="width:45%;"><div style="border-top:1px solid #0f172a;margin-top:60px;padding-top:4px;font-size:9pt;color:#333;">Client Signature / Corporate Authorization</div><p style="font-size:9pt;color:#333;margin-top:8px;">Date: _______________</p></div>' +
-                '<div style="width:45%;"><div style="border-top:1px solid #0f172a;margin-top:60px;padding-top:4px;font-size:9pt;color:#333;">GridNest Authorized Signatory Suite</div><p style="font-size:9pt;color:#333;margin-top:8px;">Date: _______________</p></div>' +
+                '<div style="width:45%;"><div style="border-top:1px solid #111827;margin-top:60px;padding-top:4px;font-size:9pt;color:#333;">Client Signature / Corporate Authorization</div><p style="font-size:9pt;color:#333;margin-top:8px;">Date: _______________</p></div>' +
+                '<div style="width:45%;"><div style="border-top:1px solid #111827;margin-top:60px;padding-top:4px;font-size:9pt;color:#333;">GridNest Authorized Signatory Suite</div><p style="font-size:9pt;color:#333;margin-top:8px;">Date: _______________</p></div>' +
                 '</div>' +
-                '<div style="text-align:center;font-size:7.5pt;color:#64748b;margin-top:auto;padding-top:12px;border-top:1px solid #e2e8f0;">www.gridnestwebsolution.com | Contact@gridnestwebsolution.com | Confidential Business Document</div>' +
+                '<div style="text-align:center;font-size:7.5pt;color:#6B7280;margin-top:auto;padding-top:12px;border-top:1px solid #E5E7EB;">www.gridnestwebsolution.com | Contact@gridnestwebsolution.com | Confidential Business Document</div>' +
                 '</div></div>';
 
             return coverPage + aboutPage + packagesPage + investmentPage + termsPage + sigPage;
@@ -2146,7 +2146,7 @@
             if (!proposalsData.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty">No proposals yet</div></td></tr>'; return; }
             var planLabels = { standard: 'Standard', 'custom-premium': 'Custom Premium' };
             tbody.innerHTML = proposalsData.map(function(p) {
-                return '<tr><td data-label="Number"><strong>'+p.proposalNumber+'</strong>'+(p.revision>1?' <small style="color:#64748b;">R'+p.revision+'</small>':'')+'</td><td data-label="Client">'+(p.client?.company||'-')+'</td><td data-label="Plan">'+(planLabels[p.plan]||p.plan)+'</td><td data-label="Amount">\u20B9'+(p.grandTotal||0).toLocaleString('en-IN')+'</td><td data-label="Status"><span class="badge badge-'+p.status+'">'+p.status+'</span></td><td data-label="Date">'+new Date(p.createdAt).toLocaleDateString()+'</td><td data-label="Actions"><button class="btn btn-outline btn-sm" onclick="viewProposal(\''+p._id+'\')" title="View"><i class="fas fa-eye"></i></button> <button class="btn btn-outline btn-sm" onclick="editProposal(\''+p._id+'\')" title="Edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="deleteProposalById(\''+p._id+'\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
+                return '<tr><td data-label="Number"><strong>'+p.proposalNumber+'</strong>'+(p.revision>1?' <small style="color:#6B7280;">R'+p.revision+'</small>':'')+'</td><td data-label="Client">'+(p.client?.company||'-')+'</td><td data-label="Plan">'+(planLabels[p.plan]||p.plan)+'</td><td data-label="Amount">\u20B9'+(p.grandTotal||0).toLocaleString('en-IN')+'</td><td data-label="Status"><span class="badge badge-'+p.status+'">'+p.status+'</span></td><td data-label="Date">'+new Date(p.createdAt).toLocaleDateString()+'</td><td data-label="Actions"><button class="btn btn-outline btn-sm" onclick="viewProposal(\''+p._id+'\')" title="View"><i class="fas fa-eye"></i></button> <button class="btn btn-outline btn-sm" onclick="editProposal(\''+p._id+'\')" title="Edit"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="deleteProposalById(\''+p._id+'\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
             }).join('');
         }
 

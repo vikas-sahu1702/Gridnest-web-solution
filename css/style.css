@@ -7,15 +7,15 @@
 }
 :root {
     /* Color Palette */
-    --primary: #2563EB;
-    --primary-dark: #1D4ED8;
-    --dark: #0F172A;
-    --dark-light: #1E293B;
-    --accent: #06B6D4;
-    --accent-light: #22D3EE;
-    --light: #F8FAFC;
-    --gray: #64748B;
-    --gray-light: #E2E8F0;
+    --primary: #1F2937;
+    --primary-dark: #111827;
+    --dark: #111827;
+    --dark-light: #1F2937;
+    --accent: #F97316;
+    --accent-light: #FB923C;
+    --light: #F3F4F6;
+    --gray: #6B7280;
+    --gray-light: #E5E7EB;
     --white: #FFFFFF;
     --black: #000000;
     
@@ -43,7 +43,7 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.3);
+    --shadow-glow: 0 0 20px rgba(31, 41, 55, 0.3);
     
     /* Transitions */
     --transition-fast: 150ms ease;
@@ -210,7 +210,7 @@ p {
     position: fixed;
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(31, 41, 55, 0.1) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9998;
@@ -334,8 +334,8 @@ p {
     width: 100%;
     height: 100%;
     background: linear-gradient(135deg, 
-        rgba(37, 99, 235, 0.1) 0%,
-        rgba(6, 182, 212, 0.1) 50%,
+        rgba(31, 41, 55, 0.1) 0%,
+        rgba(249, 115, 22, 0.1) 50%,
         rgba(255, 255, 255, 0) 100%);
     animation: gradientShift 10s ease-in-out infinite;
 }
@@ -518,7 +518,7 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, transparent 70%, rgba(15, 23, 42, 0.8) 100%);
+    background: linear-gradient(to bottom, transparent 70%, rgba(17, 24, 39, 0.8) 100%);
 }
 .about-actions {
     margin-top: var(--space-xl);
@@ -526,7 +526,7 @@ p {
 .about-badge {
     display: inline-block;
     padding: 0.4rem 1rem;
-    background: rgba(37, 99, 235, 0.1);
+    background: rgba(31, 41, 55, 0.1);
     color: var(--primary);
     border-radius: var(--radius-full);
     font-size: 0.85rem;
@@ -595,7 +595,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(37, 99, 235, 0.1);
+    background-color: rgba(31, 41, 55, 0.1);
     border-radius: var(--radius-lg);
     margin-bottom: var(--space-lg);
     font-size: 1.5rem;
@@ -642,7 +642,7 @@ p {
     font-family: var(--font-heading);
     font-size: 4rem;
     font-weight: 800;
-    color: rgba(15, 23, 42, 0.05);
+    color: rgba(17, 24, 39, 0.05);
     margin-bottom: var(--space-sm);
     line-height: 1;
 }
@@ -720,7 +720,7 @@ p {
     left: 0;
     width: 100%;
     padding: var(--space-xl);
-    background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent);
+    background: linear-gradient(to top, rgba(17, 24, 39, 0.9), transparent);
     color: var(--white);
     transform: translateY(100%);
     transition: transform var(--transition-normal);
@@ -1018,7 +1018,7 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(15, 23, 42, 0.9);
+    background-color: rgba(17, 24, 39, 0.9);
     display: none;
     align-items: center;
     justify-content: center;
@@ -1370,8 +1370,8 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 30% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 70% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+    background: radial-gradient(circle at 30% 50%, rgba(31, 41, 55, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
 }
 
 .page-hero-content {
@@ -1444,7 +1444,7 @@ p {
 .contact-form textarea:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(31, 41, 55, 0.1);
 }
 
 .contact-form textarea {
@@ -1639,13 +1639,13 @@ p {
 
 .about-services-list span {
     display: inline-block;
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(6, 182, 212, 0.08));
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.08), rgba(249, 115, 22, 0.08));
     color: var(--primary);
     padding: 0.4rem 1rem;
     border-radius: var(--radius-full);
     font-size: 0.875rem;
     font-weight: 500;
-    border: 1px solid rgba(37, 99, 235, 0.15);
+    border: 1px solid rgba(31, 41, 55, 0.15);
 }
 
 .about-team {
@@ -1838,7 +1838,7 @@ p {
 .portfolio-info .portfolio-category {
     display: inline-block;
     padding: 0.25rem 0.75rem;
-    background-color: rgba(37, 99, 235, 0.1);
+    background-color: rgba(31, 41, 55, 0.1);
     color: var(--primary);
     border-radius: var(--radius-full);
     font-size: 0.75rem;
@@ -2317,7 +2317,7 @@ p {
     align-items: center;
     gap: var(--space-sm);
     padding: 0.5rem 1rem;
-    background: rgba(37, 99, 235, 0.1);
+    background: rgba(31, 41, 55, 0.1);
     border-radius: var(--radius-full);
     margin-bottom: var(--space-lg);
 }
@@ -2430,7 +2430,7 @@ p {
     align-items: center;
     gap: var(--space-sm);
     padding: 0.5rem 1.25rem;
-    background: rgba(37, 99, 235, 0.1);
+    background: rgba(31, 41, 55, 0.1);
     border-radius: var(--radius-full);
     color: var(--primary);
     font-size: 0.875rem;
@@ -2468,7 +2468,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.1));
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.1), rgba(249, 115, 22, 0.1));
     border-radius: var(--radius-lg);
     margin: 0 auto var(--space-lg);
     font-size: 2rem;
@@ -2613,8 +2613,8 @@ p {
 .hero-bg-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 30% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 70% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+    background: radial-gradient(circle at 30% 50%, rgba(31, 41, 55, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
     z-index: 0;
 }
 .hero-particles { position: absolute; inset: 0; z-index: 0; }
@@ -2739,7 +2739,7 @@ p {
     font-family: var(--font-heading);
     font-size: 4rem;
     font-weight: 800;
-    color: rgba(37, 99, 235, 0.08);
+    color: rgba(31, 41, 55, 0.08);
     line-height: 1;
     display: block;
     margin-bottom: var(--space-sm);
@@ -2777,7 +2777,7 @@ p {
     align-items: center;
     gap: var(--space-sm);
     padding: 0.5rem 1.25rem;
-    background: rgba(37, 99, 235, 0.1);
+    background: rgba(31, 41, 55, 0.1);
     border-radius: var(--radius-full);
     color: var(--primary);
     font-size: 0.875rem;

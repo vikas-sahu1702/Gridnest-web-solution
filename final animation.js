@@ -153,7 +153,7 @@ class PremiumAnimations {
             particle.style.animationDuration = `${duration}s`;
             
             // Random color
-            const colors = ['#2563EB', '#06B6D4', '#8B5CF6', '#10B981'];
+            const colors = ['#1F2937', '#F97316', '#8B5CF6', '#10B981'];
             const color = colors[Math.floor(Math.random() * colors.length)];
             particle.style.backgroundColor = color;
             

@@ -140,7 +140,7 @@ newsletterForm.addEventListener('submit', (e) => {
                 <h3 class="modal-title">Success!</h3>
                 <p class="modal-description">Thank you for subscribing to our newsletter.</p>
                 <div class="success-icon">
-                    <i class="fas fa-check-circle" style="font-size: 3rem; color: #2563EB;"></i>
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: #F97316;"></i>
                 </div>
             `;
         } else {

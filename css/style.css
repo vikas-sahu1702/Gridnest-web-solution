@@ -318,7 +318,7 @@ p {
     flex-direction: column;
     justify-content: center;
     position: relative;
-    padding-top: 80px;
+    padding-top: 120px;
     overflow: hidden;
 }
 .hero-background {

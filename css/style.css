@@ -11,13 +11,15 @@ img {
 }
 :root {
     /* Color Palette */
-    --primary: #1F2937;
-    --primary-dark: #111827;
+    --primary: #0F172A;
+    --primary-dark: #070B14;
+    --secondary: #0F4C81;
     --dark: #111827;
-    --dark-light: #1F2937;
-    --accent: #F97316;
-    --accent-light: #FB923C;
-    --light: #F3F4F6;
+    --dark-light: #0F4C81;
+    --accent: #00B8D9;
+    --accent-light: #00B8D9;
+    --accent-hover: #0097B2;
+    --light: #F8FAFC;
     --gray: #6B7280;
     --gray-light: #E5E7EB;
     --white: #FFFFFF;
@@ -125,23 +127,23 @@ p {
     overflow: hidden;
 }
 .btn-primary {
-    background-color: var(--primary);
+    background-color: var(--accent);
     color: var(--white);
-    border-color: var(--primary);
+    border-color: var(--accent);
 }
 .btn-primary:hover {
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
     transform: translateY(-2px);
     box-shadow: var(--shadow-glow);
 }
 .btn-outline {
     background-color: transparent;
-    color: var(--dark);
-    border-color: var(--dark);
+    color: var(--secondary);
+    border-color: var(--secondary);
 }
 .btn-outline:hover {
-    background-color: var(--dark);
+    background-color: var(--secondary);
     color: var(--white);
     transform: translateY(-2px);
 }

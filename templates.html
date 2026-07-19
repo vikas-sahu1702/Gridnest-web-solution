@@ -618,8 +618,20 @@
     </footer>
 
     <script>
+        // Dynamic Navbar Height Calculation
+        function updateNavbarHeight() {
+            const navbarEl = document.getElementById('navbar') || document.querySelector('.navbar');
+            if (navbarEl) {
+                document.documentElement.style.setProperty('--navbar-height', navbarEl.offsetHeight + 'px');
+            }
+        }
+        window.addEventListener('resize', updateNavbarHeight);
+        document.addEventListener('DOMContentLoaded', updateNavbarHeight);
+
         // Loading Screen
         window.addEventListener('load', function() {
+            updateNavbarHeight();
+            setTimeout(updateNavbarHeight, 500);
             setTimeout(function() {
                 document.getElementById('loader').classList.add('loaded');
             }, 1500);
@@ -633,6 +645,7 @@
             } else {
                 navbar.classList.remove('scrolled');
             }
+            updateNavbarHeight();
         });
 
         // Mobile Navigation Toggle

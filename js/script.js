@@ -10,8 +10,18 @@ const newsletterModal = document.getElementById('newsletterModal');
 const modalClose = document.getElementById('modalClose');
 const newsletterForm = document.getElementById('newsletterForm');
 const statNumbers = document.querySelectorAll('.stat-number');
+// Dynamic Navbar Height Calculation
+function updateNavbarHeight() {
+    if (navbar) {
+        document.documentElement.style.setProperty('--navbar-height', `${navbar.offsetHeight}px`);
+    }
+}
+window.addEventListener('resize', updateNavbarHeight);
+
 // Loading Screen
 window.addEventListener('load', () => {
+    updateNavbarHeight();
+    setTimeout(updateNavbarHeight, 500);
     setTimeout(() => {
         loadingScreen.style.opacity = '0';
         setTimeout(() => {
@@ -37,7 +47,10 @@ window.addEventListener('scroll', () => {
         navbar.classList.remove('scrolled');
         backToTop.style.display = 'none';
     }
+    updateNavbarHeight();
 });
+// Initial check
+document.addEventListener('DOMContentLoaded', updateNavbarHeight);
 // Mobile Menu Toggle
 menuToggle.addEventListener('click', () => {
     menuToggle.classList.toggle('active');

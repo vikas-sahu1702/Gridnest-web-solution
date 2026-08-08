@@ -78,9 +78,6 @@
         </div>
     </div>
 
-    <!-- Mouse Glow Effect -->
-    <div class="mouse-glow" id="mouseGlow"></div>
-
     <!-- WhatsApp Float -->
             <a href="https://wa.me/919667195689" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with GridNest on WhatsApp">
         <i class="fab fa-whatsapp"></i>
@@ -130,12 +127,7 @@
                 </div>
             </div>
         </div>
-        <div class="hero-scroll-indicator">
-            <div class="scroll-mouse">
-                <div class="scroll-wheel"></div>
-            </div>
-            <span>Scroll to Explore</span>
-        </div>
+
     </section>
 
     <!-- Templates Section -->
@@ -665,15 +657,6 @@
         });
 
         // Mouse Glow Effect
-        const mouseGlow = document.getElementById('mouseGlow');
-        document.addEventListener('mousemove', function(e) {
-            mouseGlow.style.left = e.clientX + 'px';
-            mouseGlow.style.top = e.clientY + 'px';
-            mouseGlow.style.opacity = '1';
-        });
-        document.addEventListener('mouseleave', function() {
-            mouseGlow.style.opacity = '0';
-        });
 
         // Back to Top Button
         const backToTop = document.getElementById('backToTop');
@@ -717,6 +700,13 @@
             heroParticles.appendChild(particle);
         }
     </script>
-
+    <!-- NestChat Widget -->
+    <script
+      src="https://nestchat-api.onrender.com/widget.js"
+      data-client-id="gridnest-web-solution"
+      data-api-url="https://nestchat-api.onrender.com/api"
+      data-widget-version="1.0.0"
+      defer>
+    </script>
 </body>
 </html>

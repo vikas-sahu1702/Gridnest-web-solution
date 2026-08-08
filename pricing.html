@@ -37,9 +37,9 @@
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link rel="preload" href="Image/New_Logo.jpeg" as="image">
@@ -143,7 +143,7 @@
             gap: var(--space-sm);
         }
         .pricing-features li i {
-            color: var(--primary);
+            color: var(--gold);
             font-size: 0.875rem;
             flex-shrink: 0;
         }
@@ -153,13 +153,13 @@
             text-align: center;
             margin-top: var(--space-xxl);
             padding: var(--space-xl);
-            background: linear-gradient(135deg, rgba(31, 41, 55, 0.05), rgba(249, 115, 22, 0.05));
+            background: rgba(212, 175, 55, 0.05);
             border-radius: var(--radius-lg);
-            border: 1px solid var(--gray-light);
+            border: 1px solid rgba(212, 175, 55, 0.12);
         }
         .guarantee-badge i {
             font-size: 2.5rem;
-            color: var(--primary);
+            color: var(--gold);
             margin-bottom: var(--space-md);
         }
         .guarantee-badge h3 {
@@ -175,28 +175,34 @@
         /* FAQ Section */
         .faq-section {
             padding: var(--space-xxl) 0;
-            background-color: var(--light);
+            background-color: #080808;
         }
         .faq-grid {
             max-width: 800px;
             margin: 0 auto;
         }
         .faq-item {
-            background-color: var(--white);
-            border-radius: var(--radius-lg);
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 16px;
             margin-bottom: var(--space-md);
-            box-shadow: var(--shadow-sm);
             overflow: hidden;
-            transition: box-shadow var(--transition-normal);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .faq-item:hover {
-            box-shadow: var(--shadow-md);
+            border-color: rgba(212, 175, 55, 0.25);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.06);
+        }
+        .faq-item.active {
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 30px rgba(212, 175, 55, 0.08);
         }
         .faq-question {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: var(--space-lg) var(--space-xl);
+            padding: 1.5rem 1.75rem;
             cursor: pointer;
             background: none;
             border: none;
@@ -205,21 +211,29 @@
             font-family: var(--font-heading);
             font-size: 1.0625rem;
             font-weight: 600;
-            color: var(--dark);
+            color: #F5F5F5;
             transition: color var(--transition-fast);
         }
         .faq-question:hover {
-            color: var(--primary);
+            color: #D4AF37;
         }
         .faq-question i {
             font-size: 0.875rem;
-            color: var(--primary);
+            color: #D4AF37;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
             transition: transform var(--transition-normal);
             flex-shrink: 0;
             margin-left: var(--space-md);
         }
         .faq-item.active .faq-question i {
             transform: rotate(180deg);
+            background: rgba(212, 175, 55, 0.2);
         }
         .faq-answer {
             max-height: 0;
@@ -230,58 +244,74 @@
             max-height: 300px;
         }
         .faq-answer-content {
-            padding: 0 var(--space-xl) var(--space-xl);
-            color: var(--gray);
-            line-height: 1.8;
+            padding: 0 1.75rem 1.75rem;
+            color: #D8D8D8;
+            line-height: 1.9;
         }
 
         /* Comparison Table */
         .comparison-section {
             padding: var(--space-xxl) 0;
+            background-color: var(--dark);
+        }
+        .comparison-table-wrapper {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
         }
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
-            background-color: var(--white);
-            border-radius: var(--radius-lg);
+            background-color: transparent;
+            border-radius: 0;
             overflow: hidden;
-            box-shadow: var(--shadow-md);
+            box-shadow: none;
         }
         .comparison-table thead {
-            background: linear-gradient(135deg, var(--dark), var(--dark-light));
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
         .comparison-table th {
             padding: var(--space-lg) var(--space-md);
-            color: var(--white);
+            color: #F5F5F5;
             font-family: var(--font-heading);
             font-weight: 600;
             text-align: center;
         }
         .comparison-table th:first-child {
             text-align: left;
+            color: #D4AF37;
         }
         .comparison-table td {
             padding: var(--space-md);
-            border-bottom: 1px solid var(--gray-light);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.06);
             text-align: center;
+            color: #A9A9A9;
         }
         .comparison-table td:first-child {
             text-align: left;
             font-weight: 500;
-            color: var(--dark);
+            color: #F5F5F5;
+        }
+        .comparison-table tbody tr:nth-child(even) {
+            background: rgba(212, 175, 55, 0.02);
         }
         .comparison-table tbody tr:hover {
-            background-color: rgba(31, 41, 55, 0.02);
+            background: rgba(212, 175, 55, 0.06);
         }
         .comparison-table tbody tr:last-child td {
             border-bottom: none;
         }
         .comparison-table .check {
-            color: var(--primary);
+            color: #D4AF37;
             font-size: 1.125rem;
+            filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.3));
         }
         .comparison-table .cross {
-            color: var(--gray-light);
+            color: #555;
             font-size: 1.125rem;
         }
 
@@ -321,9 +351,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Mouse Glow Effect -->
-    <div class="mouse-glow"></div>
 
     <!-- Floating WhatsApp -->
     <a href="https://wa.me/919667195689" class="whatsapp-float" aria-label="Chat on WhatsApp">
@@ -490,7 +517,7 @@
                 <p class="section-subtitle">See exactly what's included in each plan</p>
             </div>
             
-            <div style="overflow-x: auto;">
+            <div style="overflow-x: auto;" class="comparison-table-wrapper">
                 <table class="comparison-table">
                     <thead>
                         <tr>
@@ -814,5 +841,13 @@
     </script>
     <script src="js/script.js" defer></script>
     <script src="js/animation.js" defer></script>
+    <!-- NestChat Widget -->
+    <script
+      src="https://nestchat-api.onrender.com/widget.js"
+      data-client-id="gridnest-web-solution"
+      data-api-url="https://nestchat-api.onrender.com/api"
+      data-widget-version="1.0.0"
+      defer>
+    </script>
 </body>
 </html>

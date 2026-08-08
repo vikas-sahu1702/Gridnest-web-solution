@@ -3522,3 +3522,11 @@ p {
     }
 }
 
+@media (max-width: 992px) {
+    .nestchat-showcase-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-xl) !important;
+    }
+}
+
+

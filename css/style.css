@@ -79,6 +79,24 @@ body {
     margin: 0 auto;
     padding: 0 var(--container-padding);
 }
+
+/* Logo Sizing Optimization */
+.nav-logo img {
+    height: 58px !important;
+    max-height: 65px !important;
+    width: auto !important;
+    object-fit: contain;
+    transition: transform var(--transition-fast);
+}
+.nav-logo img:hover {
+    transform: scale(1.03);
+}
+.footer-logo img {
+    height: 85px !important;
+    max-height: 95px !important;
+    width: auto !important;
+    object-fit: contain;
+}
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);

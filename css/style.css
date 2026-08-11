@@ -81,21 +81,26 @@ body {
 }
 
 /* Logo Sizing Optimization */
-.nav-logo img {
-    height: 58px !important;
-    max-height: 65px !important;
+.nav-logo img,
+.navbar .logo img,
+.logo img {
+    height: 95px !important;
+    max-height: 110px !important;
     width: auto !important;
-    object-fit: contain;
+    max-width: 280px !important;
+    object-fit: contain !important;
     transition: transform var(--transition-fast);
 }
-.nav-logo img:hover {
-    transform: scale(1.03);
+.nav-logo img:hover,
+.logo img:hover {
+    transform: scale(1.04);
 }
 .footer-logo img {
-    height: 85px !important;
-    max-height: 95px !important;
+    height: 120px !important;
+    max-height: 140px !important;
     width: auto !important;
-    object-fit: contain;
+    max-width: 320px !important;
+    object-fit: contain !important;
 }
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
@@ -282,7 +287,8 @@ p {
     text-decoration: none;
 }
 .logo img {
-    height: 65px;
+    height: 95px !important;
+    max-height: 110px !important;
     width: auto;
     object-fit: contain;
 }

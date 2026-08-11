@@ -92,14 +92,14 @@ function animateCounter(element) {
 // Intersection Observer for Animations
 const observerOptions = {
     root: null,
-    rootMargin: '0px',
+    rootMargin: '0px 0px -50px 0px',
     threshold: 0.1
 };
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             // Add animation classes
-            entry.target.classList.add('visible');
+            entry.target.classList.add('visible', 'animate-in');
             
             // Animate counters
             if (entry.target.classList.contains('stat-number')) {
@@ -109,7 +109,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 // Observe elements
-document.querySelectorAll('.fade-in, .zoom-in, .slide-left, .slide-right, .stat-number').forEach(element => {
+document.querySelectorAll('[data-animate], .fade-in, .zoom-in, .slide-left, .slide-right, .stat-number').forEach(element => {
     observer.observe(element);
 });
 // Newsletter Modal

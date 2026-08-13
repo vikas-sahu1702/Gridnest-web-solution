@@ -807,9 +807,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-row three">
-                                            <div class="form-group"><label>GST %</label><input type="number" id="pGst" value="18" oninput="recalcProposal()"></div>
-                                            <div class="form-group"><label>Discount (₹)</label><input type="number" id="pDiscount" value="0" oninput="recalcProposal()"></div>
+                                        <div class="form-row">
+                                            <div class="form-group"><label>GST %</label><input type="number" id="pGst" value="18" oninput="recalcProposal();updateProposalPreview();"></div>
                                             <div class="form-group"><label>Status</label>
                                                 <select id="pStatus">
                                                     <option value="draft">Draft</option>
@@ -835,6 +834,20 @@
                                             <tbody id="pExtraBody"></tbody>
                                         </table></div>
                                         <button class="btn btn-outline btn-sm" onclick="addProposalExtra()" style="margin-top:0.5rem;"><i class="fas fa-plus"></i> Add Item</button>
+                                    </div>
+                                    <div class="form-card">
+                                        <div class="form-card-title">Discounts & Offers</div>
+                                        <div class="form-row">
+                                            <div class="form-group" style="flex:2;">
+                                                <label>Discount Title / Description</label>
+                                                <input type="text" id="pDiscountTitle" placeholder="e.g. Package Discount / Special Offer" oninput="recalcProposal();updateProposalPreview();">
+                                            </div>
+                                            <div class="form-group" style="flex:1;">
+                                                <label>Discount Amount (₹)</label>
+                                                <input type="number" id="pDiscount" value="0" min="0" placeholder="0" oninput="recalcProposal();updateProposalPreview();">
+                                            </div>
+                                        </div>
+                                        <small style="color:#64748B;font-size:0.75rem;">Leave amount as 0 if no discount is applicable. If added, discount will be automatically reflected in totals and proposal document.</small>
                                     </div>
                                     <div class="form-card">
                                         <div class="form-card-title">Totals</div>
@@ -1822,11 +1835,15 @@
             var subtotal = items.reduce(function(s,i){return s+i.amount},0) + extras.reduce(function(s,e){return s+e.amount},0);
             var gstPct = parseFloat(document.getElementById('pGst').value)||0;
             var discount = parseFloat(document.getElementById('pDiscount').value)||0;
-            var taxable = subtotal - discount;
+            var discountTitleEl = document.getElementById('pDiscountTitle');
+            var discountTitle = (discountTitleEl ? discountTitleEl.value.trim() : '') || 'Discount';
+            var taxable = Math.max(0, subtotal - discount);
             var gstAmount = taxable * gstPct / 100;
             var grand = taxable + gstAmount;
-            document.getElementById('pTotals').innerHTML = '<div>Subtotal: \u20B9' + subtotal.toLocaleString('en-IN') + '</div><div>Discount: -\u20B9' + discount.toLocaleString('en-IN') + '</div><div>GST (' + gstPct + '%): \u20B9' + gstAmount.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div><div class="grand">Grand Total: \u20B9' + grand.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div>';
-            return { subtotal: subtotal, gstPct: gstPct, gstAmount: gstAmount, discount: discount, grand: grand };
+
+            var discountHTML = discount > 0 ? '<div>' + discountTitle + ': -₹' + discount.toLocaleString('en-IN') + '</div>' : '';
+            document.getElementById('pTotals').innerHTML = '<div>Subtotal: ₹' + subtotal.toLocaleString('en-IN') + '</div>' + discountHTML + '<div>GST (' + gstPct + '%): ₹' + gstAmount.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div><div class="grand">Grand Total: ₹' + grand.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div>';
+            return { subtotal: subtotal, gstPct: gstPct, gstAmount: gstAmount, discount: discount, discountTitle: discountTitle, grand: grand };
         }
 
         function onPaymentTermsChange() { document.getElementById('pPaymentTermsCustomGroup').style.display = document.getElementById('pPaymentTerms').value === 'custom' ? 'block' : 'none'; }
@@ -2035,7 +2052,8 @@
                 }
             });
             if (calc.discount > 0) {
-                investRows.push(['Package Discount', 'Applied on investment total', '-₹' + calc.discount.toLocaleString('en-IN')]);
+                var discTitle = d.discountTitle || (calc && calc.discountTitle) || 'Special Discount';
+                investRows.push([discTitle, 'Applied on investment total', '-₹' + calc.discount.toLocaleString('en-IN')]);
             }
             investRows.push(['Applicable GST (' + calc.gstPct + '%)', 'Calculated on taxable amount', '₹' + calc.gstAmount.toLocaleString('en-IN', {minimumFractionDigits:2})]);
 
@@ -2188,6 +2206,8 @@
             if (payTerms === 'custom') payText = document.getElementById('pPaymentTermsCustom').value || 'Custom Terms';
             var validity = document.getElementById('pValidity').value;
             var validText = validity === 'custom' ? (document.getElementById('pValidityCustom').value || '30') + ' Days' : validity + ' Days';
+            var discTitleEl = document.getElementById('pDiscountTitle');
+            var discTitle = discTitleEl ? discTitleEl.value.trim() : '';
 
             var html = generateProposalHTML({
                 company: document.getElementById('pClientCompany').value || 'Client Name',
@@ -2196,6 +2216,7 @@
                 plan: plan,
                 items: items,
                 additionalCharges: extras,
+                discountTitle: discTitle,
                 calc: calc,
                 payText: payText,
                 validText: validText,
@@ -2228,6 +2249,7 @@
                 document.getElementById('pDate').value = proposal.proposalDate ? new Date(proposal.proposalDate).toISOString().split('T')[0] : '';
                 document.getElementById('pPlan').value = proposal.plan || 'standard';
                 document.getElementById('pGst').value = proposal.gst ?? 18;
+                if (document.getElementById('pDiscountTitle')) document.getElementById('pDiscountTitle').value = proposal.discountTitle || '';
                 document.getElementById('pDiscount').value = proposal.discount ?? 0;
                 document.getElementById('pStatus').value = proposal.status || 'draft';
                 document.getElementById('pPaymentTerms').value = proposal.paymentTerms || '50-advance';
@@ -2250,6 +2272,7 @@
                 document.getElementById('pClientAddress').value = '';
                 document.getElementById('pPlan').value = 'standard';
                 document.getElementById('pGst').value = 18;
+                if (document.getElementById('pDiscountTitle')) document.getElementById('pDiscountTitle').value = '';
                 document.getElementById('pDiscount').value = 0;
                 document.getElementById('pStatus').value = 'draft';
                 document.getElementById('pPaymentTerms').value = '50-advance';
@@ -2272,6 +2295,7 @@
                 additionalCharges: getProposalExtras(),
                 gst: parseFloat(document.getElementById('pGst').value)||0,
                 discount: parseFloat(document.getElementById('pDiscount').value)||0,
+                discountTitle: document.getElementById('pDiscountTitle') ? document.getElementById('pDiscountTitle').value.trim() : '',
                 paymentTerms: document.getElementById('pPaymentTerms').value,
                 paymentTermsCustom: document.getElementById('pPaymentTermsCustom').value,
                 validity: document.getElementById('pValidity').value,
@@ -2355,7 +2379,7 @@
             if (p.paymentTerms === '100-advance') payText = '100% Advance Payment';
             if (p.paymentTerms === 'custom') payText = p.paymentTermsCustom || 'Custom Terms';
             var validText = p.validity === 'custom' ? (p.validityCustom || '30') + ' Days' : (p.validity || '15') + ' Days';
-            var calc = { subtotal: p.subtotal||0, gstPct: p.gst||18, gstAmount: p.gstAmount||0, discount: p.discount||0, grand: p.grandTotal||0 };
+            var calc = { subtotal: p.subtotal||0, gstPct: p.gst||18, gstAmount: p.gstAmount||0, discount: p.discount||0, discountTitle: p.discountTitle||'Special Discount', grand: p.grandTotal||0 };
 
             var html = generateProposalHTML({
                 company: p.client?.company || 'Client',
@@ -2364,6 +2388,7 @@
                 plan: p.plan,
                 items: p.items || [],
                 additionalCharges: p.additionalCharges || [],
+                discountTitle: p.discountTitle || '',
                 calc: calc,
                 payText: payText,
                 validText: validText,

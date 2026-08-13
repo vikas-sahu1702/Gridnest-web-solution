@@ -50,6 +50,11 @@ const proposalSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  discountTitle: {
+    type: String,
+    trim: true,
+    default: '',
+  },
   paymentTerms: {
     type: String,
     enum: ['50-advance', '100-advance', 'custom'],

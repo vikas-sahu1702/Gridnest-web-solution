@@ -1,6 +1,3 @@
-javascript
-
-
 // animation.js
 // Advanced Animation Functions
 class PremiumAnimations {

@@ -1,5 +1,3 @@
-
-javascript
 // script.js
 // DOM Elements
 const loadingScreen = document.querySelector('.loading-screen');

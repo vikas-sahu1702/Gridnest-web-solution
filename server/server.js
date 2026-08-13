@@ -42,6 +42,8 @@ app.use(cors({
     if (process.env.NODE_ENV === 'production') {
       const allowedOrigins = [
         process.env.DOMAIN,
+        'https://gridnestsolution.in',
+        'https://www.gridnestsolution.in',
         'https://gridnest.com',
         'https://www.gridnest.com',
       ].filter(Boolean);

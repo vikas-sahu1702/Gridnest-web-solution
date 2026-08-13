@@ -98,7 +98,6 @@ const proposalSchema = new mongoose.Schema({
 });
 
 proposalSchema.index({ status: 1, createdAt: -1 });
-proposalSchema.index({ proposalNumber: 1 });
 proposalSchema.index({ parentProposalId: 1 });
 proposalSchema.index({ 'client.company': 1 });
 

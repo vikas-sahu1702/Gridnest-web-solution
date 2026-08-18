@@ -22,56 +22,66 @@ window.addEventListener('resize', updateNavbarHeight);
 window.addEventListener('load', () => {
     updateNavbarHeight();
     setTimeout(updateNavbarHeight, 500);
-    setTimeout(() => {
-        loadingScreen.style.opacity = '0';
+    if (loadingScreen) {
         setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 500);
-    }, 1000);
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        }, 1000);
+    }
 });
 // Mouse Glow Effect
 document.addEventListener('mousemove', (e) => {
-    mouseGlow.style.left = `${e.clientX}px`;
-    mouseGlow.style.top = `${e.clientY}px`;
-    mouseGlow.style.opacity = '1';
+    if (mouseGlow) {
+        mouseGlow.style.left = `${e.clientX}px`;
+        mouseGlow.style.top = `${e.clientY}px`;
+        mouseGlow.style.opacity = '1';
+    }
 });
 document.addEventListener('mouseleave', () => {
-    mouseGlow.style.opacity = '0';
+    if (mouseGlow) {
+        mouseGlow.style.opacity = '0';
+    }
 });
 // Navbar Scroll Effect
 window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
-        navbar.classList.add('scrolled');
-        backToTop.style.display = 'flex';
+        if (navbar) navbar.classList.add('scrolled');
+        if (backToTop) backToTop.style.display = 'flex';
     } else {
-        navbar.classList.remove('scrolled');
-        backToTop.style.display = 'none';
+        if (navbar) navbar.classList.remove('scrolled');
+        if (backToTop) backToTop.style.display = 'none';
     }
     updateNavbarHeight();
 });
 // Initial check
 document.addEventListener('DOMContentLoaded', updateNavbarHeight);
 // Mobile Menu Toggle
-menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    navMenu.classList.toggle('active');
-    
-    // Close menu when clicking a link
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        if (navMenu) navMenu.classList.toggle('active');
+        
+        // Close menu when clicking a link
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                if (navMenu) navMenu.classList.remove('active');
+            });
         });
     });
-});
+}
 // Back to Top
-backToTop.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+if (backToTop) {
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
-});
+}
 // Counter Animation
 function animateCounter(element) {
     const target = parseInt(element.getAttribute('data-count'));
@@ -114,72 +124,82 @@ document.querySelectorAll('[data-animate], .fade-in, .zoom-in, .slide-left, .sli
 });
 // Newsletter Modal
 setTimeout(() => {
-    if (!localStorage.getItem('newsletterShown')) {
+    if (newsletterModal && !localStorage.getItem('newsletterShown')) {
         newsletterModal.style.display = 'flex';
     }
 }, 3000);
-modalClose.addEventListener('click', () => {
-    newsletterModal.style.display = 'none';
-    localStorage.setItem('newsletterShown', 'true');
-});
+if (modalClose) {
+    modalClose.addEventListener('click', () => {
+        if (newsletterModal) newsletterModal.style.display = 'none';
+        localStorage.setItem('newsletterShown', 'true');
+    });
+}
 // Newsletter Form Submission
-newsletterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const emailInput = newsletterForm.querySelector('input[type="email"]');
-    const email = emailInput.value;
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const emailInput = newsletterForm.querySelector('input[type="email"]');
+        if (!emailInput) return;
+        const email = emailInput.value;
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        return;
-    }
-
-    const API_BASE = window.location.origin + '/api';
-    const submitBtn = newsletterForm.querySelector('button[type="submit"]');
-    const originalHTML = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-    submitBtn.disabled = true;
-
-    fetch(API_BASE + '/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email }),
-    })
-    .then(response => response.json().then(data => ({ status: response.status, data })))
-    .then(result => {
-        const modalBody = document.querySelector('.modal-body');
-        if (result.data.success) {
-            modalBody.innerHTML = `
-                <h3 class="modal-title">Success!</h3>
-                <p class="modal-description">Thank you for subscribing to our newsletter.</p>
-                <div class="success-icon">
-                    <i class="fas fa-check-circle" style="font-size: 3rem; color: #00B8D9;"></i>
-                </div>
-            `;
-        } else {
-            modalBody.innerHTML = `
-                <h3 class="modal-title">Note</h3>
-                <p class="modal-description">${result.data.message || 'Subscription failed. Please try again.'}</p>
-                <button class="btn btn-outline" onclick="location.reload()">Try Again</button>
-            `;
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            return;
         }
-        setTimeout(() => {
+
+        const API_BASE = window.location.origin + '/api';
+        const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+        if (!submitBtn) return;
+        const originalHTML = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        submitBtn.disabled = true;
+
+        fetch(API_BASE + '/newsletter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email }),
+        })
+        .then(response => response.json().then(data => ({ status: response.status, data })))
+        .then(result => {
+            const modalBody = document.querySelector('.modal-body');
+            if (modalBody) {
+                if (result.data && result.data.success) {
+                    modalBody.innerHTML = `
+                        <h3 class="modal-title">Success!</h3>
+                        <p class="modal-description">Thank you for subscribing to our newsletter.</p>
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle" style="font-size: 3rem; color: #00B8D9;"></i>
+                        </div>
+                    `;
+                } else {
+                    modalBody.innerHTML = `
+                        <h3 class="modal-title">Note</h3>
+                        <p class="modal-description">${(result.data && result.data.message) || 'Subscription failed. Please try again.'}</p>
+                        <button class="btn btn-outline" onclick="location.reload()">Try Again</button>
+                    `;
+                }
+            }
+            setTimeout(() => {
+                if (newsletterModal) newsletterModal.style.display = 'none';
+                localStorage.setItem('newsletterShown', 'true');
+            }, 2500);
+        })
+        .catch(error => {
+            console.error('Newsletter subscription error:', error);
+            submitBtn.innerHTML = originalHTML;
+            submitBtn.disabled = false;
+            alert('Network error. Please try again later.');
+        });
+    });
+}
+// Close modal when clicking outside
+if (newsletterModal) {
+    newsletterModal.addEventListener('click', (e) => {
+        if (e.target === newsletterModal) {
             newsletterModal.style.display = 'none';
             localStorage.setItem('newsletterShown', 'true');
-        }, 2500);
-    })
-    .catch(error => {
-        console.error('Newsletter subscription error:', error);
-        submitBtn.innerHTML = originalHTML;
-        submitBtn.disabled = false;
-        alert('Network error. Please try again later.');
+        }
     });
-});
-// Close modal when clicking outside
-newsletterModal.addEventListener('click', (e) => {
-    if (e.target === newsletterModal) {
-        newsletterModal.style.display = 'none';
-        localStorage.setItem('newsletterShown', 'true');
-    }
-});
+}
 // Smooth Scrolling for Anchor Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

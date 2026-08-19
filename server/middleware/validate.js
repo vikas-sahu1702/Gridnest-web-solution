@@ -51,7 +51,7 @@ const contactValidation = [
   body('service')
     .trim()
     .notEmpty().withMessage('Please select a service')
-    .isIn(['hotel', 'restaurant', 'corporate', 'seo', 'maintenance', 'template', 'other'])
+    .isIn(['hotel', 'restaurant', 'corporate', 'seo', 'maintenance', 'template', 'nestchat', 'other'])
     .withMessage('Please select a valid service option'),
 
   body('message')

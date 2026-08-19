@@ -55,6 +55,7 @@ const contactSchema = new mongoose.Schema(
           'seo',
           'maintenance',
           'template',
+          'nestchat',
           'other',
         ],
         message: 'Please select a valid service option',

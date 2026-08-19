@@ -659,8 +659,8 @@
                 <p style="color: var(--gray); max-width: 680px; margin: 0.5rem auto 0; font-size: 1rem; line-height: 1.6;">No hidden fees. Every plan includes AI acceleration and automated lead collection.</p>
                 
                 <div style="display: inline-flex; align-items: center; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; padding: 4px; margin-top: 1.5rem; gap: 4px;">
-                    <span style="padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; color: var(--gray); font-weight: 500;">Monthly Billing</span>
-                    <span style="padding: 6px 16px; border-radius: 20px; background: #6366f1; color: #fff; font-size: 0.85rem; font-weight: 600; box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);">Yearly (Save 20%)</span>
+                    <button id="nestchatMonthlyBtn" onclick="setNestChatBilling('monthly')" style="border: none; cursor: pointer; padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; background: #6366f1; color: #fff; box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4); transition: all 0.3s ease;">Monthly Billing</button>
+                    <button id="nestchatYearlyBtn" onclick="setNestChatBilling('yearly')" style="border: none; cursor: pointer; padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; background: transparent; color: var(--gray); transition: all 0.3s ease;">Yearly (Save 20%)</button>
                 </div>
             </div>
 
@@ -674,7 +674,7 @@
                             <span style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem; font-weight: 600;">Starter</span>
                         </div>
                         <div style="display: flex; align-items: baseline; gap: 0.3rem; margin-bottom: 0.5rem;">
-                            <span style="font-size: 2.8rem; font-weight: 800; color: #fff;">$1.6</span>
+                            <span id="starterPriceAmount" style="font-size: 2.8rem; font-weight: 800; color: #fff;">$2</span>
                             <span style="color: var(--gray); font-size: 0.95rem;">/ month</span>
                         </div>
                         <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.5rem; min-height: 42px;">Perfect for personal websites and early-stage startups.</p>
@@ -701,7 +701,7 @@
                     </div>
                     
                     <a href="https://nestchat-web-7my6.onrender.com/" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; text-align: center; background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 0.85rem; border-radius: 12px; font-weight: 600; text-decoration: none; font-size: 0.95rem; transition: all 0.3s ease;">
-                        Start Free Trial
+                        Start 7-Day Free Trial
                     </a>
                 </div>
 
@@ -716,7 +716,7 @@
                             <span style="background: rgba(139, 92, 246, 0.2); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem; font-weight: 600;">Pro Growth</span>
                         </div>
                         <div style="display: flex; align-items: baseline; gap: 0.3rem; margin-bottom: 0.5rem;">
-                            <span style="font-size: 2.8rem; font-weight: 800; color: #fff;">$4</span>
+                            <span id="proPriceAmount" style="font-size: 2.8rem; font-weight: 800; color: #fff;">$5</span>
                             <span style="color: var(--gray); font-size: 0.95rem;">/ month</span>
                         </div>
                         <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.5rem; min-height: 42px;">Ideal for growing businesses, agencies, and e-commerce stores.</p>
@@ -757,6 +757,43 @@
             </div>
         </div>
     </section>
+
+    <script>
+    function setNestChatBilling(type) {
+        var monthlyBtn = document.getElementById('nestchatMonthlyBtn');
+        var yearlyBtn = document.getElementById('nestchatYearlyBtn');
+        var starterAmt = document.getElementById('starterPriceAmount');
+        var proAmt = document.getElementById('proPriceAmount');
+        
+        if (type === 'yearly') {
+            yearlyBtn.style.background = '#6366f1';
+            yearlyBtn.style.color = '#fff';
+            yearlyBtn.style.fontWeight = '600';
+            yearlyBtn.style.boxShadow = '0 2px 10px rgba(99, 102, 241, 0.4)';
+            
+            monthlyBtn.style.background = 'transparent';
+            monthlyBtn.style.color = 'var(--gray)';
+            monthlyBtn.style.fontWeight = '500';
+            monthlyBtn.style.boxShadow = 'none';
+            
+            if (starterAmt) starterAmt.textContent = '$1.6';
+            if (proAmt) proAmt.textContent = '$4';
+        } else {
+            monthlyBtn.style.background = '#6366f1';
+            monthlyBtn.style.color = '#fff';
+            monthlyBtn.style.fontWeight = '600';
+            monthlyBtn.style.boxShadow = '0 2px 10px rgba(99, 102, 241, 0.4)';
+            
+            yearlyBtn.style.background = 'transparent';
+            yearlyBtn.style.color = 'var(--gray)';
+            yearlyBtn.style.fontWeight = '500';
+            yearlyBtn.style.boxShadow = 'none';
+            
+            if (starterAmt) starterAmt.textContent = '$2';
+            if (proAmt) proAmt.textContent = '$5';
+        }
+    }
+    </script>
 
     <!-- FAQ Section -->
     <section class="faq-section">

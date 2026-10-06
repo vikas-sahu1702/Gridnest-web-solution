@@ -51,12 +51,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  <url>
+  <!-- <url>
     <loc>https://gridnest-web-solution-production.up.railway.app/Hotel_Vishal.html</loc>
     <lastmod>2026-07-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
-  </url>
+  </url> -->
   <url>
     <loc>https://gridnest-web-solution-production.up.railway.app/privacy-policy.html</loc>
     <lastmod>2026-07-18</lastmod>
